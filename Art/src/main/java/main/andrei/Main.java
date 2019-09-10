@@ -10,7 +10,7 @@ public class Main {
     static String inputText;
 
     public static void main (String[] args) {
-/*
+
         BasicGUI basicGUI = new BasicGUI();
         basicGUI.setVisible(true);
         StringOperations stringOperations = new StringOperations();
@@ -35,23 +35,7 @@ public class Main {
             }
         });
 
- */
-        String messedLine = "";
-        String subMessedLine = "";
 
-
-        chosenFile = new File("C:\\Users\\XIAOMI\\Desktop\\RailFence.java");
-        StringOperations stringOperations = new StringOperations();
-        inputText = stringOperations.textFromFile(chosenFile);
-        //System.out.println(inputText);
-        String[] linesArray = inputText.split("\n");
-        linesArray = stringOperations.removeAfter(linesArray, "//");
-        String singleLine;
-        for (int i = 0; i < linesArray.length; i++){
-            //singleLine = i + linesArray[i];
-            //System.out.println("|" + singleLine + "|");
-
-        }
     }
 
     //изучиь 3 группы метрик
