@@ -6,29 +6,36 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
+    public static String file;
     public static void main(String[] args) {
+
         //       System.out.println("test");
-        JFrame window = new JFrame();
+        Form window = new Form();
+        //window.setContentPane(new Form().panel1);
         JFileChooser fileChooser = new JFileChooser();
         File selectedFile = null;
         int returnVal;
-       do {     returnVal =  fileChooser.showOpenDialog(null);
-        //System.out.println("Selected file: " + fileChooser.getSelectedFile().getAbsolutePath());
-            selectedFile = fileChooser.getSelectedFile();
-           try {
-               Thread.sleep(50);
-           } catch (InterruptedException e) {
-               e.printStackTrace();
-           }
-       }while((returnVal != JFileChooser.APPROVE_OPTION)||(!fileChooser.getSelectedFile().exists()));
-        try {
-            Scanner filescanner = new Scanner(selectedFile);
-            while(filescanner.hasNext()){
-                System.out.println(filescanner.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+
+//        do {     returnVal =  fileChooser.showOpenDialog(null);
+//        //System.out.println("Selected file: " + fileChooser.getSelectedFile().getAbsolutePath());
+//            selectedFile = fileChooser.getSelectedFile();
+//           try {
+//               Thread.sleep(50);
+//           } catch (InterruptedException e) {
+//               e.printStackTrace();
+//           }
+//       }while((returnVal != JFileChooser.APPROVE_OPTION)||(!fileChooser.getSelectedFile().exists()));
+//
+//
+//        try {
+//            Scanner filescanner = new Scanner(selectedFile);
+//            while(filescanner.hasNext()){
+//                System.out.println(filescanner.nextLine());
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }
