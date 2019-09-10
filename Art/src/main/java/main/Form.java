@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;import java.awt.event.ComponentAdapter;
 
+import static main.andrei.Main.buttonClicked;
+
 public class Form extends JFrame{
 
     private JButton chooseFileButton;
@@ -22,11 +24,16 @@ public class Form extends JFrame{
         setTitle("Моднейшее окно!");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        chooseFileButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Какой-то пидор жмякнул кнопку накинь сюда вызов своего файлчузера!!!!");//TODO:сюда вызов своего файлчузера!!!!
-            }
-        });
+
+//        chooseFileButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("Какой-то пидор жмякнул кнопку накинь сюда вызов своего файлчузера!!!!");//TODO:сюда вызов своего файлчузера!!!!
+//            }
+//        });
+        chooseFileButton.addActionListener(buttonClicked);
+
+
+
         add(panel1);
         setVisible(true);
     panel1.addComponentListener(new ComponentAdapter() { } );}

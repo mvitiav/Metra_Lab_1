@@ -14,7 +14,7 @@ public class StringOperations {
         return inputLines;
     }
 
-    public String textFromFile(File file) {
+    public String textFromFile(File file) {//TODO: ответь а чем те простой сцаннер не зашел?
         String inputText = "";
         String line;
         try {
