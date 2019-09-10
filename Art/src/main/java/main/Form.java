@@ -9,10 +9,17 @@ public class Form extends JFrame{
     private JButton chooseFileButton;
     private JTable table1;
     private JPanel panel1;
+    private MyTableModel tableModel;
 
+    public MyTableModel getTableModel() {
+        return tableModel;
+    }
 
     public Form() {
+        tableModel=new MyTableModel();
+        table1.setModel(tableModel);
         setSize(800, 600);
+        setTitle("Моднейшее окно!");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         chooseFileButton.addActionListener(new ActionListener() {

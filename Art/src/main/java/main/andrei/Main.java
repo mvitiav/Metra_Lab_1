@@ -8,6 +8,7 @@ import java.io.File;
 public class Main {
     static File chosenFile;
     static String inputText;
+    static JFileChooser fileChooser;
 
     public static void main (String[] args) {
 
@@ -17,10 +18,13 @@ public class Main {
         basicGUI.chooseFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
+
+                fileChooser = new JFileChooser();
                 int retCode = fileChooser.showDialog(null, "Выбрать файл");
                 if (retCode == JFileChooser.APPROVE_OPTION) {
                     chosenFile = fileChooser.getSelectedFile();
+
+
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     //System.out.println(inputText);

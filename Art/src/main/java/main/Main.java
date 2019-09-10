@@ -11,6 +11,11 @@ public class Main {
 
         //       System.out.println("test");
         Form window = new Form();
+
+        window.getTableModel().addOperator("operator");
+        window.getTableModel().addOperator("operator");
+        window.getTableModel().addOperand("operand");
+        window.getTableModel().addOperand("operand2");
         //window.setContentPane(new Form().panel1);
         JFileChooser fileChooser = new JFileChooser();
         File selectedFile = null;
