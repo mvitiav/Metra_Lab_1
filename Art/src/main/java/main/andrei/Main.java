@@ -12,6 +12,7 @@ public class Main {
     static String inputText;
     static JFileChooser fileChooser;
     static Form window;
+    final static Boolean TEST_MODE=true;
     public static ActionListener buttonClicked;
 
     public static void main (String[] args) {
@@ -28,8 +29,10 @@ public class Main {
 //                int retCode = fileChooser.showDialog(null, "Выбрать файл");
 //                if (retCode == JFileChooser.APPROVE_OPTION) {
                 if ( selectFile()) {
-                    chosenFile = fileChooser.getSelectedFile();
+                    if(!TEST_MODE) {
 
+                        chosenFile = fileChooser.getSelectedFile();
+                    }else {chosenFile = new File("Art/tests/testFile.java");}
 
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
                     window.setTitle(window.getTitle()+ chosenFile.toString());
@@ -43,7 +46,12 @@ public class Main {
                     //    singleLine = i + linesArray[i];
                     //    System.out.println("|" + singleLine + "|");
                     //}
+
+
+
                 }
+
+
             }
         };
 
@@ -62,9 +70,11 @@ public class Main {
     }
 
     public static boolean selectFile() {
+        if(TEST_MODE){return true;}
         fileChooser = new JFileChooser();
         int retCode = fileChooser.showDialog(null, "Выбрать файл");
         return  (retCode == JFileChooser.APPROVE_OPTION);
+
     }
 
     //изучиь 3 группы метрик
