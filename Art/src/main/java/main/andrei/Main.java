@@ -46,9 +46,10 @@ public class Main {
                     //    singleLine = i + linesArray[i];
                     //    System.out.println("|" + singleLine + "|");
                     //}
-
-
-
+                    codeAnalysis.operatorsList.forEach(s -> window.getTableModel().addOperator(s));
+                  //  window.getTableModel().fireTableDataChanged();
+                    window.getTable1().revalidate();
+                    window.getTable1().repaint();
                 }
 
 

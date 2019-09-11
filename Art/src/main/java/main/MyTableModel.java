@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.SortedMap;
 
 public class MyTableModel implements TableModel {
+//public class MyTableModel extends AbstractTableModel {  //думал будет проще но придется ебаться с OBSом тк надо автообновление мутить
     public LinkedHashMap<String,Integer> hashMap1;
     public LinkedHashMap<String,Integer> hashMap2;//maybe SortedMap
     public int getRowCount() {
@@ -99,4 +100,5 @@ public class MyTableModel implements TableModel {
         if(!hashMap2.containsKey(operand)){hashMap2.put(operand,0);}
         hashMap2.put(operand,hashMap2.get(operand)+1);
     }
+
 }

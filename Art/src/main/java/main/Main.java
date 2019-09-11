@@ -3,6 +3,9 @@ package main;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -10,17 +13,18 @@ public class Main {
     public static void main(String[] args) {
 
         //       System.out.println("test");
-        Form window = new Form();
+//        Form window = new Form();
+//
+//        window.getTableModel().addOperator("operator");
+//        window.getTableModel().addOperator("operator");
+//        window.getTableModel().addOperand("operand");
+//        window.getTableModel().addOperand("operand2");
+//        //window.setContentPane(new Form().panel1);
+//        JFileChooser fileChooser = new JFileChooser();
+//        File selectedFile = null;
+//        int returnVal;
 
-        window.getTableModel().addOperator("operator");
-        window.getTableModel().addOperator("operator");
-        window.getTableModel().addOperand("operand");
-        window.getTableModel().addOperand("operand2");
-        //window.setContentPane(new Form().panel1);
-        JFileChooser fileChooser = new JFileChooser();
-        File selectedFile = null;
-        int returnVal;
-
+      //  System.out.println(A.X>A.Y);
 
 //        do {     returnVal =  fileChooser.showOpenDialog(null);
 //        //System.out.println("Selected file: " + fileChooser.getSelectedFile().getAbsolutePath());

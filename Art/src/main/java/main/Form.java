@@ -11,10 +11,14 @@ public class Form extends JFrame{
     private JButton chooseFileButton;
     private JTable table1;
     private JPanel panel1;
-    private MyTableModel tableModel;
+    private MyTableModel tableModel=null;
 
     public MyTableModel getTableModel() {
         return tableModel;
+    }
+
+    public JTable getTable1() {
+        return table1;
     }
 
     public Form() {

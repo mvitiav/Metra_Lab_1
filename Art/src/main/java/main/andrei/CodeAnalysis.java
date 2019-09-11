@@ -1,11 +1,14 @@
 package main.andrei;
 
+import java.util.ArrayList;
+
 public class CodeAnalysis {
+    public ArrayList<String> operatorsList = new ArrayList<>();
     public final String[] TYPES_LIST = {"byte", "short", "int", "long", "float", "double", "char", "boolean", "String", "class", "void", "interface"};
     public final String[] AFTER_NAME_SIGNS = {";", "=", "{", "(", ")", ","};//скобка, если метод
-    public String getRegisteredOperators(String[] codeLines){
+    public String getRegisteredOperators(String[] codeLines) {
         String registeredOperators = "";
-        for (int curType = 0; curType < TYPES_LIST.length; curType++){
+        for (int curType = 0; curType < TYPES_LIST.length; curType++){//                        костыль ебучий!!! TODO:если не будет использоваться именно в качестве инта то надо на енум с forEach перелопатить!!!!
             for (int curLine = 0; curLine < codeLines.length; curLine++){ //берем одну строку
                 if (codeLines[curLine].indexOf(TYPES_LIST[curType]) != -1){
                     //если в анализируемой строке есть объявление типа, класса, метода...
@@ -23,6 +26,8 @@ public class CodeAnalysis {
 
                     if (!sign.equals("!")){
                         registeredOperators += codeLines[curLine].substring(codeLines[curLine].indexOf(TYPES_LIST[curType])+TYPES_LIST[curType].length(), codeLines[curLine].indexOf(sign)).trim() + ";";
+//                        registeredOperators += codeLines[curLine].substring(codeLines[curLine].indexOf(TYPES_LIST[curType])+TYPES_LIST[curType].length(), codeLines[curLine].indexOf(sign)).trim() + ";";
+                        operatorsList.add(codeLines[curLine].substring(codeLines[curLine].indexOf(TYPES_LIST[curType])+TYPES_LIST[curType].length(), codeLines[curLine].indexOf(sign)).trim() );
                     }
                     else {
                         System.out.println("Что-то пошло не так!");
