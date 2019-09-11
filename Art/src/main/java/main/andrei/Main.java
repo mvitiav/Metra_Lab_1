@@ -18,6 +18,7 @@ public class Main {
 
         BasicGUI basicGUI = new BasicGUI();
         //basicGUI.setVisible(true);
+        final CodeAnalysis codeAnalysis = new CodeAnalysis();
         StringOperations stringOperations = new StringOperations();
          buttonClicked = new ActionListener() {
             @Override
@@ -31,21 +32,25 @@ public class Main {
 
 
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
-                window.setTitle(window.getTitle()+ chosenFile.toString());
+                    window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     //System.out.println(inputText);
                     String[] linesArray = inputText.split("\n");
                     linesArray = stringOperations.removeAfter(linesArray, "//");
-                    String singleLine;
-                    for (int i = 0; i < linesArray.length; i++){
-                        singleLine = i + linesArray[i];
-                        System.out.println("|" + singleLine + "|");
-                    }
+                    System.out.println(codeAnalysis.getRegisteredOperators(linesArray));
+                    //String singleLine;
+                    //for (int i = 0; i < linesArray.length; i++){
+                    //    singleLine = i + linesArray[i];
+                    //    System.out.println("|" + singleLine + "|");
+                    //}
                 }
             }
         };
+
+
+
                                                                        //moja guiha
-       window = new Form();
+        window = new Form();
                                                                  //table test
 //        window.getTableModel().addOperator("operator");
 //        window.getTableModel().addOperator("operator");
@@ -54,12 +59,10 @@ public class Main {
 
 
         basicGUI.chooseFileButton.addActionListener(buttonClicked);
-
-
     }
 
-    public static boolean selectFile()
-    {  fileChooser = new JFileChooser();
+    public static boolean selectFile() {
+        fileChooser = new JFileChooser();
         int retCode = fileChooser.showDialog(null, "Выбрать файл");
         return  (retCode == JFileChooser.APPROVE_OPTION);
     }
