@@ -44,6 +44,17 @@ public class StringOperations {
         }
     }
 
+    public static int countHist(String text, String searchable)
+    {int counter = 0;
+        int index = 0;
+        while (index < text.length() && (index = text.indexOf(searchable, index)) >= 0) {
+            counter++;
+            index += searchable.length(); //length of 'the'
+        }
+
+    return counter;
+    }
+
     public String leaveChars(String text, String alphabet){
         String outText = "";
         text = text.toUpperCase();
