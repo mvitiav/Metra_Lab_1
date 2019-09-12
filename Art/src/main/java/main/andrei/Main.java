@@ -38,6 +38,7 @@ public class Main {
                     window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     codeAnalysis.getStrings(inputText);
+                    codeAnalysis.getOperators(inputText);
                     //System.out.println(inputText);
                     //String[] linesArray = inputText.split("\n");
                     //linesArray = stringOperations.removeAfter(linesArray, "//");

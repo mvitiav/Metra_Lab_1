@@ -25,7 +25,7 @@ public class Main extends JFrame implements Runnable {
         new Thread(new Server()).start();
 
     }
-
+    int i++;
     public Main(String name) throws HeadlessException {
         super(name);
         setLayout(new FlowLayout());

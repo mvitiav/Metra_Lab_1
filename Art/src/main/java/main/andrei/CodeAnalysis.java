@@ -1,5 +1,6 @@
 package main.andrei;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,7 +9,7 @@ public class CodeAnalysis {
     public final String[] AFTER_NAME_SIGNS = {";", "=", "{", "(", ")", ","};//скобка, если метод
     public String getRegisteredOperators(String text){
         String registeredOperators = "";
-
+        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
         return registeredOperators;
     }
 
@@ -16,7 +17,6 @@ public class CodeAnalysis {
     public String getStrings(String text){
         String strings = "";
         char nullChar = 0;
-        // не тот Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
         Pattern pattern = Pattern.compile("\".+?\"");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
@@ -25,7 +25,20 @@ public class CodeAnalysis {
         return strings;
     }
 
+    public ArrayList<String> getOperators(String text){
+        ArrayList<String> operandsList = new ArrayList<>();
+        Pattern pattern = Pattern.compile("=|>|<|!|~|?|:|==|<=|>=|!=|&&|\\|\\||\\+\\+|\\-\\-|\\+|\\-|\\*|\\/|&\\||^|%|<<|>>|>>>|+=|\\-=|*=|\\/=|&=|\\|=|^=|%=|<<=|>>=|>>>");
+
+        //Pattern pattern = Pattern.compile("\\+\\+");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            System.out.println(text.substring(matcher.start(), matcher.end()));
+        }
+        return operandsList;
+    }
+
 }
+
 
 
 

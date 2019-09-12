@@ -1,6 +1,7 @@
 package main.andrei;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class StringOperations {
     public String[] removeAfter(String[] inputLines, String subStr){
@@ -54,4 +55,6 @@ public class StringOperations {
         }
         return outText;
     }
+
+    //public ArrayList<>
 }
