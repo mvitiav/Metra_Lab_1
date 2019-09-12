@@ -3,15 +3,20 @@ package main;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.LinkedHashMap;
-import java.util.SortedMap;
 
 public class MyTableModel implements TableModel {
-//public class MyTableModel extends AbstractTableModel {  //думал будет проще но придется ебаться с OBSом тк надо автообновление мутить
-    public LinkedHashMap<String,Integer> hashMap1;
-    public LinkedHashMap<String,Integer> hashMap2;//maybe SortedMap
+    //public class MyTableModel extends AbstractTableModel {  //думал будет проще но придется ебаться с OBSом тк надо автообновление мутить
+    public LinkedHashMap<String, Integer> hashMap1;
+    public LinkedHashMap<String, Integer> hashMap2;//maybe SortedMap
+
+    public MyTableModel() {
+        hashMap1 = new LinkedHashMap();
+        hashMap2 = new LinkedHashMap();
+    }
+
     public int getRowCount() {
 
-     return Math.max(hashMap1.size(), hashMap2.size());
+        return Math.max(hashMap1.size(), hashMap2.size());
     }
 
     public int getColumnCount() {
@@ -19,27 +24,36 @@ public class MyTableModel implements TableModel {
     }
 
     public String getColumnName(int columnIndex) {
-        String s="";
-        switch (columnIndex)
-        {
-            case 0:s= "J";
+        String s = "";
+        switch (columnIndex) {
+            case 0:
+                s = "J";
                 break;
-            case 1:s= "Operator";
+            case 1:
+                s = "Operator";
                 break;
-            case 2:s= "F1(j)";
+            case 2:
+                s = "F1(j)";
                 break;
-            case 3:s= "i";
+            case 3:
+                s = "i";
                 break;
-            case 4:s= "Operand";
+            case 4:
+                s = "Operand";
                 break;
-            case 5:s= "F2(i)";
+            case 5:
+                s = "F2(i)";
                 break;
         }
         return s;
     }
 
     public Class<?> getColumnClass(int columnIndex) {
-        if(columnIndex!=1&&columnIndex!=3){return Integer.class;}else {return String.class;}
+        if (columnIndex != 1 && columnIndex != 3) {
+            return Integer.class;
+        } else {
+            return String.class;
+        }
     }
 
     public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -47,14 +61,31 @@ public class MyTableModel implements TableModel {
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        switch (columnIndex)
-        {
-            case 0:if(hashMap1.size()>rowIndex){return rowIndex+1;}else return null;
-            case 3:if(hashMap2.size()>rowIndex){return rowIndex+1;}else return null;
-            case 1:if(hashMap1.size()>rowIndex){return hashMap1.keySet().toArray()[rowIndex];}else return null;
-            case 2:if(hashMap1.size()>rowIndex){return hashMap1.get(hashMap1.keySet().toArray()[rowIndex]);}else return null;
-            case 4:if(hashMap2.size()>rowIndex){return hashMap2.keySet().toArray()[rowIndex];}else return null;
-            case 5:if(hashMap2.size()>rowIndex){return hashMap2.get(hashMap2.keySet().toArray()[rowIndex]);}else return null;
+        switch (columnIndex) {
+            case 0:
+                if (hashMap1.size() > rowIndex) {
+                    return rowIndex + 1;
+                } else return null;
+            case 3:
+                if (hashMap2.size() > rowIndex) {
+                    return rowIndex + 1;
+                } else return null;
+            case 1:
+                if (hashMap1.size() > rowIndex) {
+                    return hashMap1.keySet().toArray()[rowIndex];
+                } else return null;
+            case 2:
+                if (hashMap1.size() > rowIndex) {
+                    return hashMap1.get(hashMap1.keySet().toArray()[rowIndex]);
+                } else return null;
+            case 4:
+                if (hashMap2.size() > rowIndex) {
+                    return hashMap2.keySet().toArray()[rowIndex];
+                } else return null;
+            case 5:
+                if (hashMap2.size() > rowIndex) {
+                    return hashMap2.get(hashMap2.keySet().toArray()[rowIndex]);
+                } else return null;
         }
         return null;
     }
@@ -69,11 +100,6 @@ public class MyTableModel implements TableModel {
 
     public void removeTableModelListener(TableModelListener l) {
 
-    }
-
-    public MyTableModel() {
-        hashMap1= new LinkedHashMap();
-        hashMap2= new LinkedHashMap();
     }
 
     public LinkedHashMap<String, Integer> getHashMap1() {
@@ -91,14 +117,19 @@ public class MyTableModel implements TableModel {
     public void setHashMap2(LinkedHashMap<String, Integer> hashMap2) {
         this.hashMap2 = hashMap2;
     }
-    public void addOperator(String operator){
-        if(!hashMap1.containsKey(operator)){hashMap1.put(operator,0);}
-        hashMap1.put(operator,hashMap1.get(operator)+1);
+
+    public void addOperator(String operator) {
+        if (!hashMap1.containsKey(operator)) {
+            hashMap1.put(operator, 0);
+        }
+        hashMap1.put(operator, hashMap1.get(operator) + 1);
     }
-    public void addOperand(String operand)
-    {
-        if(!hashMap2.containsKey(operand)){hashMap2.put(operand,0);}
-        hashMap2.put(operand,hashMap2.get(operand)+1);
+
+    public void addOperand(String operand) {
+        if (!hashMap2.containsKey(operand)) {
+            hashMap2.put(operand, 0);
+        }
+        hashMap2.put(operand, hashMap2.get(operand) + 1);
     }
 
 }

@@ -1,3 +1,5 @@
+
+//213
 package net.guides.fifth.desu;
 
 import javax.swing.*;
@@ -33,9 +35,13 @@ public class Main extends JFrame implements Runnable {
         setVisible(true);
         setSize(800,600);
         setLocationRelativeTo(null);
-
+/* adsasfasdf */
+        final String CONSTANTEXAMPLE = "123";
+        /*
+        final String CONSTANTEXAMPLE2 = "Starry coment";
+        */
         final JTextField t1 = new JTextField(10);
-        final Button b1 = new Button("Send");
+        final Button b1 = new Button("Se//nd");
         b1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

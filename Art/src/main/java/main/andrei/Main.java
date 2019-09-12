@@ -38,6 +38,12 @@ public class Main {
                     window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     codeAnalysis.getStrings(inputText);
+
+//                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
+
+
+                 //       codeAnalysis.isCommented(inputText,"new");
+
                     //System.out.println(inputText);
                     //String[] linesArray = inputText.split("\n");
                     //linesArray = stringOperations.removeAfter(linesArray, "//");

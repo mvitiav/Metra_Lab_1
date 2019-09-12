@@ -6,14 +6,15 @@ import java.util.regex.Pattern;
 public class CodeAnalysis {
     public final String[] TYPES_LIST = {"byte", "short", "int", "long", "float", "double", "char", "boolean", "String", "class", "void", "interface"};
     public final String[] AFTER_NAME_SIGNS = {";", "=", "{", "(", ")", ","};//скобка, если метод
-    public String getRegisteredOperators(String text){
+
+    public String getRegisteredOperators(String text) {
         String registeredOperators = "";
 
         return registeredOperators;
     }
 
     //метод для выпиливания строковых операндов
-    public String getStrings(String text){
+    public String getStrings(String text) {
         String strings = "";
         char nullChar = 0;
         // не тот Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
@@ -21,8 +22,55 @@ public class CodeAnalysis {
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             System.out.println(text.substring(matcher.start(), matcher.end()));
+
+            if (!isCommented(text, matcher.start(), matcher.end())) {
+                //System.out.println("                it's also commented!!!!!");
+                Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
+            }
         }
         return strings;
+    }
+
+    public Boolean isCommented(String text
+            , int beg, int end
+//            , String substr
+    ) {
+
+//        Pattern pattern = Pattern.compile(".*?//.*?"+text.substring(beg,end)+".*?$");
+//        Matcher matcher = pattern.matcher(text);
+//
+//        if (matcher.matches()) {
+//            return true;
+//        }
+        if (StringOperations.countHist(text.substring(0, beg), "/*") -
+                StringOperations.countHist(text.substring(0, beg), "*/")
+                > 0) {
+            return true;
+        }
+
+
+        Pattern pattern = Pattern.compile(".*?//.*?" + text.substring(beg, end) + ".*?$");
+        Matcher matcher = pattern.matcher(text);
+//        Pattern pattern = Pattern.compile(".*?//.*?"+substr+".*?$");
+//        Pattern pattern = Pattern.compile(".*?//.*?" + substr + ".*?$");
+//        Pattern pattern = Pattern.compile("^.*?//.*?$");
+//        Pattern pattern = Pattern.compile(".*?$");
+//        Pattern pattern = Pattern.compile("^.*?$");
+
+//      while (matcher.find()){
+//          System.out.println(text.substring(matcher.start(),matcher.end()));
+//      }
+
+
+        for (String s : text.split("\n")) { //TODO:если починишь ^ то можно без этого костыля
+            matcher.reset(s);
+            if (matcher.matches()) {
+                return true;
+            }
+        }
+
+
+        return false;
     }
 
 }

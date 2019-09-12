@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.regex.*;
 public class Main {
     public static String file;
     public static void main(String[] args) {
@@ -27,6 +27,17 @@ public class Main {
 //        File selectedFile = null;
 //        int returnVal;
 
+       // Matcher matcher = new Matcher(Pattern.compile("\\({1}"));
+//        String s1 = "(()())";
+//
+//        String tempstring = s1;
+//        Matcher matcher =Pattern.compile("\\(.*\\)").matcher(tempstring);
+//while (matcher.find())
+//{
+//    System.out.println(tempstring.substring(matcher.start(),matcher.end()));
+//    tempstring = tempstring.substring(matcher.start()+1,matcher.end()-1);
+//    matcher.reset(tempstring);
+//}
       //  System.out.println(A.X>A.Y);
 
 //        do {     returnVal =  fileChooser.showOpenDialog(null);
