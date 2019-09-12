@@ -54,7 +54,6 @@ public class CodeAnalysis {
     public ArrayList<String> getCasters(String text){
         ArrayList<String> casters = new ArrayList<>();
         Pattern pattern = Pattern.compile("\\([byte|short|int|long|float|double|char|boolean|String| ]+?\\)");
-        //
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             casters.add(text.substring(matcher.start(), matcher.end()));
