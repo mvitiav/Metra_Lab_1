@@ -37,16 +37,17 @@ public class Main {
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
                     window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
+                    codeAnalysis.getStrings(inputText);
                     //System.out.println(inputText);
-                    String[] linesArray = inputText.split("\n");
-                    linesArray = stringOperations.removeAfter(linesArray, "//");
-                    System.out.println(codeAnalysis.getRegisteredOperators(linesArray));
+                    //String[] linesArray = inputText.split("\n");
+                    //linesArray = stringOperations.removeAfter(linesArray, "//");
+                    //System.out.println(codeAnalysis.getRegisteredOperators(linesArray));
                     //String singleLine;
                     //for (int i = 0; i < linesArray.length; i++){
                     //    singleLine = i + linesArray[i];
                     //    System.out.println("|" + singleLine + "|");
                     //}
-                    codeAnalysis.operatorsList.forEach(s -> window.getTableModel().addOperator(s));
+                    //codeAnalysis.operatorsList.forEach(s -> window.getTableModel().addOperator(s));
                   //  window.getTableModel().fireTableDataChanged();
                     window.getTable1().revalidate();
                     window.getTable1().repaint();
