@@ -11,6 +11,9 @@ import java.util.Scanner;
 public class Main {
     public static String file;
     public static void main(String[] args) {
+        //TODO: \b(String|int|char|boolean|void|class)\b.+?[{;(),=]    <- тут слов в скобки еще добавить надо
+        //TODO: ".+?" строки
+        //TODO: \/\/.*?$ одинарные комменты
 
         //       System.out.println("test");
 //        Form window = new Form();
