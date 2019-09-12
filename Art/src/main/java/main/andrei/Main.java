@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Main {
     static File chosenFile;
@@ -38,6 +39,9 @@ public class Main {
                     window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     codeAnalysis.getStrings(inputText);
+                    codeAnalysis.getCasters(inputText);
+                    codeAnalysis.getRegisteredOperators(inputText);
+                    codeAnalysis.getOperatorsList(inputText);
 
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
 

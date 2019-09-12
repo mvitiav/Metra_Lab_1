@@ -67,7 +67,9 @@ public class Main extends JFrame implements Runnable {
                 Socket socket = connectiuon = new Socket(InetAddress.getByName("192.168.1.14"), 5678);
                 output = new ObjectOutputStream(connectiuon.getOutputStream());
                 input = new ObjectInputStream(connectiuon.getInputStream());
-                JOptionPane.showMessageDialog(null,(String)input.readObject());
+                JOptionPane.showMessageDialog(null,(  String)input.readObject());
+                JOptionPane.showMessageDialog(null,(  String   )input.readObject());
+                JOptionPane.showMessageDialog(null,(jhvhjvjh   String   )input.readObject());// эту не пропустит
             }
         } catch (UnknownHostException e) {
             e.printStackTrace();

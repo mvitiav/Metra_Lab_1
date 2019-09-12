@@ -1,17 +1,12 @@
 package main.andrei;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CodeAnalysis {
-    public final String[] TYPES_LIST = {"byte", "short", "int", "long", "float", "double", "char", "boolean", "String", "class", "void", "interface"};
-    public final String[] AFTER_NAME_SIGNS = {";", "=", "{", "(", ")", ","};//скобка, если метод
-
-    public String getRegisteredOperators(String text) {
-        String registeredOperators = "";
-
-        return registeredOperators;
-    }
+    //public final String[] TYPES_LIST = {"byte", "short", "int", "long", "float", "double", "char", "boolean", "String", "class", "void", "interface"};
+    //public final String[] AFTER_NAME_SIGNS = {";", "=", "{", "(", ")", ","};//скобка, если метод
 
     //метод для выпиливания строковых операндов
     public String getStrings(String text) {
@@ -25,10 +20,46 @@ public class CodeAnalysis {
 
             if (!isCommented(text, matcher.start(), matcher.end())) {
                 //System.out.println("                it's also commented!!!!!");
+                //Main.window.getTableModel().addOperand(text.substring(matcher.start()+1, matcher.end()-1)); Вариант, чтобы не оставляло скобки
                 Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
             }
         }
         return strings;
+    }
+
+    public ArrayList<String> getRegisteredOperators(String text) {
+        ArrayList<String> registeredOperators = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            registeredOperators.add(text.substring(matcher.start(), matcher.end()));
+            String regOp = text.substring(matcher.start(), matcher.end());
+            //regOp = regOp.substring(regOp.indexOf(" "), regOp.indexOf(" ")+3);
+            Main.window.getTableModel().addOperand(regOp);
+        }
+        return registeredOperators;
+    }
+
+    public ArrayList<String> getOperatorsList(String text){
+        ArrayList<String> operatorsList = new ArrayList<>();
+        Pattern pattern = Pattern.compile(">>>=|>>=|<<=|%=|\\^=|&=|\\|=|&=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|\\*|\\+\\+|--|\\+|\\||&|!=|>=|<=|==|:|\\?|~|!|>|>|= ");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            operatorsList.add(text.substring(matcher.start(), matcher.end()));
+            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
+        }
+        return operatorsList;
+    }
+
+    public ArrayList<String> getCasters(String text){
+        ArrayList<String> casters = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\([byte|short|int|long|float|double|char|boolean|String| ]+?\\)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            casters.add(text.substring(matcher.start(), matcher.end()));
+            Main.window.getTableModel().addOperator("cast " + text.substring(matcher.start(), matcher.end()));
+        }
+        return casters;
     }
 
     public Boolean isCommented(String text
@@ -43,8 +74,7 @@ public class CodeAnalysis {
 //            return true;
 //        }
         if (StringOperations.countHist(text.substring(0, beg), "/*") -
-                StringOperations.countHist(text.substring(0, beg), "*/")
-                > 0) {
+                StringOperations.countHist(text.substring(0, beg), "*/") > 0) {
             return true;
         }
 
@@ -68,8 +98,6 @@ public class CodeAnalysis {
                 return true;
             }
         }
-
-
         return false;
     }
 
