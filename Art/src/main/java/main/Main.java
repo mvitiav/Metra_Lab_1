@@ -28,16 +28,21 @@ public class Main {
 //        int returnVal;
 
        // Matcher matcher = new Matcher(Pattern.compile("\\({1}"));
-//        String s1 = "(()())";
+       String s1 = "gs==df'!=g]l>>>=o-=&=k,sdf*=gp=o[|=s/=d++kg&?=>!~:==";
 //
-//        String tempstring = s1;
-//        Matcher matcher =Pattern.compile("\\(.*\\)").matcher(tempstring);
-//while (matcher.find())
-//{
-//    System.out.println(tempstring.substring(matcher.start(),matcher.end()));
+        String tempstring = s1;
+//       Matcher matcher =Pattern.compile("\\(.*\\)").matcher(tempstring);
+       Matcher matcher =Pattern.compile(
+//               "=|>|<|!|~|\?|:|==|<=|>=|!=|&&|\\|\\||\\+\\+|\\-\\-|\\+|\\-|\\*|\\/|&\\||^|%|«|»|»>|+=|\\-=|*=|\\/=|&=|\\|=|^=|%=|«=|»=|»>"
+               ">>>=|>>=|<<=|%=|\\^=|&=|\\|=|&=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|-\\*|\\+\\+|--|\\+|\\||&|!=|>=|<=|==|:|\\?|~|!|>|>|="
+
+       ).matcher(tempstring);
+while (matcher.find())
+{
+    System.out.println("123                    "+tempstring.substring(matcher.start(),matcher.end()));
 //    tempstring = tempstring.substring(matcher.start()+1,matcher.end()-1);
 //    matcher.reset(tempstring);
-//}
+}
       //  System.out.println(A.X>A.Y);
 
 //        do {     returnVal =  fileChooser.showOpenDialog(null);
