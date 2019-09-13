@@ -38,10 +38,15 @@ public class Main {
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
                     window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
-                    codeAnalysis.getStrings(inputText);
-                    codeAnalysis.getCasters(inputText);
-                    codeAnalysis.getRegisteredOperators(inputText);
-                    codeAnalysis.getOperatorsList(inputText);
+                    //inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: Так нельзя
+                    inputText = codeAnalysis.getStrings(inputText);
+                    //System.out.println("NO STRINGS " + inputText);
+                    //inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: И так нельзя :(
+                    inputText = codeAnalysis.getCasters(inputText);
+                    //System.out.println("NO CASTERS " + inputText);
+                    inputText = codeAnalysis.getRegisteredOperators(inputText);
+                    //System.out.println("NO OPERATORS : " + inputText);
+                    inputText = codeAnalysis.getOperatorsList(inputText);
 
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
 

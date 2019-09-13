@@ -26,10 +26,13 @@ public class CodeAnalysis {
     }
 
     public String getRegisteredOperators(String text) {
-        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
+        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|void|interface)\\b.+?[{;(),=]");//TODO: Убрал пока class, пока не выясним, чем он является. Если что, потом на костыль повесим или на старое место поставим.
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
+            String operator = text.substring(matcher.start(), matcher.end());
+            operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
+            Main.window.getTableModel().addOperand(operator);//TODO:префикс временный
+            //Main.window.getTableModel().addOperand("Op : |" + text.substring(matcher.start(), matcher.end()) + "|");//TODO:префикс временный
             text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
             matcher.reset(text);
         }
@@ -48,7 +51,7 @@ public class CodeAnalysis {
     }
 
     public String getCasters(String text){
-        ArrayList<String> casters = new ArrayList<>();
+        //ArrayList<String> casters = new ArrayList<>();
         //Pattern pattern = Pattern.compile("\\([byte|short|int|long|float|double|char|boolean|String| ]+?\\)");
         Pattern pattern = Pattern.compile("\\( *(byte|short|int|long|float|double|char|boolean|String) *\\)+?");
         Matcher matcher = pattern.matcher(text);
@@ -60,6 +63,16 @@ public class CodeAnalysis {
             casterText = casterText.trim();
             casterText = "cast (" + casterText + ")";
             Main.window.getTableModel().addOperator(casterText);
+            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String cutTypedConstants(String text){
+        Pattern pattern = Pattern.compile("final.+(byte|short|int|long|float|double|char|boolean|String).+[=].+[;]+?");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
             text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
             matcher.reset(text);
         }

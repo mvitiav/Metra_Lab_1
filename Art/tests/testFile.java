@@ -27,7 +27,7 @@ public class Main extends JFrame implements Runnable {
         new Thread(new Server()).start();
 
     }
-    int i++;
+    int i;
     public Main(String name) throws HeadlessException {
         super(name);
         setLayout(new FlowLayout());
@@ -69,7 +69,7 @@ public class Main extends JFrame implements Runnable {
                 input = new ObjectInputStream(connectiuon.getInputStream());
                 JOptionPane.showMessageDialog(null,(  String)input.readObject());
                 JOptionPane.showMessageDialog(null,(  String   )input.readObject());
-                JOptionPane.showMessageDialog(null,(jhvhjvjh   String   )input.readObject());// эту не пропустит
+                JOptionPane.showMessageDialog(null,( String   )input.readObject());// эту не пропустит
             }
         } catch (UnknownHostException e) {
             e.printStackTrace();
