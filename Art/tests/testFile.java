@@ -36,7 +36,7 @@ public class Main extends JFrame implements Runnable {
         setSize(800,600);
         setLocationRelativeTo(null);
 /* adsasfasdf */
-        final String CONSTANTEXAMPLE = "123";
+        final String CONSTANTEXAMPLE = "1  int i = 23";
         /*
         final String CONSTANTEXAMPLE2 = "Starry coment";
         */
