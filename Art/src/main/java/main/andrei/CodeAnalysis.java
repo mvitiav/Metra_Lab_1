@@ -53,7 +53,13 @@ public class CodeAnalysis {
         Pattern pattern = Pattern.compile("\\( *(byte|short|int|long|float|double|char|boolean|String) *\\)+?");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            Main.window.getTableModel().addOperator("cast " + text.substring(matcher.start(), matcher.end()));
+            String casterText;
+            casterText = text.substring(matcher.start(), matcher.end());
+            casterText = casterText.replace("(", "");
+            casterText = casterText.replace(")", "");
+            casterText = casterText.trim();
+            casterText = "cast (" + casterText + ")";
+            Main.window.getTableModel().addOperator(casterText);
             text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
             matcher.reset(text);
         }
