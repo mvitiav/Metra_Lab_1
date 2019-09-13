@@ -22,7 +22,10 @@ public class CodeAnalysis {
                 //System.out.println("                it's also commented!!!!!");
                 //Main.window.getTableModel().addOperand(text.substring(matcher.start()+1, matcher.end()-1)); Вариант, чтобы не оставляло скобки
                 Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
+
             }
+            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            matcher.reset(text);
         }
         return strings;
     }
@@ -66,7 +69,6 @@ public class CodeAnalysis {
             , int beg, int end
 //            , String substr
     ) {
-
 //        Pattern pattern = Pattern.compile(".*?//.*?"+text.substring(beg,end)+".*?$");
 //        Matcher matcher = pattern.matcher(text);
 //
@@ -77,8 +79,6 @@ public class CodeAnalysis {
                 StringOperations.countHist(text.substring(0, beg), "*/") > 0) {
             return true;
         }
-
-
         Pattern pattern = Pattern.compile(".*?//.*?" + text.substring(beg, end) + ".*?$");
         Matcher matcher = pattern.matcher(text);
 //        Pattern pattern = Pattern.compile(".*?//.*?"+substr+".*?$");
@@ -90,8 +90,6 @@ public class CodeAnalysis {
 //      while (matcher.find()){
 //          System.out.println(text.substring(matcher.start(),matcher.end()));
 //      }
-
-
         for (String s : text.split("\n")) { //TODO:если починишь ^ то можно без этого костыля
             matcher.reset(s);
             if (matcher.matches()) {
