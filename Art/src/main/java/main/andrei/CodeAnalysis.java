@@ -11,58 +11,53 @@ public class CodeAnalysis {
     //метод для выпиливания строковых операндов
     public String getStrings(String text) {
         String strings = "";
-        char nullChar = 0;
         // не тот Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
         Pattern pattern = Pattern.compile("\".+?\"");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            System.out.println(text.substring(matcher.start(), matcher.end()));
-
+            //System.out.println(text.substring(matcher.start(), matcher.end()));
             if (!isCommented(text, matcher.start(), matcher.end())) {
-                //System.out.println("                it's also commented!!!!!");
-                //Main.window.getTableModel().addOperand(text.substring(matcher.start()+1, matcher.end()-1)); Вариант, чтобы не оставляло скобки
                 Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
-
             }
             text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
             matcher.reset(text);
         }
-        return strings;
+        return text;
     }
 
-    public ArrayList<String> getRegisteredOperators(String text) {
-        ArrayList<String> registeredOperators = new ArrayList<>();
+    public String getRegisteredOperators(String text) {
         Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            registeredOperators.add(text.substring(matcher.start(), matcher.end()));
-            String regOp = text.substring(matcher.start(), matcher.end());
-            //regOp = regOp.substring(regOp.indexOf(" "), regOp.indexOf(" ")+3);
-            Main.window.getTableModel().addOperand(regOp);
+            Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
+            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            matcher.reset(text);
         }
-        return registeredOperators;
+        return text;
     }
 
-    public ArrayList<String> getOperatorsList(String text){
-        ArrayList<String> operatorsList = new ArrayList<>();
+    public String getOperatorsList(String text){
         Pattern pattern = Pattern.compile(">>>=|>>=|<<=|%=|\\^=|&=|\\|=|&=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|\\*|\\+\\+|--|\\+|\\||&|!=|>=|<=|==|:|\\?|~|!|>|>|= ");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            operatorsList.add(text.substring(matcher.start(), matcher.end()));
             Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
+            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            matcher.reset(text);
         }
-        return operatorsList;
+        return text;
     }
 
-    public ArrayList<String> getCasters(String text){
+    public String getCasters(String text){
         ArrayList<String> casters = new ArrayList<>();
-        Pattern pattern = Pattern.compile("\\([byte|short|int|long|float|double|char|boolean|String| ]+?\\)");
+        //Pattern pattern = Pattern.compile("\\([byte|short|int|long|float|double|char|boolean|String| ]+?\\)");
+        Pattern pattern = Pattern.compile("\\( *(byte|short|int|long|float|double|char|boolean|String) *\\)+?");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            casters.add(text.substring(matcher.start(), matcher.end()));
             Main.window.getTableModel().addOperator("cast " + text.substring(matcher.start(), matcher.end()));
+            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            matcher.reset(text);
         }
-        return casters;
+        return text;
     }
 
     public Boolean isCommented(String text

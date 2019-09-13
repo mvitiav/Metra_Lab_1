@@ -39,9 +39,9 @@ public class Main {
                     window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     codeAnalysis.getStrings(inputText);
-                    //codeAnalysis.getCasters(inputText);
-                    //codeAnalysis.getRegisteredOperators(inputText);
-                    //codeAnalysis.getOperatorsList(inputText);
+                    codeAnalysis.getCasters(inputText);
+                    codeAnalysis.getRegisteredOperators(inputText);
+                    codeAnalysis.getOperatorsList(inputText);
 
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
 
