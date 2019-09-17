@@ -84,3 +84,9 @@ public class Main extends JFrame implements Runnable {
         output.writeObject(objject);
     }
 }
+
+
+class tempcl2
+{
+    test
+}

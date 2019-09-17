@@ -11,6 +11,7 @@ public class CodeAnalysis {
     //метод для выпиливания строковых операндов
     public String getStrings(String text) {
         String strings = "";
+        char nullChar = 0;
         // не тот Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
         Pattern pattern = Pattern.compile("\".+?\"");
         Matcher matcher = pattern.matcher(text);
@@ -37,6 +38,77 @@ public class CodeAnalysis {
             matcher.reset(text);
         }
         return text;
+    }
+
+    public ArrayList<Class2> getClassList(String text)
+    {ArrayList<Class2> list = new ArrayList<>();
+
+//        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|void|interface)\\b.+?[{;(),=]");
+//        Pattern pattern = Pattern.compile("class.+?[{]");//class(|.+?)[{]
+        Pattern pattern = Pattern.compile("(?<=\\n|\\A)(?:public\\s)?(class|interface|enum)\\s([^\\n\\s]*)");//class(|.+?)[{]
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            //System.err.println(text.substring(matcher.start(),matcher.end()));
+
+//            Pattern pattern2 = Pattern.compile("class ");//class(|.+?)[{]
+//            Matcher matcher2 = pattern2.matcher(text.substring(matcher.start(),matcher.end()));
+//            matcher2.find();
+//int nameBeg =matcher2.end();
+//            pattern2 = Pattern.compile("class \\w+");
+//            matcher2 = pattern2.matcher(text.substring(matcher.start(),matcher.end()));
+//            matcher2.find();
+//int nameEnd =matcher2.end();
+//            System.err.println(" name = "+text.substring(matcher.start(),matcher.end()).substring(nameBeg,nameEnd));
+
+            //            Pattern pattern2 = Pattern.compile("class ");//class(|.+?)[{]
+//            Matcher matcher2 = pattern2.matcher(text.substring(matcher.start(),matcher.end()));
+//            matcher2.find();
+//int nameBeg =matcher2.end();
+//            pattern2 = Pattern.compile("class \\w+");
+//            matcher2 = pattern2.matcher(text.substring(matcher.start(),matcher.end()));
+//            matcher2.find();
+//int nameEnd =matcher2.end();
+//            System.err.println(" name = "+text.substring(matcher.start(),matcher.end()).substring(nameBeg,nameEnd));
+
+            System.out.println("                                        "+matcher.group(2));
+
+//(?<=\n|\A)(?:public\s)?(class|interface|enum)\s([^\n\s]*)
+
+            //todo: ДА-ДА, не удивляйтессь!!! (костыли страшные но если не так то названиями по типу class MainClass можно наебнуть)
+//\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)
+//\{(?:[^}{]+|\{(?:[^}{]+|\{[^}{]*\})*\})*\}
+
+
+            int bodyBegPos,bodyEndPos;
+            int begs =0;
+            int ends =0;
+           int index = matcher.end();
+            bodyBegPos = text.indexOf('{', index);
+
+            while (index < text.length() && (index = text.indexOf('}', index)) >= 0) {
+               // counter++;
+                begs++;
+                index ++; //length of '{'\'}'
+                if(StringOperations.countHits(text.substring(bodyBegPos-1,index), "{")==begs){
+
+                    break;
+                }
+            }
+
+            Class2 tempClass = new Class2(matcher.group(2),text.substring(bodyBegPos+1,index-1));
+
+            System.out.println(tempClass.body);
+
+
+//            String operator = text.substring(matcher.start(), matcher.end());
+//            operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
+//            Main.window.getTableModel().addOperand(operator);
+//            //Main.window.getTableModel().addOperand("Op : |" + text.substring(matcher.start(), matcher.end()) + "|");
+//            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+//            matcher.reset(text);
+        }
+
+        return list;
     }
 
     public String getOperatorsList(String text){
@@ -89,8 +161,8 @@ public class CodeAnalysis {
 //        if (matcher.matches()) {
 //            return true;
 //        }
-        if (StringOperations.countHist(text.substring(0, beg), "/*") -
-                StringOperations.countHist(text.substring(0, beg), "*/") > 0) {
+        if (StringOperations.countHits(text.substring(0, beg), "/*") -
+                StringOperations.countHits(text.substring(0, beg), "*/") > 0) {
             return true;
         }
         Pattern pattern = Pattern.compile(".*?//.*?" + text.substring(beg, end) + ".*?$");
