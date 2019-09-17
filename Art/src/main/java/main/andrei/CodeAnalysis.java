@@ -70,7 +70,7 @@ public class CodeAnalysis {
 //int nameEnd =matcher2.end();
 //            System.err.println(" name = "+text.substring(matcher.start(),matcher.end()).substring(nameBeg,nameEnd));
 
-            System.out.println("                                        "+matcher.group(2));
+         //   System.out.println("                                        "+matcher.group(2));
 
 //(?<=\n|\A)(?:public\s)?(class|interface|enum)\s([^\n\s]*)
 
@@ -96,8 +96,8 @@ public class CodeAnalysis {
             }
 
             Class2 tempClass = new Class2(matcher.group(2),text.substring(bodyBegPos+1,index-1));
-
-            System.out.println(tempClass.body);
+            list.add(tempClass);
+           // System.out.println(tempClass.body);
 
 
 //            String operator = text.substring(matcher.start(), matcher.end());

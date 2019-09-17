@@ -48,7 +48,8 @@ public class Main {
                     //System.out.println("NO OPERATORS : " + inputText);
                     inputText = codeAnalysis.getOperatorsList(inputText);
 
-                    codeAnalysis.getClassList(inputText);
+//                    codeAnalysis.getClassList(inputText);
+                    codeAnalysis.getClassList(inputText).forEach(class2 -> System.out.println(class2.name));
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
 
 
