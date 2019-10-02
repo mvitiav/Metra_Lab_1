@@ -82,6 +82,10 @@ public class Main extends JFrame implements Runnable {
     private void sendObj(Object objject) throws IOException {
         output.flush();
         output.writeObject(objject);
+        ///
+        Files.write(Paths.get(chosenFile.toString().substring(0, chosenFile.toString().lastIndexOf(".")) + "[CPH]" + ".txt"), fileContent);
+        newChar = currentAlphabet.charAt((textCharShift + keyCharShift + mode * currentAlphabet.length()) % currentAlphabet.length());
+        ///
     }
 }
 

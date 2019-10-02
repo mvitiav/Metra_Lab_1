@@ -40,12 +40,20 @@ public class Main {
                     inputText = stringOperations.textFromFile(chosenFile);
                     //inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: Так нельзя
                     inputText = codeAnalysis.getStrings(inputText);
-                    //System.out.println("NO STRINGS " + inputText);
-                    //inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: И так нельзя :(
+                    System.out.println("NO STRINGS " + inputText);
+                    inputText = codeAnalysis.cutImports(inputText);
+                    System.out.println("NO IMPORTS " + inputText);
+                    inputText = codeAnalysis.cutMultilineComments(inputText);
+                    System.out.println("NO MULTI-LINE COMMENTS " + inputText);
+                    inputText = codeAnalysis.cutSingleLineComments(inputText);
+                    System.out.println("NO SINGLE-LINE COMMENTS " + inputText);
+                    inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: И так нельзя :(
                     inputText = codeAnalysis.getCasters(inputText);
-                    //System.out.println("NO CASTERS " + inputText);
+                    System.out.println("NO CASTERS " + inputText);
+                    inputText = codeAnalysis.methodHandler(inputText);
+                    System.out.println("NO METHODS " + inputText);
                     inputText = codeAnalysis.getRegisteredOperators(inputText);
-                    //System.out.println("NO OPERATORS : " + inputText);
+                    System.out.println("NO OPERATORS : " + inputText);
                     inputText = codeAnalysis.getOperatorsList(inputText);
 
 //                    codeAnalysis.getClassList(inputText);
@@ -93,7 +101,6 @@ public class Main {
         fileChooser = new JFileChooser();
         int retCode = fileChooser.showDialog(null, "Выбрать файл");
         return  (retCode == JFileChooser.APPROVE_OPTION);
-
     }
 
     //изучиь 3 группы метрик

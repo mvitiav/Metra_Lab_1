@@ -5,24 +5,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CodeAnalysis {
-    //public final String[] TYPES_LIST = {"byte", "short", "int", "long", "float", "double", "char", "boolean", "String", "class", "void", "interface"};
-    //public final String[] AFTER_NAME_SIGNS = {";", "=", "{", "(", ")", ","};//скобка, если метод
-
-    //метод для выпиливания строковых операндов
     public String getStrings(String text) {
-        String strings = "";
-        char nullChar = 0;
-        // не тот Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|class|void|interface)\\b.+?[{;(),=]");
         Pattern pattern = Pattern.compile("\".+?\"");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            //System.out.println(text.substring(matcher.start(), matcher.end()));
             if (!isCommented(text, matcher.start(), matcher.end())) {
                 Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
             }
-            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
-            matcher.reset(text);
-        }
+            text = text.substring(0, matcher.start()) + " " + text.substring(matcher.end());  //TODO:                          ...+"aaa"+...
+            matcher.reset(text);                                                              // Этот кусок превратится в '++'    ^^^^^^
+        }                                                                                     // Если ничего не втыкать
         return text;
     }
 
@@ -32,8 +24,7 @@ public class CodeAnalysis {
         while (matcher.find()) {
             String operator = text.substring(matcher.start(), matcher.end());
             operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
-            Main.window.getTableModel().addOperand(operator);//TODO:префикс временный
-            //Main.window.getTableModel().addOperand("Op : |" + text.substring(matcher.start(), matcher.end()) + "|");//TODO:префикс временный
+            Main.window.getTableModel().addOperand(operator);
             text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
             matcher.reset(text);
         }
@@ -82,7 +73,7 @@ public class CodeAnalysis {
             int bodyBegPos,bodyEndPos;
             int begs =0;
             int ends =0;
-           int index = matcher.end();
+            int index = matcher.end();
             bodyBegPos = text.indexOf('{', index);
 
             while (index < text.length() && (index = text.indexOf('}', index)) >= 0) {
@@ -90,7 +81,6 @@ public class CodeAnalysis {
                 begs++;
                 index ++; //length of '{'\'}'
                 if(StringOperations.countHits(text.substring(bodyBegPos-1,index), "{")==begs){
-
                     break;
                 }
             }
@@ -111,18 +101,51 @@ public class CodeAnalysis {
         return list;
     }
 
-    public String getOperatorsList(String text){
+    public String getOperatorsList(String text) {
         Pattern pattern = Pattern.compile(">>>=|>>=|<<=|%=|\\^=|&=|\\|=|&=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|\\*|\\+\\+|--|\\+|\\||&|!=|>=|<=|==|:|\\?|~|!|>|>|= ");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
-            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            //text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
         return text;
     }
 
-    public String getCasters(String text){
+    public String cutImports(String text) {
+        Pattern pattern = Pattern.compile(" *(package|import).*;");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String cutMultilineComments(String text) {
+        Pattern pattern = Pattern.compile("(\\/\\*)([^*]|[\\r\\n]|(\\*+([^*\\/]|[\\r\\n])))*(\\*\\/)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String cutSingleLineComments(String text) {
+        Pattern pattern = Pattern.compile("\"[^\"\\\\]*(?:\\\\[\\W\\w][^\"\\\\]*)*\"|(\\/\\/.*)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            if (text.charAt(matcher.start()) == '/') {
+                text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            }
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String getCasters(String text) {
         //ArrayList<String> casters = new ArrayList<>();
         //Pattern pattern = Pattern.compile("\\([byte|short|int|long|float|double|char|boolean|String| ]+?\\)");
         Pattern pattern = Pattern.compile("\\( *(byte|short|int|long|float|double|char|boolean|String) *\\)+?");
@@ -135,26 +158,41 @@ public class CodeAnalysis {
             casterText = casterText.trim();
             casterText = "cast (" + casterText + ")";
             Main.window.getTableModel().addOperator(casterText);
-            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            text = text.substring(0,matcher.start() - 1) + text.substring(matcher.end() + 1);
             matcher.reset(text);
         }
         return text;
     }
 
-    public String cutTypedConstants(String text){
+    public String methodHandler(String text) {
+        Pattern pattern = Pattern.compile("(\\w+ *\\. *\\w+ *)(\\([^()]*\\))");
+        //Pattern pattern = Pattern.compile("(\\w+ *)(\\. *\\w+ *\\([^()]*\\)){1,}");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String method;
+            method = text.substring(matcher.start(), matcher.end());
+            String[] methodParts = method.split("\\.|\\(");
+            Main.window.getTableModel().addOperand(methodParts[0]);
+            Main.window.getTableModel().addOperand(methodParts[1]);
+
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+
+    public String cutTypedConstants(String text) {
         Pattern pattern = Pattern.compile("final.+(byte|short|int|long|float|double|char|boolean|String).+[=].+[;]+?");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
         return text;
     }
 
-    public Boolean isCommented(String text
-            , int beg, int end
-//            , String substr
-    ) {
+    public Boolean isCommented(String text, int beg, int end) {
 //        Pattern pattern = Pattern.compile(".*?//.*?"+text.substring(beg,end)+".*?$");
 //        Matcher matcher = pattern.matcher(text);
 //
@@ -184,7 +222,6 @@ public class CodeAnalysis {
         }
         return false;
     }
-
 }
 
 

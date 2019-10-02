@@ -15,7 +15,7 @@ public class StringOperations {
         return inputLines;
     }
 
-    public String textFromFile(File file) {//TODO: ответь а чем те простой сцаннер не зашел?
+    public String textFromFile(File file) {
         String inputText = "";
         String line;
         try {
@@ -30,6 +30,7 @@ public class StringOperations {
         }
         return inputText;
     }
+
 
     public void textToFile(String path, String text){
         File file;
