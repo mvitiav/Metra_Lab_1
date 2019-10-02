@@ -192,6 +192,27 @@ public class CodeAnalysis {
         return text;
     }
 
+
+
+
+
+
+    //for parsing of expression:
+    //priorities (smaller number first):
+    //+ 2
+    //* 1
+    //= 3
+    //.
+    //a = b + c * d
+
+
+    public void analyzeExpression(String text)
+    {int left = text.length();
+
+
+
+    }
+
     public Boolean isCommented(String text, int beg, int end) {
 //        Pattern pattern = Pattern.compile(".*?//.*?"+text.substring(beg,end)+".*?$");
 //        Matcher matcher = pattern.matcher(text);

@@ -18,6 +18,13 @@ public class Main {
 
     public static void main (String[] args) {
 
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        }
+        //Это шоб мимикрировать под тему оси
+
         BasicGUI basicGUI = new BasicGUI();
         //basicGUI.setVisible(true);
         final CodeAnalysis codeAnalysis = new CodeAnalysis();
