@@ -59,15 +59,11 @@ public class Main {
                     System.out.println("NO CASTERS " + inputText);
                     inputText = codeAnalysis.methodHandler(inputText);
                     System.out.println("NO METHODS " + inputText);
+                    inputText = codeAnalysis.simpleMethodHandler(inputText);
+                    System.out.println("NO SIMPLE METHODS " + inputText);
                     inputText = codeAnalysis.getRegisteredOperators(inputText);
                     System.out.println("NO OPERATORS : " + inputText);
                     inputText = codeAnalysis.getOperatorsList(inputText);
-
-
-                    System.out.println("Ебал я ваши дебаг-выводы!");
-                    System.out.println("Ебал я ваши дебаг-выводы!");
-                    System.out.println("Ебал я ваши дебаг-выводы!");
-                    System.out.println("Ебал я ваши дебаг-выводы!");
 
 //                    codeAnalysis.getClassList(inputText);
                     codeAnalysis.getClassList(inputText).forEach(class2 -> {System.out.println(class2.name);

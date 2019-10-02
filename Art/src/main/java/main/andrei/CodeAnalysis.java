@@ -25,7 +25,7 @@ public class CodeAnalysis {
             String operator = text.substring(matcher.start(), matcher.end());
             operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
             Main.window.getTableModel().addOperand(operator);
-            text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
         return text;
@@ -180,23 +180,67 @@ public class CodeAnalysis {
         return text;
     }
 
-    public String methodHandler(String text) {
-        Pattern pattern = Pattern.compile("(\\w+ *\\. *\\w+ *)(\\([^()]*\\))");
-        //Pattern pattern = Pattern.compile("(\\w+ *)(\\. *\\w+ *\\([^()]*\\)){1,}");
+    public String getConstNums(String text) {
+        //Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]*[f|l|d]{0,1}");
+        //Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]*");
+        Pattern pattern = Pattern.compile("\\d{1,}");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            String method;
-            method = text.substring(matcher.start(), matcher.end());
-            String[] methodParts = method.split("\\.|\\(");
-            Main.window.getTableModel().addOperand(methodParts[0]);
-            Main.window.getTableModel().addOperand(methodParts[1]);
-
+            String num;
+            num = text.substring(matcher.start(), matcher.end());
+            Main.window.getTableModel().addOperand(num);
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
         return text;
     }
 
+    public String methodHandler(String text) {
+        Pattern pattern = Pattern.compile("(\\w+ *\\.){1,}( *\\w+ *\\([^()]*\\)\\.*){1,}");
+        //Pattern pattern = Pattern.compile("(\\w+ *\\. *\\w+ *)(\\([^()]*\\))");
+        //Pattern pattern = Pattern.compile("(\\w+ *)(\\. *\\w+ *\\([^()]*\\)){1,}");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String method;
+            method = text.substring(matcher.start(), matcher.end());
+            String[] methodParts = method.split("\\.|\\(");
+            //Main.window.getTableModel().addOperand(methodParts[0]);
+            //Main.window.getTableModel().addOperand(methodParts[1]);
+            for (String part : methodParts) {
+                if (part.indexOf(")") != -1 && part.matches(".*[0-9]{1,}.*")) {
+                    System.out.println("Cyclepart : |" + part + "|");
+                    getConstNums(part);
+                }
+                else {
+                    Main.window.getTableModel().addOperand(part);
+                }
+            }
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String simpleMethodHandler(String text) {
+        Pattern pattern = Pattern.compile("( *\\w+ *\\([^()]*\\)){1,}");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String method;
+            method = text.substring(matcher.start(), matcher.end());
+            String[] methodParts = method.split("\\(");
+            for (String part : methodParts){
+                if (part.indexOf(")") != -1 && part.matches(".*[0-9]{1,}.*")) {
+                    getConstNums(part);
+                }
+                else {
+                    Main.window.getTableModel().addOperand(part);
+                }
+            }
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
 
     public String cutTypedConstants(String text) {
         Pattern pattern = Pattern.compile("final.+(byte|short|int|long|float|double|char|boolean|String).+[=].+[;]+?");
