@@ -31,6 +31,22 @@ public class CodeAnalysis {
         return text;
     }
 
+
+    public ArrayList<Method2> getMethodList(String text)
+    {ArrayList<Method2> list = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");//class(|.+?)[{]
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find())
+        {
+            System.out.println(text.substring(matcher.start(),matcher.end()));
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+
+        }
+    return list;
+    }
+
+
     public ArrayList<Class2> getClassList(String text)
     {ArrayList<Class2> list = new ArrayList<>();
 
@@ -224,8 +240,14 @@ public class CodeAnalysis {
                 StringOperations.countHits(text.substring(0, beg), "*/") > 0) {
             return true;
         }
-        Pattern pattern = Pattern.compile(".*?//.*?" + text.substring(beg, end) + ".*?$");
+
+//        Pattern pattern = Pattern.compile(".*?//.*?" + text.substring(beg, end) + ".*?$");
+//        Matcher matcher = pattern.matcher(text);
+
+        Pattern pattern = Pattern.compile(".*?//.*?\\Q" + text.substring(beg, end) + "\\E.*?$");
         Matcher matcher = pattern.matcher(text);
+
+
 //        Pattern pattern = Pattern.compile(".*?//.*?"+substr+".*?$");
 //        Pattern pattern = Pattern.compile(".*?//.*?" + substr + ".*?$");
 //        Pattern pattern = Pattern.compile("^.*?//.*?$");

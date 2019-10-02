@@ -93,4 +93,8 @@ public class Main extends JFrame implements Runnable {
 class tempcl2
 {
     test
+
+    public static void writeTest(int count=5){for(count=count;count>0;count--){
+        System.out.println(count+")"+"Test");
+    }}
 }

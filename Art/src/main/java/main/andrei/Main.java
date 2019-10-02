@@ -63,8 +63,19 @@ public class Main {
                     System.out.println("NO OPERATORS : " + inputText);
                     inputText = codeAnalysis.getOperatorsList(inputText);
 
+
+                    System.out.println("Ебал я ваши дебаг-выводы!");
+                    System.out.println("Ебал я ваши дебаг-выводы!");
+                    System.out.println("Ебал я ваши дебаг-выводы!");
+                    System.out.println("Ебал я ваши дебаг-выводы!");
+
 //                    codeAnalysis.getClassList(inputText);
-                    codeAnalysis.getClassList(inputText).forEach(class2 -> System.out.println(class2.name));
+                    codeAnalysis.getClassList(inputText).forEach(class2 -> {System.out.println(class2.name);
+                    codeAnalysis.getMethodList(class2.body);
+                    });
+
+
+
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
 
 
