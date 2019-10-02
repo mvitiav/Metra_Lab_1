@@ -50,10 +50,27 @@ public class Main {
        ).matcher(tempstring);
 while (matcher.find())
 {
-    System.out.println("123                    "+tempstring.substring(matcher.start(),matcher.end()));
+ //   System.out.println("123                    "+tempstring.substring(matcher.start(),matcher.end()));
 //    tempstring = tempstring.substring(matcher.start()+1,matcher.end()-1);
 //    matcher.reset(tempstring);
 }
+
+        tempstring = " public static void writeTest(int count=5){for(count=count;count>0;count--){\n" +
+                "        System.out.println(count+\")\"+\"Test\");\n" +
+                "    }}";
+
+
+        matcher =Pattern.compile(
+//               "=|>|<|!|~|\?|:|==|<=|>=|!=|&&|\\|\\||\\+\\+|\\-\\-|\\+|\\-|\\*|\\/|&\\||^|%|«|»|»>|+=|\\-=|*=|\\/=|&=|\\|=|^=|%=|«=|»=|»>"
+                "(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])"
+
+        ).matcher(tempstring);
+        while (matcher.find())
+        {
+            System.out.println("123                    "+tempstring.substring(matcher.start(),matcher.end()));
+//    tempstring = tempstring.substring(matcher.start()+1,matcher.end()-1);
+//    matcher.reset(tempstring);
+        }
       //  System.out.println(A.X>A.Y);
 
 //        do {     returnVal =  fileChooser.showOpenDialog(null);
@@ -77,7 +94,16 @@ while (matcher.find())
 //        }
 
     }
+
+
 }
+
+
+
+
+
+
+
 
 //плеыер - биграмный шифр тк ассматриваются 2 сисвола - надо генерировать подстановочную таблицу размер которой равен ол-ву букв алфавита например для англа 5 на 5 = 25 а ваще найс - ключ в начале таблички а оставшиеся дальше тк шифр биграмны надо рассматривать2 символа сначала текст разбивается по парам и буквы шифруются исходя из своей позиции а 2 одинаковые подряд разбиваются например иксом как редкими если текст нечетной длины то добавить вконец че-то еще например тот же символ
 //

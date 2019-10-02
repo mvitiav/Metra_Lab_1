@@ -34,14 +34,33 @@ public class CodeAnalysis {
 
     public ArrayList<Method2> getMethodList(String text)
     {ArrayList<Method2> list = new ArrayList<>();
-
-        Pattern pattern = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");//class(|.+?)[{]
+        //System.out.println(text);
+        Pattern pattern = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]\\,]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");//class(|.+?)[{]
         Matcher matcher = pattern.matcher(text);
         while (matcher.find())
         {
-            System.out.println(text.substring(matcher.start(),matcher.end()));
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+          //  System.out.println("==================================\n"+text.substring(matcher.start(),matcher.end())+"\n==================================");
 
+            int bodyBegPos,bodyEndPos;
+            int begs =0;
+            int ends =0;
+            int index = matcher.end();
+            bodyBegPos = matcher.end();
+//            bodyBegPos = text.indexOf('{', index);
+
+
+            while (index < text.length() && (index = text.indexOf('}', index)) >= 0) {
+                // counter++;
+                begs++;
+                index ++; //length of '{'\'}'
+                if(StringOperations.countHits(text.substring(bodyBegPos-1,index), "{")==begs){
+                    break;
+                }
+            }
+
+            list.add(new Method2(text.substring(bodyBegPos+1,index-1),matcher.group(2)));
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
         }
     return list;
     }
