@@ -89,6 +89,13 @@ public class Main extends JFrame implements Runnable {
     }
 }
 
+        System.out.println(5);
+        Main.win.dow.getTableModel().svbfdjhvbfdkj(  7  );
+        Main.win.dow.getTableModel().svbfdjhvbfdkj("sfv" + 3 * (4 - 5));
+
+public static void writeTest(int count=5){for(;count>0;count--){
+        System.out.println(count+"   uuu) "+" Test ");
+        }}
 
 class tempcl2
 {
