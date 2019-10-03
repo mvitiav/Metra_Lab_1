@@ -61,9 +61,9 @@ public class Main {
                     System.out.println("NO METHODS " + inputText);
                     inputText = codeAnalysis.simpleMethodHandler(inputText);
                     System.out.println("NO SIMPLE METHODS " + inputText);
-                    inputText = codeAnalysis.getRegisteredOperators(inputText);
-                    System.out.println("NO OPERATORS : " + inputText);
-                    inputText = codeAnalysis.getOperatorsList(inputText);
+                    //inputText = codeAnalysis.getRegisteredOperators(inputText);
+                    //System.out.println("NO OPERATORS : " + inputText);
+                    //inputText = codeAnalysis.getOperatorsList(inputText);
 
 //                    codeAnalysis.getClassList(inputText);
                     codeAnalysis.getClassList(inputText).forEach(class2 -> {System.out.println(class2.name);
@@ -120,5 +120,4 @@ public class Main {
     //изучиь 3 группы метрик
     //размер сложность упр сложность данных
     //операторы операнцы частоты операторов и операндов общее количетво операторов и операндов
-
 }

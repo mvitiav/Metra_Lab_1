@@ -183,7 +183,7 @@ public class CodeAnalysis {
     public String getConstNums(String text) {
         //Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]*[f|l|d]{0,1}");
         //Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]*");
-        Pattern pattern = Pattern.compile("\\d{1,}");
+        Pattern pattern = Pattern.compile("\\d{1,}");//just-for-test
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String num;
@@ -196,24 +196,25 @@ public class CodeAnalysis {
     }
 
     public String methodHandler(String text) {
-        Pattern pattern = Pattern.compile("(\\w+ *\\.){1,}( *\\w+ *\\([^()]*\\)\\.*){1,}");
+        //Pattern pattern = Pattern.compile("(\\w+ *\\.){1,}( *\\w+ *\\([^()]*\\)\\.*){1,}");
         //Pattern pattern = Pattern.compile("(\\w+ *\\. *\\w+ *)(\\([^()]*\\))");
         //Pattern pattern = Pattern.compile("(\\w+ *)(\\. *\\w+ *\\([^()]*\\)){1,}");
+        Pattern pattern = Pattern.compile("(\\.{1,} *\\w+ *\\([^()]*\\))");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String method;
-            method = text.substring(matcher.start(), matcher.end());
-            String[] methodParts = method.split("\\.|\\(");
-            //Main.window.getTableModel().addOperand(methodParts[0]);
+            method = text.substring(matcher.start() + 1, matcher.end());
+            String[] methodParts = method.split("\\(");
+            System.out.println("Method taken : " + method);
+            Main.window.getTableModel().addOperand(methodParts[0]);
             //Main.window.getTableModel().addOperand(methodParts[1]);
-            for (String part : methodParts) {
-                if (part.indexOf(")") != -1 && part.matches(".*[0-9]{1,}.*")) {
-                    System.out.println("Cyclepart : |" + part + "|");
-                    getConstNums(part);
-                }
-                else {
-                    Main.window.getTableModel().addOperand(part);
-                }
+
+            if (methodParts.length > 1
+                && methodParts[1].matches(".*[0-9]{1,}.*")
+                && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
+                System.out.println("Cyclepart : |" + methodParts[1] + "|");
+                //methodParts[1] = getConstNums(methodParts[1]);
+                getConstNums(methodParts[1]);
             }
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
@@ -222,21 +223,22 @@ public class CodeAnalysis {
     }
 
     public String simpleMethodHandler(String text) {
-        Pattern pattern = Pattern.compile("( *\\w+ *\\([^()]*\\)){1,}");
+        //Pattern pattern = Pattern.compile("( *\\w+ *\\([^()]*\\)){1,}");
+        Pattern pattern = Pattern.compile("( *\\w+ *\\([^()]*\\)){1,}\\;");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String method;
             method = text.substring(matcher.start(), matcher.end());
             String[] methodParts = method.split("\\(");
-            for (String part : methodParts){
-                if (part.indexOf(")") != -1 && part.matches(".*[0-9]{1,}.*")) {
-                    getConstNums(part);
-                }
-                else {
-                    Main.window.getTableModel().addOperand(part);
-                }
+            Main.window.getTableModel().addOperand(methodParts[0]);
+            if (methodParts.length > 1
+                    && methodParts[1].matches(".*[0-9]{1,}.*")
+                    && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
+                System.out.println("Cyclepart111 : |" + methodParts[1] + "|");
+                //methodParts[1] = getConstNums(methodParts[1]);
+                getConstNums(methodParts[1]);
             }
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end() - 1);
             matcher.reset(text);
         }
         return text;
