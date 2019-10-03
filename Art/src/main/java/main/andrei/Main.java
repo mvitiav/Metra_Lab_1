@@ -117,7 +117,7 @@ public class Main {
         return  (retCode == JFileChooser.APPROVE_OPTION);
     }
 
-    void nothing(){}//TODO: Можешь удалить эту строку. Оно просто не пушилось...
+    void nothing1(){}//TODO: Можешь удалить эту строку. Оно просто не пушилось...
 
     //изучиь 3 группы метрик
     //размер сложность упр сложность данных
