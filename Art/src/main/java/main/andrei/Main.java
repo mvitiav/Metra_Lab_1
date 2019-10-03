@@ -58,26 +58,12 @@ public class Main {
                     inputText = codeAnalysis.getCasters(inputText);
                     System.out.println("NO CASTERS " + inputText);
                     inputText = codeAnalysis.methodHandler(inputText);
-                    //TODO:пока-что спрятал!
-                   // System.out.println("NO METHODS " + inputText);
-                  //  inputText = codeAnalysis.simpleMethodHandler(inputText);
-                  //  System.out.println("NO SIMPLE METHODS " + inputText);
-                  //  inputText = codeAnalysis.getRegisteredOperators(inputText);
-                 //   System.out.println("NO OPERATORS : " + inputText);
-                 ///   inputText = codeAnalysis.getOperatorsList(inputText);
-                    //TODO:пока-что спрятал!
-
-                    //TODO:прошлая версия! (тут мусор его снести \/ \/ \/ )
-                    //System.out.println("NO METHODS " + inputText);
-                    //inputText = codeAnalysis.getRegisteredOperators(inputText);
-                    //System.out.println("NO OPERATORS : " + inputText);
-                    //inputText = codeAnalysis.getOperatorsList(inputText);
-                    //TODO:я у мамы мергер дохуя! (тут мусор его снести /\ /\ /\ )
-
-                    System.out.println("Ебал я ваши дебаг-выводы!");
-                    System.out.println("Ебал я ваши дебаг-выводы!");
-                    System.out.println("Ебал я ваши дебаг-выводы!");
-                    System.out.println("Ебал я ваши дебаг-выводы!");
+                    System.out.println("NO METHODS " + inputText);
+                    inputText = codeAnalysis.simpleMethodHandler(inputText);
+                    System.out.println("NO SIMPLE METHODS " + inputText);
+                    inputText = codeAnalysis.getRegisteredOperators(inputText);
+                    System.out.println("NO OPERATORS : " + inputText);
+                    inputText = codeAnalysis.getOperatorsList(inputText);
 
 //                    codeAnalysis.getClassList(inputText);
                     codeAnalysis.getClassList(inputText).forEach(class2 -> {System.out.println(class2.name);
