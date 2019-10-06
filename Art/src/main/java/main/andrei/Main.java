@@ -61,14 +61,24 @@ public class Main {
                     System.out.println("NO METHODS " + inputText);
                     inputText = codeAnalysis.simpleMethodHandler(inputText);
                     System.out.println("NO SIMPLE METHODS " + inputText);
-                    //inputText = codeAnalysis.getRegisteredOperators(inputText);
-                    //System.out.println("NO OPERATORS : " + inputText);
-                    //inputText = codeAnalysis.getOperatorsList(inputText);
-
+                    inputText = codeAnalysis.cutEmptyBrackets(inputText);
+                    System.out.println("NO EMPTY BRACKETS " + inputText);
+                    inputText = codeAnalysis.methodHandler(inputText);
+                    inputText = codeAnalysis.simpleMethodHandler(inputText);
+                    //inputText = codeAnalysis.cutRoundOperatorBrackets(inputText);
+                    //System.out.println("NO BRACKETS " + inputText);
+                    inputText = codeAnalysis.getRegisteredOperators(inputText);
+                    inputText = codeAnalysis.getOperatorsList(inputText);
+                    inputText = codeAnalysis.getBrackets(inputText);
+                    System.out.println("NO OPERATORS : " + inputText);
 //                    codeAnalysis.getClassList(inputText);
-                    codeAnalysis.getClassList(inputText).forEach(class2 -> {System.out.println(class2.name);
-                    codeAnalysis.getMethodList(class2.body);
-                    });
+                    try {
+                        codeAnalysis.getClassList(inputText).forEach(class2 -> {
+                            System.out.println(class2.name);
+                            codeAnalysis.getMethodList(class2.body);
+                        });
+                    }
+                    catch (Exception e){}
 
 
 
@@ -116,8 +126,6 @@ public class Main {
         int retCode = fileChooser.showDialog(null, "Выбрать файл");
         return  (retCode == JFileChooser.APPROVE_OPTION);
     }
-
-    void nothing1(){}//TODO: Можешь удалить эту строку. Оно просто не пушилось...
 
     //изучиь 3 группы метрик
     //размер сложность упр сложность данных

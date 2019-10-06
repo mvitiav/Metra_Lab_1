@@ -42,7 +42,7 @@ public class Main extends JFrame implements Runnable {
         */
         final JTextField t1 = new JTextField(10);
         final Button b1 = new Button("Se//nd");
-        b1.addActionListener(new ActionListener() {
+        b1.addActionListener(new ActionListener()) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==b1)

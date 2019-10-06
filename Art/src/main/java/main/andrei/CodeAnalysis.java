@@ -1,5 +1,6 @@
 package main.andrei;
 
+import java.time.chrono.JapaneseEra;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -118,7 +119,19 @@ public class CodeAnalysis {
     }
 
     public String getOperatorsList(String text) {
-        Pattern pattern = Pattern.compile(">>>=|>>=|<<=|%=|\\^=|&=|\\|=|&=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|\\*|\\+\\+|--|\\+|\\||&|!=|>=|<=|==|:|\\?|~|!|>|>|= ");
+        Pattern pattern = Pattern.compile(";|>>>=|>>=|<<=|%=|\\^=|&=|\\|=|&=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|\\*|\\+\\+|--|\\+|-|\\||&|!=|>=|<=|==|:|\\?|~|!|>|>|= ");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
+            //text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String getBrackets(String text) {
+        Pattern pattern = Pattern.compile("[(){}]");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
@@ -183,7 +196,7 @@ public class CodeAnalysis {
     public String getConstNums(String text) {
         //Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]*[f|l|d]{0,1}");
         //Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]*");
-        Pattern pattern = Pattern.compile("\\d{1,}");//just-for-test
+        Pattern pattern = Pattern.compile("\\d{1,}");//just-for-test, but... it works fine
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String num;
@@ -238,7 +251,46 @@ public class CodeAnalysis {
                 //methodParts[1] = getConstNums(methodParts[1]);
                 getConstNums(methodParts[1]);
             }
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end() - 1);
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String cutEmptyBrackets(String text) {               //TODO: Простите, не бейте.
+        Pattern pattern = Pattern.compile("\\( {0,}\\)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        Main.window.getTableModel().addOperator("(");
+        Main.window.getTableModel().addOperator(")");
+        return text;
+    }
+
+    public String cutRoundOperatorBrackets(String text) {                           //TODO: Ну да, костылища. А кому сейчас легко?
+        Pattern pattern = Pattern.compile("\\([a-zA-Z0-9| |/|*|\\-|+]{1,}\\)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String expression;
+            expression = text.substring(matcher.start()+1, matcher.end()-1);
+            Pattern subPattern = Pattern.compile("(?!(byte|short|int|long|float|double|char|boolean|String|new)\\b)\\b\\w+");//TODO: .matches() ни в какую не заработал
+            Matcher subMatcher = subPattern.matcher(expression);
+            String operand;
+            while (subMatcher.find()) {
+                operand = expression.substring(subMatcher.start(), subMatcher.end());
+                Main.window.getTableModel().addOperand(operand);
+                Main.window.getTableModel().addOperator("(");
+                Main.window.getTableModel().addOperator(")");
+                subMatcher.reset(expression);
+                try {
+                    expression = expression.substring(0, subMatcher.start()) + expression.substring(subMatcher.end());
+                }
+                catch (Exception e){}
+
+            }
+            text = text.substring(0, matcher.start()-1) + expression + text.substring(matcher.end()+1);
             matcher.reset(text);
         }
         return text;
@@ -253,11 +305,6 @@ public class CodeAnalysis {
         }
         return text;
     }
-
-
-
-
-
 
     //for parsing of expression:
     //priorities (smaller number first):
