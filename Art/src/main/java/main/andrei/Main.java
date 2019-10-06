@@ -18,6 +18,7 @@ public class Main {
 
     public static void main (String[] args) {
 
+        if (true){}//TODO: не пушило
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
