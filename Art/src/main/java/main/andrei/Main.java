@@ -74,6 +74,7 @@ public class Main {
                     inputText = codeAnalysis.getOperatorsList(inputText);
                     inputText = codeAnalysis.getBrackets(inputText);
                     System.out.println("NO OPERATORS : " + inputText);
+                    inputText = codeAnalysis.flowControlHandler(inputText);
 //                    codeAnalysis.getClassList(inputText);
                     try {
                         codeAnalysis.getClassList(inputText).forEach(class2 -> {

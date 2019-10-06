@@ -244,7 +244,7 @@ public class CodeAnalysis {
             method = text.substring(matcher.start() + 1, matcher.end());
             String[] methodParts = method.split("\\(");
             System.out.println("Method taken : " + method);
-            Main.window.getTableModel().addOperand(methodParts[0]);
+            Main.window.getTableModel().addOperator(methodParts[0]);
 //            Main.window.addOperand(methodParts[0]);
             //Main.window.getTableModel().addOperand(methodParts[1]);
 
@@ -269,7 +269,7 @@ public class CodeAnalysis {
             String method;
             method = text.substring(matcher.start(), matcher.end());
             String[] methodParts = method.split("\\(");
-            Main.window.getTableModel().addOperand(methodParts[0]);
+            Main.window.getTableModel().addOperator(methodParts[0]);
             //Main.window.addOperand(methodParts[0]);
             if (methodParts.length > 1
                     && methodParts[1].matches(".*[0-9]{1,}.*")
@@ -332,6 +332,37 @@ public class CodeAnalysis {
         }
         return text;
     }
+
+    public String flowControlHandler(String text) {
+        Pattern pattern = Pattern.compile("(if).*[\\S\\s]*(else)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            Main.window.getTableModel().addOperator("if..else");
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+
+        pattern = Pattern.compile("(do).*[\\S\\s]*(while)");
+        matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            Main.window.getTableModel().addOperator("do..while");
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+
+        pattern = Pattern.compile("if|while|for|switch|break|continue");
+        matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+
+
+
 
     //for parsing of expression:
     //priorities (smaller number first):

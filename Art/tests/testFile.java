@@ -58,7 +58,12 @@ public class Main extends JFrame implements Runnable {
         add(t1);
         add(b1);
     }
-
+    if (true) {
+        j--;
+    }
+    else {
+        i++;
+    }
     @Override
     public void run() {
         try  {
@@ -84,7 +89,7 @@ public class Main extends JFrame implements Runnable {
         output.writebject(objject);
         ///
         Files.write(Paths.get(chosenFile.toString().substring(0, chosenFile.toString().lastIndexOf(".")) + "[CPH]" + ".txt"), fileContent);
-        newChar = currentAlphabet.charAt((textCharShift + keyCharShift + mode * currentAlphabet.length()) % currentAlphabet.length());
+        newChar = currentAlphabet.charAt(textCharShift + keyCharShift + mode * currentAlphabet.length()) % currentAlphabet.length());
         ///
     }
 }
