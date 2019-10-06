@@ -18,7 +18,7 @@ public class Main {
 
     public static void main (String[] args) {
 
-        if (false){}//////////////////////////
+        if (false && true){}//////////////////////////
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
