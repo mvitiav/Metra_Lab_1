@@ -37,7 +37,7 @@ public class Form extends JFrame{
         table1.setModel(tableModel);
 
 //        table1.setAutoCreateRowSorter(true);
-
+        System.out.println("test");
 
         TableRowSorter<TableModel> sorter1 = new TableRowSorter<>(table1.getModel());
 
