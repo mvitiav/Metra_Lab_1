@@ -11,8 +11,8 @@ public class CodeAnalysis {
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             if (!isCommented(text, matcher.start(), matcher.end())) {
-//                Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
-                Main.window.addOperand(text.substring(matcher.start(), matcher.end()));
+                Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
+//                Main.window.addOperand(text.substring(matcher.start(), matcher.end()));
             }
             text = text.substring(0, matcher.start()) + " " + text.substring(matcher.end());  //TODO:                          ...+"aaa"+...
             matcher.reset(text);                                                              // Этот кусок превратится в '++'    ^^^^^^
@@ -26,9 +26,9 @@ public class CodeAnalysis {
         while (matcher.find()) {
             String operator = text.substring(matcher.start(), matcher.end());
             operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
-            //Main.window.getTableModel().addOperand(operator);
+            Main.window.getTableModel().addOperand(operator);
 //            Main.window.addOperator(operator);//                              todo:менняй как хочешь!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            Main.window.addOperand(operator);
+//            Main.window.addOperand(operator);
             text = text.substring(0,matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
@@ -156,8 +156,8 @@ public class CodeAnalysis {
         Pattern pattern = Pattern.compile("[(){}]");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-//            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
-            Main.window.addOperator(text.substring(matcher.start(), matcher.end()));
+            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
+//            Main.window.addOperator(text.substring(matcher.start(), matcher.end()));
             //text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
@@ -209,8 +209,8 @@ public class CodeAnalysis {
             casterText = casterText.replace(")", "");
             casterText = casterText.trim();
             casterText = "cast (" + casterText + ")";
-//            Main.window.getTableModel().addOperator(casterText);
-            Main.window.addOperator(casterText);
+            Main.window.getTableModel().addOperator(casterText);
+//            Main.window.addOperator(casterText);
             text = text.substring(0,matcher.start() - 1) + text.substring(matcher.end() + 1);
             matcher.reset(text);
         }
@@ -225,8 +225,8 @@ public class CodeAnalysis {
         while (matcher.find()) {
             String num;
             num = text.substring(matcher.start(), matcher.end());
-//            Main.window.getTableModel().addOperand(num);
-            Main.window.addOperand(num);
+            Main.window.getTableModel().addOperand(num);
+//            Main.window.addOperand(num);
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
@@ -244,8 +244,8 @@ public class CodeAnalysis {
             method = text.substring(matcher.start() + 1, matcher.end());
             String[] methodParts = method.split("\\(");
             System.out.println("Method taken : " + method);
-//            Main.window.getTableModel().addOperand(methodParts[0]);
-            Main.window.addOperand(methodParts[0]);
+            Main.window.getTableModel().addOperand(methodParts[0]);
+//            Main.window.addOperand(methodParts[0]);
             //Main.window.getTableModel().addOperand(methodParts[1]);
 
             if (methodParts.length > 1
@@ -269,8 +269,8 @@ public class CodeAnalysis {
             String method;
             method = text.substring(matcher.start(), matcher.end());
             String[] methodParts = method.split("\\(");
-//            Main.window.getTableModel().addOperand(methodParts[0]);
-            Main.window.addOperand(methodParts[0]);
+            Main.window.getTableModel().addOperand(methodParts[0]);
+            //Main.window.addOperand(methodParts[0]);
             if (methodParts.length > 1
                     && methodParts[1].matches(".*[0-9]{1,}.*")
                     && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {

@@ -30,7 +30,7 @@ public class Main {
         //basicGUI.setVisible(true);
         final CodeAnalysis codeAnalysis = new CodeAnalysis();
         StringOperations stringOperations = new StringOperations();
-         buttonClicked = new ActionListener() {
+        buttonClicked = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
@@ -58,6 +58,8 @@ public class Main {
                     inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: И так нельзя :(
                     inputText = codeAnalysis.getCasters(inputText);
                     System.out.println("NO CASTERS " + inputText);
+
+
                     inputText = codeAnalysis.methodHandler(inputText);
                     System.out.println("NO METHODS " + inputText);
                     inputText = codeAnalysis.simpleMethodHandler(inputText);
@@ -80,13 +82,35 @@ public class Main {
                         });
                     }
                     catch (Exception e){}
+                    /*
+=======
+
+
+//                    inputText = codeAnalysis.methodHandler(inputText);
+//                    System.out.println("NO METHODS " + inputText);
+//                    inputText = codeAnalysis.simpleMethodHandler(inputText);
+//                    System.out.println("NO SIMPLE METHODS " + inputText);
+//                    inputText = codeAnalysis.getRegisteredOperators(inputText);
+//                    System.out.println("NO OPERATORS : " + inputText);
+//                    inputText = codeAnalysis.getOperatorsList(inputText);
+
+//                    codeAnalysis.getClassList(inputText);
+
+
+
+                    codeAnalysis.getClassList(inputText).forEach(class2 -> {System.out.println(class2.name);
+                    codeAnalysis.getMethodList(class2.body).forEach(method2 -> System.out.println("====================================\n"+method2.name+":\n"+method2.body));
+                    });
+>>>>>>> origin/master
+
+                     */
 
 
 
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
 
 
-                 //       codeAnalysis.isCommented(inputText,"new");
+                    //       codeAnalysis.isCommented(inputText,"new");
 
                     //System.out.println(inputText);
                     //String[] linesArray = inputText.split("\n");
@@ -98,7 +122,7 @@ public class Main {
                     //    System.out.println("|" + singleLine + "|");
                     //}
                     //codeAnalysis.operatorsList.forEach(s -> window.getTableModel().addOperator(s));
-                  //  window.getTableModel().fireTableDataChanged();
+                    //  window.getTableModel().fireTableDataChanged();
                     window.getTable1().revalidate();
                     window.getTable1().repaint();
                 }
@@ -109,9 +133,9 @@ public class Main {
 
 
 
-                                                                       //moja guiha
+        //moja guiha
         window = new Form();
-                                                                 //table test
+        //table test
 //        window.getTableModel().addOperator("operator");
 //        window.getTableModel().addOperator("operator");
 //        window.getTableModel().addOperand("operand");
@@ -131,4 +155,5 @@ public class Main {
     //изучиь 3 группы метрик
     //размер сложность упр сложность данных
     //операторы операнцы частоты операторов и операндов общее количетво операторов и операндов
+
 }
