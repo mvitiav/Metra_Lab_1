@@ -19,16 +19,49 @@ public class CodeAnalysis {
         return text;
     }
 
+    public String arrayHandler(String text) {
+        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String)\\b.*\\[\\d*\\]\\s*=\\s*\\{.*};");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String subText = text.substring(matcher.start(), matcher.end());
+            if (subText.indexOf("[") - subText.indexOf("]") > 1){
+                Main.window.getTableModel().addOperand(subText.substring(subText.indexOf("[")+1, subText.indexOf("]")-1));
+            }
+            String array = subText.substring(subText.indexOf("{")+1, subText.lastIndexOf("}")-1);
+            String  arrayElems[] = array.split(",");
+            for (String element : arrayElems){
+                Main.window.getTableModel().addOperand(element.trim());
+            }
+            subText = subText.replaceAll("\\[.*;", "");
+            Main.window.getTableModel().addOperator("=");           //TODO: Оператор?
+            text = text.substring(0, matcher.start()) + subText + ";" + text.substring(matcher.end()-1);
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    /*  Ага, разогнался
+    public String cutNews(String text) {
+        Pattern pattern = Pattern.compile("new.*;");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            text = text.substring(matcher.start(), matcher.end()-1);
+            matcher.reset(text);
+        }
+        return text;
+    }
+     */
+
     public String getRegisteredOperators(String text) {
         Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|void|interface)\\b.+?[{;(),=]");//TODO: Убрал пока class, пока не выясним, чем он является. Если что, потом на костыль повесим или на старое место поставим.
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String operator = text.substring(matcher.start(), matcher.end());
-            operator = operator.substring(operator.indexOf(" "), operator.length() - 1).trim();
+            operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
             Main.window.getTableModel().addOperand(operator);
 //            Main.window.addOperator(operator);//                              todo:менняй как хочешь!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Main.window.addOperand(operator);
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
         return text;
@@ -44,7 +77,7 @@ public class CodeAnalysis {
             matcher.reset(text);
         }
 
-        pattern = Pattern.compile("\"[0-9]+\""); //в составе одной регулярки работало не везде корректно
+        pattern = Pattern.compile("[0-9]+"); //в составе одной регулярки работало не везде корректно
         matcher = pattern.matcher(text);
         while (matcher.find()) {
             String num = text.substring(matcher.start(), matcher.end());
@@ -118,7 +151,7 @@ public class CodeAnalysis {
 //int nameEnd =matcher2.end();
 //            System.err.println(" name = "+text.substring(matcher.start(),matcher.end()).substring(nameBeg,nameEnd));
 
-            //   System.out.println("                                        "+matcher.group(2));
+         //   System.out.println("                                        "+matcher.group(2));
 
 //(?<=\n|\A)(?:public\s)?(class|interface|enum)\s([^\n\s]*)
 
@@ -171,12 +204,18 @@ public class CodeAnalysis {
     }
 
     public String getBrackets(String text) {
-        Pattern pattern = Pattern.compile("[(){}]");
+        Pattern pattern = Pattern.compile("[(]");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
-//            Main.window.addOperator(text.substring(matcher.start(), matcher.end()));
-            //text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
+            Main.window.getTableModel().addOperator("(...)");
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+
+        pattern = Pattern.compile("[{]");
+        matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            Main.window.getTableModel().addOperator("{...}");
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
@@ -260,16 +299,17 @@ public class CodeAnalysis {
         while (matcher.find()) {
             String method;
             method = text.substring(matcher.start() + 1, matcher.end());
+
             String[] methodParts = method.split("\\(");
             System.out.println("Method taken : " + method);
-            if(!Main.disableFormAdding)  Main.window.getTableModel().addOperator(methodParts[0]);
+            Main.window.getTableModel().addOperator(methodParts[0]);
 //            Main.window.addOperand(methodParts[0]);
             //Main.window.getTableModel().addOperand(methodParts[1]);
 
             if (methodParts.length > 1
-                    && methodParts[1].matches(".*[0-9]{1,}.*")
-                    && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
-                System.out.println("Cyclepart : |" + methodParts[1] + "|");
+                && methodParts[1].matches(".*[0-9]{1,}.*")
+                && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
+                //System.out.println("Cyclepart : |" + methodParts[1] + "|");
                 //methodParts[1] = getConstNums(methodParts[1]);
                 getConstNums(methodParts[1]);
             }
@@ -286,21 +326,23 @@ public class CodeAnalysis {
         while (matcher.find()) {
             String method;
             method = text.substring(matcher.start(), matcher.end());
-            String[] methodParts = method.split("\\(");
-        if(!Main.disableFormAdding) Main.window.getTableModel().addOperator(methodParts[0]);
-            if (Main.globalMethodlist.indexOf(new Method2(methodParts[0]))>=0) {
-                Main.globalMethodlist.get(Main.globalMethodlist.indexOf(new Method2(methodParts[0]))).usedCount++;
-                if( Main.globalMethodlist.get(Main.globalMethodlist.indexOf(new Method2(methodParts[0]))).usedCount==1)Main.isReLoopNeeded=true;//kosil no ja zabil
-            }
+            //String[] methodParts = method.split("\\(");
+            //Main.window.getTableModel().addOperator(methodParts[0]);
             //Main.window.addOperand(methodParts[0]);
-            if (methodParts.length > 1
-                    && methodParts[1].matches(".*[0-9]{1,}.*")
-                    && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
-                System.out.println("Cyclepart111 : |" + methodParts[1] + "|");
-                //methodParts[1] = getConstNums(methodParts[1]);
-                getConstNums(methodParts[1]);
+
+            if (text.substring(matcher.start()-10, matcher.end()).indexOf("new") == -1) {//Величайший костыль современности
+                String methodParts[] = method.split("\\(");
+                Main.window.getTableModel().addOperator(methodParts[0]);
+                //Main.window.addOperand(methodParts[0]);
+                if (methodParts.length > 1
+                        && methodParts[1].matches(".*[0-9]{1,}.*")
+                        && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
+                    System.out.println("Cyclepart111 : |" + methodParts[1] + "|");
+                    //methodParts[1] = getConstNums(methodParts[1]);
+                    getConstNums(methodParts[1]);
+                }
             }
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end()-1);
             matcher.reset(text);
         }
         return text;
@@ -310,11 +352,10 @@ public class CodeAnalysis {
         Pattern pattern = Pattern.compile("\\( {0,}\\)");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            Main.window.getTableModel().addOperator("(...)");
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
-        Main.window.getTableModel().addOperator("(");
-        Main.window.getTableModel().addOperator(")");
         return text;
     }
 
@@ -323,7 +364,7 @@ public class CodeAnalysis {
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String expression;
-            expression = text.substring(matcher.start() + 1, matcher.end() - 1);
+            expression = text.substring(matcher.start()+1, matcher.end()-1);
             Pattern subPattern = Pattern.compile("(?!(byte|short|int|long|float|double|char|boolean|String|new)\\b)\\b\\w+");//TODO: .matches() ни в какую не заработал
             Matcher subMatcher = subPattern.matcher(expression);
             String operand;

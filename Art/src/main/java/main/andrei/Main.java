@@ -9,21 +9,18 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
-    final static Boolean TEST_MODE = true;
-    public static ActionListener buttonClicked;
-    public static ArrayList<Method2> globalMethodlist = new ArrayList<>();
-    public static boolean isReLoopNeeded = false;
-    public static boolean disableFormAdding = false;
     static File chosenFile;
     static String inputText;
     static JFileChooser fileChooser;
     static Form window;
+    final static Boolean TEST_MODE=true;
+    public static ActionListener buttonClicked;
+    public static ArrayList<Method2> globalMethodlist = new ArrayList<>();
+    public static  boolean isReLoopNeeded=false;
+    public static boolean disableFormAdding = false;
+    public static void main (String[] args) {
 
-    public static void main(String[] args) {
-
-        while (true) {
-            break;
-        }
+        while (true){break;}
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -42,17 +39,16 @@ public class Main {
 //                fileChooser = new JFileChooser();
 //                int retCode = fileChooser.showDialog(null, "Выбрать файл");
 //                if (retCode == JFileChooser.APPROVE_OPTION) {
-                if (selectFile()) {
-                    if (!TEST_MODE) {
+                if ( selectFile()) {
+                    if(!TEST_MODE) {
 
                         chosenFile = fileChooser.getSelectedFile();
-                    } else {
-                        chosenFile = new File("Art/tests/testFile.java");
-                    }
+                    }else {chosenFile = new File("Art/tests/testFile.java");}
 
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
-                    window.setTitle(window.getTitle() + chosenFile.toString());
+                    window.setTitle(window.getTitle()+ chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
+                    /*
                     //inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: Так нельзя
                     inputText = codeAnalysis.getStrings(inputText);
                     System.out.println("NO STRINGS " + inputText);
@@ -63,7 +59,9 @@ public class Main {
                     inputText = codeAnalysis.cutSingleLineComments(inputText);
                     System.out.println("NO SINGLE-LINE COMMENTS " + inputText);
 
+                     */
 
+//
 //                    inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: И так нельзя :(
 //                    inputText = codeAnalysis.getCasters(inputText);
 //                    inputText = codeAnalysis.getNumericalOperands(inputText);
@@ -83,58 +81,82 @@ public class Main {
 //                    inputText = codeAnalysis.getBrackets(inputText);
 //                    System.out.println("NO OPERATORS : " + inputText);
 //                    inputText = codeAnalysis.flowControlHandler(inputText);
-//                   // codeAnalysis.getClassList(inputText);
+//                    codeAnalysis.getClassList(inputText);
 
                     //todo: перенеси их ниже туда где указано "хуярь"
                     try {
 
                         codeAnalysis.getClassList(inputText).forEach(class2 -> {
                             System.out.println(class2.name);
-                            System.out.println(class2.body);
-                            globalMethodlist.addAll(
-                                    codeAnalysis.getMethodList(class2.body)
-                            );
+                          globalMethodlist.addAll(codeAnalysis.getMethodList(class2.body));
                         });
 
                         System.out.println("======================================================================================");
 
-                        String tempInputText="";
-                        System.out.println(globalMethodlist.get(globalMethodlist.indexOf(new Method2("main"))));
-                        tempInputText=   globalMethodlist.get(  globalMethodlist.indexOf(new Method2("main"))).body;
-                        tempInputText= codeAnalysis.methodHandler(tempInputText);
-                        codeAnalysis.simpleMethodHandler(tempInputText);
+
+                        System.out.println(globalMethodlist.get( globalMethodlist.indexOf(new Method2("main"))));
+                        codeAnalysis.simpleMethodHandler(
+                                globalMethodlist.get
+                                        (
+                                                globalMethodlist.indexOf
+                                                        (new Method2("main"))
+                                        )
+                                        .body);
                         //globalMethodlist.forEach(System.out::println);
 
                         disableFormAdding = true;//todo: коостыль обрубающий твоиим методам запись в форму
-                        while (isReLoopNeeded) {
-                            isReLoopNeeded = false;
-                            for (Method2 method2 : globalMethodlist) {
-
-                                if (method2.usedCount > 0) {
-                                    tempInputText = method2.body;
-                                    tempInputText= codeAnalysis.methodHandler(tempInputText);
-                                    codeAnalysis.simpleMethodHandler(tempInputText);//todo: сюда бы копию твоего метода но без добавления в форму
+                        while(isReLoopNeeded)
+                        {isReLoopNeeded=false;
+                            globalMethodlist.forEach(method2 ->
+                            {
+                                if (method2.usedCount>0)
+                                {
+                                    codeAnalysis.simpleMethodHandler(method2.body);//todo: сюда бы копию твоего метода но без добавления в форму
                                 }
-                            }
+                            });
 
                         }
-                        globalMethodlist.get(  globalMethodlist.indexOf(new Method2("main"))).usedCount++;
                         disableFormAdding = false;
-                        System.out.println("======================================================================================");
-                        System.out.println("======================================================================================");
-                        for (Method2 method2 : globalMethodlist) {
-                            if (method2.usedCount > 0) {
-                                tempInputText = method2.body;
-                                //todo:тут хуярь свои методы
-                                System.out.println(tempInputText);
+                        globalMethodlist.forEach(method2 ->
+                        {//if (method2.usedCount>0){
+                            String tempInputText = method2.body;
+                            //todo:тут хуярь свои методы
+                            inputText = codeAnalysis.getStrings(inputText);
+                            System.out.println("NO STRINGS " + inputText);
+                            inputText = codeAnalysis.cutImports(inputText);
+                            System.out.println("NO IMPORTS " + inputText);
+                            inputText = codeAnalysis.cutMultilineComments(inputText);
+                            System.out.println("NO MULTI-LINE COMMENTS " + inputText);
+                            inputText = codeAnalysis.cutSingleLineComments(inputText);
+                            System.out.println("NO SINGLE-LINE COMMENTS " + inputText);
+                            inputText = codeAnalysis.arrayHandler(inputText);
+                            inputText = codeAnalysis.cutTypedConstants(inputText);
+                            inputText = codeAnalysis.getCasters(inputText);
+                            System.out.println("NO CASTERS " + inputText);
+                            inputText = codeAnalysis.getNumericalOperands(inputText);
+                            inputText = codeAnalysis.methodHandler(inputText);
+                            System.out.println("NO METHODS " + inputText);
+                            inputText = codeAnalysis.simpleMethodHandler(inputText);
+                            System.out.println("NO SIMPLE METHODS " + inputText);
+                            inputText = codeAnalysis.cutEmptyBrackets(inputText);
+                            System.out.println("NO EMPTY BRACKETS " + inputText);
+                            inputText = codeAnalysis.methodHandler(inputText);
+                            inputText = codeAnalysis.simpleMethodHandler(inputText);
 
 
-                            }
-                        }
+                            //inputText = codeAnalysis.cutRoundOperatorBrackets(inputText);
+                            //System.out.println("NO BRACKETS " + inputText);
+                            inputText = codeAnalysis.getRegisteredOperators(inputText);
+                            inputText = codeAnalysis.getOperatorsList(inputText);
+                            inputText = codeAnalysis.getBrackets(inputText);
+                            System.out.println("NO OPERATORS : " + inputText);
+                            inputText = codeAnalysis.flowControlHandler(inputText);
+                           // }
+                        });
 
 
-                    } catch (Exception e) {
                     }
+                    catch (Exception e){}
                     /*
 =======
 
@@ -157,6 +179,7 @@ public class Main {
 >>>>>>> origin/master
 
                      */
+
 
 
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
@@ -184,6 +207,7 @@ public class Main {
         };
 
 
+
         //moja guiha
         window = new Form();
         //table test
@@ -197,12 +221,10 @@ public class Main {
     }
 
     public static boolean selectFile() {
-        if (TEST_MODE) {
-            return true;
-        }
+        if(TEST_MODE){return true;}
         fileChooser = new JFileChooser();
         int retCode = fileChooser.showDialog(null, "Выбрать файл");
-        return (retCode == JFileChooser.APPROVE_OPTION);
+        return  (retCode == JFileChooser.APPROVE_OPTION);
     }
 
     //изучиь 3 группы метрик

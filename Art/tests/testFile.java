@@ -30,6 +30,7 @@ public class Main extends JFrame implements Runnable {
         writeTest(1273);
         char testChar = 'a';
         boolean testBoolean = true;
+        int testArray[] = {1, 2, 3, 5, 6, 7, 8, 9, 10};
         String testString = "testString";
 //new Main("Test");
         new Thread(new Main("Term_1")).start();
@@ -48,23 +49,23 @@ public class Main extends JFrame implements Runnable {
         /*
         final String CONSTANTEXAMPLE2 = "Starry coment";
         */
-        final JTextField t1 = new JTextField(10);
-        final Button b1 = new Button("Se//nd");
-        b1.addActionListener(new ActionListener()) {
+        final JTextField t = new JTextField(10);
+        final Button b = new Button("Se//nd");
+        b.addActionListener(new ActionListener()) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==b1)
+                if(e.getSource()==b)
                 {
                     try {
-                        sendObj(t1.getText());
-                    } catch (IOException e1) {
+                        sendObj(t.getText());
+                    } catch (IOException e) {
                         e1.printStackTrace();
                     }
                 };
             }
-        });
-        add(t1);
-        add(b1);
+        };
+        add(t);
+        add(b);
     }
 
     if (true) {
@@ -99,7 +100,7 @@ public class Main extends JFrame implements Runnable {
         output.writebject(objject);
         ///
         Files.write(Paths.get(chosenFile.toString().substring(0, chosenFile.toString().lastIndexOf(".")) + "[CPH]" + ".txt"), fileContent);
-        newChar = currentAlphabet.charAt(textCharShift + keyCharShift + mode * currentAlphabet.length()) % currentAlphabet.length());
+        newChar = currentAlphabet.charAt(textCharShift + keyCharShift + mode * currentAlphabet.length()) % currentAlphabet.length();
         ///
     }
 }
