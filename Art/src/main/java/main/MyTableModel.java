@@ -126,6 +126,7 @@ public class MyTableModel implements TableModel {
 
     public void addOperator(String operator) {
         Form.operatorsCount++;
+
         Main.window.getoPRL().setText(String.valueOf(Form.operatorsCount));
         Main.window.getuOPRL().setText(String.valueOf(hashMap1.size()));
 
@@ -143,8 +144,14 @@ public class MyTableModel implements TableModel {
 
     public void addOperand(String operand) {
         Form.operandsCount++;
+
+        Main.window.getoPNDL().setText(String.valueOf(Form.operandsCount));
+        Main.window.getuOPNDL().setText(String.valueOf(hashMap2.size()));
+
+        Main.window.getpDL().setText(String.valueOf(hashMap1.size()+hashMap2.size()));
         Main.window.getpLL().setText(String.valueOf(Form.operatorsCount+Form.operandsCount));
         Main.window.getpVL().setText(String.valueOf(   (int)   ( (Form.operatorsCount+Form.operandsCount) * (Math.log(hashMap1.size()+hashMap2.size()) / Math.log(2)) )    ));
+
 
         Main.window.getpDL().setText(String.valueOf(hashMap1.size()+hashMap2.size()));
         if (!hashMap2.containsKey(operand)) {
