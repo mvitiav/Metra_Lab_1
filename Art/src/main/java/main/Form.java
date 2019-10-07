@@ -75,7 +75,7 @@ public class Form extends JFrame{
 //        table1.setAutoCreateRowSorter(true);
         System.out.println("test");
 
-        TableRowSorter<TableModel> sorter1 = new TableRowSorter<>(table1.getModel());
+  //     TableRowSorter<TableModel> sorter1 = new TableRowSorter<>(table1.getModel());
 
 //        sorter1.setComparator(0, new Comparator<Integer>() {
 //            @Override
@@ -84,8 +84,8 @@ public class Form extends JFrame{
 //            }
 //        });
 
-        sorter1.setSortsOnUpdates(true);
-        table1.setRowSorter(sorter1);
+     //   sorter1.setSortsOnUpdates(true);
+   //     table1.setRowSorter(sorter1);
 
 //        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 ////        sortKeys.add(new RowSorter.SortKey(4, SortOrder.ASCENDING));
@@ -110,7 +110,7 @@ public class Form extends JFrame{
 
 //        chooseFileButton.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent e) {
-//                System.out.println("Какой-то пидор жмякнул кнопку накинь сюда вызов своего файлчузера!!!!");//TODO:сюда вызов своего файлчузера!!!!
+//                System.out.println("Какой-то нехороший человек жмякнул кнопку накинь сюда вызов своего файлчузера!!!!");//уэже не надо сюда вызов своего файлчузера!!!!
 //            }
 //        });
         chooseFileButton.addActionListener(buttonClicked);

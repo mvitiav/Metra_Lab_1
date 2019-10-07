@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
-    final static Boolean TEST_MODE = true;
+    final static Boolean TEST_MODE = false;
     public static Form window;
     public static ActionListener buttonClicked;
     public static ArrayList<Method2> globalMethodlist = new ArrayList<>();
@@ -30,7 +30,6 @@ public class Main {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
         }
         //Это шоб мимикрировать под тему оси
-
         BasicGUI basicGUI = new BasicGUI();
         //basicGUI.setVisible(true);
         final CodeAnalysis codeAnalysis = new CodeAnalysis();
@@ -49,17 +48,15 @@ public class Main {
 //                if (retCode == JFileChooser.APPROVE_OPTION) {
                 if (selectFile()) {
                     if (!TEST_MODE) {
-
                         chosenFile = fileChooser.getSelectedFile();
                     } else {
                         chosenFile = new File("Art/tests/testFile.java");
                     }
-
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
                     window.setTitle(window.getTitle() + chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     /*
-                    //inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: Так нельзя
+                    //inputText = codeAnalysis.cutTypedConstants(inputText);//тутатожебылотуду: Так нельзя
                     inputText = codeAnalysis.getStrings(inputText);
                     System.out.println("NO STRINGS " + inputText);
                     inputText = codeAnalysis.cutImports(inputText);
@@ -68,11 +65,9 @@ public class Main {
                     System.out.println("NO MULTI-LINE COMMENTS " + inputText);
                     inputText = codeAnalysis.cutSingleLineComments(inputText);
                     System.out.println("NO SINGLE-LINE COMMENTS " + inputText);
-
                      */
-
 //
-//                    inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: И так нельзя :(
+//                    inputText = codeAnalysis.cutTypedConstants(inputText);//тута была туду: И так нельзя :(
 //                    inputText = codeAnalysis.getCasters(inputText);
 //                    inputText = codeAnalysis.getNumericalOperands(inputText);
 //                    System.out.println("NO CASTERS " + inputText);
@@ -93,7 +88,7 @@ public class Main {
 //                    inputText = codeAnalysis.flowControlHandler(inputText);
 //                    codeAnalysis.getClassList(inputText);
 
-                    //todo: перенеси их ниже туда где указано "хуярь"
+
                     try {
 
                         codeAnalysis.getClassList(inputText).forEach(class2 -> {
@@ -114,13 +109,13 @@ public class Main {
                                         .body);
                         //globalMethodlist.forEach(System.out::println);
 
-                        disableFormAdding = true;//todo: коостыль обрубающий твоиим методам запись в форму
+                        disableFormAdding = true;//!!! коостыль обрубающий твоиим методам запись в форму !удалишь - все полетит
                         while (isReLoopNeeded) {
                             isReLoopNeeded = false;
                             globalMethodlist.forEach(method2 ->
                             {
                                 if (method2.usedCount > 0) {
-                                    codeAnalysis.simpleMethodHandler(method2.body);//todo: сюда бы копию твоего метода но без добавления в форму
+                                    codeAnalysis.simpleMethodHandler(method2.body);// сюда бы копию твоего метода но без добавления в форму (уже не надо)
                                 }
                             });
 
@@ -129,7 +124,7 @@ public class Main {
                         globalMethodlist.forEach(method2 ->
                         {//if (method2.usedCount>0){
                             String tempInputText = method2.body;
-                            //todo:тут хуярь свои методы
+                            //тут имплементируй свои методы //(терь культурно )))
                             inputText = codeAnalysis.getStrings(inputText);
                             System.out.println("NO STRINGS " + inputText);
                             inputText = codeAnalysis.cutImports(inputText);

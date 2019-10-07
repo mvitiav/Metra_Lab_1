@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CodeAnalysis {
-    public String getStrings(String text) {//TODO: char здесь же забираем
+    public String getStrings(String text) {// char здесь же забираем
         Pattern pattern = Pattern.compile("['|\"].+?['|\"]");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
@@ -13,7 +13,7 @@ public class CodeAnalysis {
                 Main.window.getTableModel().addOperand(text.substring(matcher.start(), matcher.end()));
 //                Main.window.addOperand(text.substring(matcher.start(), matcher.end()));
             }
-            text = text.substring(0, matcher.start()) + " " + text.substring(matcher.end());  //TODO:                          ...+"aaa"+...
+            text = text.substring(0, matcher.start()) + " " + text.substring(matcher.end());  //                          ...+"aaa"+...
             matcher.reset(text);                                                              // Этот кусок превратится в '++'    ^^^^^^
         }                                                                                     // Если ничего не втыкать
         return text;
@@ -34,7 +34,7 @@ public class CodeAnalysis {
                 Main.window.getTableModel().addOperand(element.trim());
             }
             subText = subText.replaceAll("\\[.*;", "");
-            Main.window.getTableModel().addOperator("=");           //TODO: Оператор?
+            Main.window.getTableModel().addOperator("=");           //TODO: Оператор? - ХЗ
             text = text.substring(0, matcher.start()) + subText + ";" + text.substring(matcher.end()-1);
             matcher.reset(text);
         }
@@ -54,13 +54,13 @@ public class CodeAnalysis {
      */
 
     public String getRegisteredOperators(String text) {
-        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|void|interface)\\b.+?[{;(),=]");//TODO: Убрал пока class, пока не выясним, чем он является. Если что, потом на костыль повесим или на старое место поставим.
+        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|void|interface)\\b.+?[{;(),=]");//TODO: Убрал пока class, пока не выясним, чем он является. Если что, потом на костыль повесим или на старое место поставим. - ОК!
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String operator = text.substring(matcher.start(), matcher.end());
             operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
             Main.window.getTableModel().addOperand(operator);
-//            Main.window.addOperator(operator);//                              todo:менняй как хочешь!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//            Main.window.addOperator(operator);//                             // менняй как хочешь!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Main.window.addOperand(operator);
             text = text.substring(0,matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
@@ -156,7 +156,7 @@ public class CodeAnalysis {
 
 //(?<=\n|\A)(?:public\s)?(class|interface|enum)\s([^\n\s]*)
 
-            //todo: ДА-ДА, не удивляйтессь!!! (костыли страшные но если не так то названиями по типу class MainClass можно наебнуть)
+            // ДА-ДА, не удивляйтессь!!! (костыли страшные но если не так то названиями по типу class MainClass можно наебнуть)
 //\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)
 //\{(?:[^}{]+|\{(?:[^}{]+|\{[^}{]*\})*\})*\}
 
@@ -349,7 +349,7 @@ public class CodeAnalysis {
         return text;
     }
 
-    public String cutEmptyBrackets(String text) {               //TODO: Простите, не бейте.
+    public String cutEmptyBrackets(String text) {               // Простите, не бейте.
         Pattern pattern = Pattern.compile("\\( {0,}\\)");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
@@ -360,13 +360,13 @@ public class CodeAnalysis {
         return text;
     }
 
-    public String cutRoundOperatorBrackets(String text) {                           //TODO: Ну да, костылища. А кому сейчас легко?
+    public String cutRoundOperatorBrackets(String text) {                           // Ну да, костылища. А кому сейчас легко?
         Pattern pattern = Pattern.compile("\\([a-zA-Z0-9| |/|*|\\-|+]{1,}\\)");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String expression;
             expression = text.substring(matcher.start()+1, matcher.end()-1);
-            Pattern subPattern = Pattern.compile("(?!(byte|short|int|long|float|double|char|boolean|String|new)\\b)\\b\\w+");//TODO: .matches() ни в какую не заработал
+            Pattern subPattern = Pattern.compile("(?!(byte|short|int|long|float|double|char|boolean|String|new)\\b)\\b\\w+");//.matches() ни в какую не заработал
             Matcher subMatcher = subPattern.matcher(expression);
             String operand;
             while (subMatcher.find()) {
@@ -482,7 +482,7 @@ public class CodeAnalysis {
 //      while (matcher.find()){
 //          System.out.println(text.substring(matcher.start(),matcher.end()));
 //      }
-        for (String s : text.split("\n")) { //TODO:если починишь ^ то можно без этого костыля
+        for (String s : text.split("\n")) { //если починишь ^ то можно без этого костыля
             matcher.reset(s);
             if (matcher.matches()) {
                 return true;
