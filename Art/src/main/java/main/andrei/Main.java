@@ -36,8 +36,10 @@ public class Main {
         final CodeAnalysis codeAnalysis = new CodeAnalysis();
         StringOperations stringOperations = new StringOperations();
         buttonClicked = new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                Main.window.getTableModel().recreate();
                 Form.operandsCount = 0;
                 Form.operatorsCount = 0;
                 Form.uniqueOperandsCount = 0;

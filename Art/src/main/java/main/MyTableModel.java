@@ -51,6 +51,9 @@ public class MyTableModel implements TableModel {
         return s;
     }
 
+    public void recreate(){hashMap1 = new LinkedHashMap();
+        hashMap2 = new LinkedHashMap();}
+
     public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex != 1 && columnIndex != 3) {
             return Integer.class;
