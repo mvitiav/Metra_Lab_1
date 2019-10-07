@@ -29,6 +29,7 @@ public class Main extends JFrame implements Runnable {
         double testDouble = 90.10;
         writeTest(1273);
         char testChar = 'a';
+        int neeeewwwwwiiiinnnnttt = 1010;
         boolean testBoolean = true;
         int testArray[] = {1, 2, 3, 5, 6, 7, 8, 9, 10};
         String testString = "testString";
