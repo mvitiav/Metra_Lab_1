@@ -413,11 +413,10 @@ public class CodeAnalysis {
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
-
+/*
         pattern = Pattern.compile("for\\s*\\(.*\\)");
         matcher = pattern.matcher(text);
         while (matcher.find()) {
-            Main.window.getTableModel().addOperator("for");
             String line = text.substring(matcher.start(), matcher.end());
             String brackets = line.substring(line.indexOf("(")+1, line.indexOf(")"));
             String bracketsParts[] = brackets.split(";");
@@ -427,8 +426,9 @@ public class CodeAnalysis {
                 Main.window.getTableModel().addOperator(part);
             }
         }
+ */
 
-        pattern = Pattern.compile("if|while|switch|break|continue");
+        pattern = Pattern.compile("if|while|switch|break|continue|for");
         matcher = pattern.matcher(text);
         while (matcher.find()) {
             Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
