@@ -24,9 +24,10 @@ public class CodeAnalysis {
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String subText = text.substring(matcher.start(), matcher.end());
-            if (subText.indexOf("[") - subText.indexOf("]") > 1){
-                Main.window.getTableModel().addOperand(subText.substring(subText.indexOf("[")+1, subText.indexOf("]")-1));
+            if (subText.indexOf("]") - subText.indexOf("[") > 1){
+                Main.window.getTableModel().addOperand(subText.substring(subText.indexOf("[")+1, subText.indexOf("]")));
             }
+            Main.window.getTableModel().addOperator("[...]");
             String array = subText.substring(subText.indexOf("{")+1, subText.lastIndexOf("}")-1);
             String  arrayElems[] = array.split(",");
             for (String element : arrayElems){
@@ -195,7 +196,7 @@ public class CodeAnalysis {
         Pattern pattern = Pattern.compile(";|>>>=|>>=|<<=|%=|\\^=|&=|\\|=|&=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|\\*|\\+\\+|--|\\+|-|\\||&|!=|>=|<=|==|:|\\?|~|!|>|>|= ");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));
+            Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()).trim());
             //text = text.substring(0,matcher.start()-1)+text.substring(matcher.end()+1);
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
