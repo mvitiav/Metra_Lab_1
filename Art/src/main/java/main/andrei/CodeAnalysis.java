@@ -414,7 +414,20 @@ public class CodeAnalysis {
             matcher.reset(text);
         }
 
-        pattern = Pattern.compile("if|while|for|switch|break|continue");
+        pattern = Pattern.compile("for\\s*\\(.*\\)");
+        matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String line = text.substring(matcher.start(), matcher.end());
+            String brackets = line.substring(line.indexOf("(")+1, line.indexOf(")"));
+            String bracketsParts[] = brackets.split(";");
+            for (String part : bracketsParts){
+                part = getOperatorsList(part);
+                part = part.trim();
+                Main.window.getTableModel().addOperator(part);
+            }
+        }
+
+        pattern = Pattern.compile("if|while|switch|break|continue");
         matcher = pattern.matcher(text);
         while (matcher.find()) {
             Main.window.getTableModel().addOperator(text.substring(matcher.start(), matcher.end()));

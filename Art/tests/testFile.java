@@ -31,7 +31,7 @@ public class Main extends JFrame implements Runnable {
         char testChar = 'a';
         int neeeewwwwwiiiinnnnttt = 1010;
         boolean testBoolean = true;
-        int testArray[111] = {1, 2, 3, 5, 6, 7, 8, 9, 10};
+        int testArray[] = {1, 2, 3, 5, 6, 7, 8, 9, 10};
         String testString = "testString";
 //new Main("Test");
         new Thread(new Main("Term_1")).start();
