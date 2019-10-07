@@ -27,6 +27,7 @@ public class Main extends JFrame implements Runnable {
         long testLong = 60;
         float testFloat = 70.80;
         double testDouble = 90.10;
+        writeTest(1273);
         char testChar = 'a';
         boolean testBoolean = true;
         String testString = "testString";
@@ -65,18 +66,20 @@ public class Main extends JFrame implements Runnable {
         add(t1);
         add(b1);
     }
+
     if (true) {
         j--;
     }
     else {
         i++;
     }
+
     @Override
     public void run() {
         try  {
             while (true){
 //                Socket socket = connectiuon = new Socket(InetAddress.getByName("127.0.0.1"), 5678);
-                Socket socket = connectiuon = new Socket(InetAddress.getByName("192.168.1.14"), 5678);
+                Socket socket = connectiuon = new Socket1(InetAddress.getByName("192.168.1.14"), 5678);
                 output = new ObjectOutputStream(connectiuon.getOutputStream());
                 input = new ObjectInputStream(connectiuon.getInputStream());
                 JOptionPane.showMessageDialog(null,(  String)input.readObject());
@@ -113,5 +116,6 @@ class tempcl2
 {
     public static void writeTest(int count=5){for(count=count;count>0;count--){
         System.out.println(count+")"+"Test");
+        writeTest();
     }}
 }

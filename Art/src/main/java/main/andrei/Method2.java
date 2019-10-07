@@ -18,12 +18,23 @@ public class Method2 {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Method2 method2 = (Method2) o;
-        return Objects.equals(name, method2.name) &&
-                Objects.equals(interFace, method2.interFace);
+        return Objects.equals(name, method2.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, interFace);
+        return Objects.hash(name);
+    }
+
+    public Method2(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Method2{" +
+                "name='" + name + '\'' +
+                ", usedCount=" + usedCount +
+                '}';
     }
 }
