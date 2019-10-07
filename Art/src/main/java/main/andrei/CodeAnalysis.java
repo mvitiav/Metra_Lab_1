@@ -417,6 +417,7 @@ public class CodeAnalysis {
         pattern = Pattern.compile("for\\s*\\(.*\\)");
         matcher = pattern.matcher(text);
         while (matcher.find()) {
+            Main.window.getTableModel().addOperator("for");
             String line = text.substring(matcher.start(), matcher.end());
             String brackets = line.substring(line.indexOf("(")+1, line.indexOf(")"));
             String bracketsParts[] = brackets.split(";");
