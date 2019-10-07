@@ -1,13 +1,12 @@
 package main.andrei;
 
-import java.time.chrono.JapaneseEra;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CodeAnalysis {
-    public String getStrings(String text) {
-        Pattern pattern = Pattern.compile("\".+?\"");
+    public String getStrings(String text) {//TODO: char здесь же забираем
+        Pattern pattern = Pattern.compile("['|\"].+?['|\"]");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             if (!isCommented(text, matcher.start(), matcher.end())) {
@@ -35,6 +34,26 @@ public class CodeAnalysis {
         return text;
     }
 
+    public String getNumericalOperands(String text) {
+        Pattern pattern = Pattern.compile("([0-9]+[.]{1,}[0-9]+)");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String num = text.substring(matcher.start(), matcher.end());
+            Main.window.getTableModel().addOperand(num);
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+
+        pattern = Pattern.compile("\"[0-9]+\""); //в составе одной регулярки работало не везде корректно
+        matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String num = text.substring(matcher.start(), matcher.end());
+            Main.window.getTableModel().addOperand(num);
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
 
     public ArrayList<Method2> getMethodList(String text)
     {ArrayList<Method2> list = new ArrayList<>();

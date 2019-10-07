@@ -21,15 +21,22 @@ public class Main extends JFrame implements Runnable {
     private static ObjectOutputStream output;
 
     public static void main(String[] args){
-
+        byte testByte = 30;
+        short testShort = 40;
+        int testInt = 50;
+        long testLong = 60;
+        float testFloat = 70.80;
+        double testDouble = 90.10;
+        char testChar = 'a';
+        boolean testBoolean = true;
+        String testString = "testString";
 //new Main("Test");
         new Thread(new Main("Term_1")).start();
         new Thread(new Server()).start();
-
     }
-    int i;
     public Main(String name) throws HeadlessException {
         super(name);
+         String s = "Hello, world!";
         setLayout(new FlowLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);

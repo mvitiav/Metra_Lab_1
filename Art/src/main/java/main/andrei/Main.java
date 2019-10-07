@@ -57,9 +57,8 @@ public class Main {
                     System.out.println("NO SINGLE-LINE COMMENTS " + inputText);
                     inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: И так нельзя :(
                     inputText = codeAnalysis.getCasters(inputText);
+                    inputText = codeAnalysis.getNumericalOperands(inputText);
                     System.out.println("NO CASTERS " + inputText);
-
-
                     inputText = codeAnalysis.methodHandler(inputText);
                     System.out.println("NO METHODS " + inputText);
                     inputText = codeAnalysis.simpleMethodHandler(inputText);
