@@ -73,14 +73,14 @@ public class CodeAnalysis {
 
             while (index < text.length() && (index = text.indexOf('}', index)) >= 0) {
                 // counter++;
-                begs++;
+                begs++;//(ends)
                 index++; //length of '{'\'}'
                 if (StringOperations.countHits(text.substring(bodyBegPos - 1, index), "{") == begs) {
                     break;
                 }
             }
 
-            list.add(new Method2(text.substring(bodyBegPos + 1, index - 1), matcher.group(2)));
+            list.add(new Method2(text.substring(bodyBegPos, index - 1), matcher.group(2)));
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
