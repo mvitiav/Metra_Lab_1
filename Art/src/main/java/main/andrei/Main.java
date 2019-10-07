@@ -9,18 +9,21 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
+    final static Boolean TEST_MODE = true;
+    public static Form window;
+    public static ActionListener buttonClicked;
+    public static ArrayList<Method2> globalMethodlist = new ArrayList<>();
+    public static boolean isReLoopNeeded = false;
+    public static boolean disableFormAdding = false;
     static File chosenFile;
     static String inputText;
     static JFileChooser fileChooser;
-    static Form window;
-    final static Boolean TEST_MODE=true;
-    public static ActionListener buttonClicked;
-    public static ArrayList<Method2> globalMethodlist = new ArrayList<>();
-    public static  boolean isReLoopNeeded=false;
-    public static boolean disableFormAdding = false;
-    public static void main (String[] args) {
 
-        while (true){break;}
+    public static void main(String[] args) {
+
+        while (true) {
+            break;
+        }
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -35,18 +38,23 @@ public class Main {
         buttonClicked = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                Form.operandsCount = 0;
+                Form.operatorsCount = 0;
+                Form.uniqueOperandsCount = 0;
+                Form.uniqueOperandsCount = 0;
 //                fileChooser = new JFileChooser();
 //                int retCode = fileChooser.showDialog(null, "Выбрать файл");
 //                if (retCode == JFileChooser.APPROVE_OPTION) {
-                if ( selectFile()) {
-                    if(!TEST_MODE) {
+                if (selectFile()) {
+                    if (!TEST_MODE) {
 
                         chosenFile = fileChooser.getSelectedFile();
-                    }else {chosenFile = new File("Art/tests/testFile.java");}
+                    } else {
+                        chosenFile = new File("Art/tests/testFile.java");
+                    }
 
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
-                    window.setTitle(window.getTitle()+ chosenFile.toString());
+                    window.setTitle(window.getTitle() + chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     /*
                     //inputText = codeAnalysis.cutTypedConstants(inputText);//TODO: Так нельзя
@@ -88,13 +96,13 @@ public class Main {
 
                         codeAnalysis.getClassList(inputText).forEach(class2 -> {
                             System.out.println(class2.name);
-                          globalMethodlist.addAll(codeAnalysis.getMethodList(class2.body));
+                            globalMethodlist.addAll(codeAnalysis.getMethodList(class2.body));
                         });
 
                         System.out.println("======================================================================================");
 
 
-                        System.out.println(globalMethodlist.get( globalMethodlist.indexOf(new Method2("main"))));
+                        System.out.println(globalMethodlist.get(globalMethodlist.indexOf(new Method2("main"))));
                         codeAnalysis.simpleMethodHandler(
                                 globalMethodlist.get
                                         (
@@ -105,12 +113,11 @@ public class Main {
                         //globalMethodlist.forEach(System.out::println);
 
                         disableFormAdding = true;//todo: коостыль обрубающий твоиим методам запись в форму
-                        while(isReLoopNeeded)
-                        {isReLoopNeeded=false;
+                        while (isReLoopNeeded) {
+                            isReLoopNeeded = false;
                             globalMethodlist.forEach(method2 ->
                             {
-                                if (method2.usedCount>0)
-                                {
+                                if (method2.usedCount > 0) {
                                     codeAnalysis.simpleMethodHandler(method2.body);//todo: сюда бы копию твоего метода но без добавления в форму
                                 }
                             });
@@ -151,12 +158,12 @@ public class Main {
                             inputText = codeAnalysis.getBrackets(inputText);
                             System.out.println("NO OPERATORS : " + inputText);
                             inputText = codeAnalysis.flowControlHandler(inputText);
-                           // }
+                            // }
                         });
 
 
+                    } catch (Exception e) {
                     }
-                    catch (Exception e){}
                     /*
 =======
 
@@ -179,7 +186,6 @@ public class Main {
 >>>>>>> origin/master
 
                      */
-
 
 
 //                    codeAnalysis.isCommented(inputText, "Main(\"Test\")");
@@ -207,7 +213,6 @@ public class Main {
         };
 
 
-
         //moja guiha
         window = new Form();
         //table test
@@ -221,10 +226,12 @@ public class Main {
     }
 
     public static boolean selectFile() {
-        if(TEST_MODE){return true;}
+        if (TEST_MODE) {
+            return true;
+        }
         fileChooser = new JFileChooser();
         int retCode = fileChooser.showDialog(null, "Выбрать файл");
-        return  (retCode == JFileChooser.APPROVE_OPTION);
+        return (retCode == JFileChooser.APPROVE_OPTION);
     }
 
     //изучиь 3 группы метрик

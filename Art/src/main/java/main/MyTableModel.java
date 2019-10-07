@@ -1,8 +1,11 @@
 package main;
 
+import main.andrei.Main;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.LinkedHashMap;
+
 
 public class MyTableModel implements TableModel {
     //public class MyTableModel extends AbstractTableModel {  //думал будет проще но придется ебаться с OBSом тк надо автообновление мутить
@@ -119,6 +122,16 @@ public class MyTableModel implements TableModel {
     }
 
     public void addOperator(String operator) {
+        Form.operatorsCount++;
+        Main.window.getoPRL().setText(String.valueOf(Form.operatorsCount));
+        Main.window.getuOPRL().setText(String.valueOf(hashMap1.size()));
+
+        Main.window.getpDL().setText(String.valueOf(hashMap1.size()+hashMap2.size()));
+        Main.window.getpLL().setText(String.valueOf(Form.operatorsCount+Form.operandsCount));
+        Main.window.getpVL().setText(String.valueOf(   (int)   ( (Form.operatorsCount+Form.operandsCount) * (Math.log(hashMap1.size()+hashMap2.size()) / Math.log(2)) )    ));
+
+
+
         if (!hashMap1.containsKey(operator)) {
             hashMap1.put(operator, 0);
         }
@@ -126,6 +139,11 @@ public class MyTableModel implements TableModel {
     }
 
     public void addOperand(String operand) {
+        Form.operandsCount++;
+        Main.window.getpLL().setText(String.valueOf(Form.operatorsCount+Form.operandsCount));
+        Main.window.getpVL().setText(String.valueOf(   (int)   ( (Form.operatorsCount+Form.operandsCount) * (Math.log(hashMap1.size()+hashMap2.size()) / Math.log(2)) )    ));
+
+        Main.window.getpDL().setText(String.valueOf(hashMap1.size()+hashMap2.size()));
         if (!hashMap2.containsKey(operand)) {
             hashMap2.put(operand, 0);
         }

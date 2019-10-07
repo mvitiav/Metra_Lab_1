@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.*;
-public class Main {
+public class Main2 {
     public static String file;
     public static void main(String[] args) {
         //TODO: \b(String|int|char|boolean|void|class)\b.+?[{;(),=]    <- тут слов в скобки еще добавить надо

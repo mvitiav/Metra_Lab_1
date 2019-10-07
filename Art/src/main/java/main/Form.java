@@ -1,27 +1,34 @@
 package main;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.util.Comparator;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentAdapter;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static main.andrei.Main.buttonClicked;
 
 public class Form extends JFrame{
+
+    public static int operandsCount=0;
+    public static int operatorsCount =0;
+    public static int uniqueOperandsCount=0;
+    public static int uniqueOperatorsCount =0;
 
     private JButton chooseFileButton;
     private JTable table1;
     private JPanel panel1;
     private JLabel Operators;
     private JPanel InfoPanel;
+    private JLabel uOPRL;
+    private JLabel uOPNDL;
+    private JLabel oPRL;
+    private JLabel oPNDL;
+    private JLabel pDL;
+    private JLabel pLL;
+    private JLabel pVL;
     private MyTableModel tableModel=null;
 
     public MyTableModel getTableModel() {
@@ -32,7 +39,36 @@ public class Form extends JFrame{
         return table1;
     }
 
+    public JLabel getuOPRL() {
+        return uOPRL;
+    }
+
+    public JLabel getpDL() {
+        return pDL;
+    }
+
+    public JLabel getpLL() {
+        return pLL;
+    }
+
+    public JLabel getpVL() {
+        return pVL;
+    }
+
+    public JLabel getuOPNDL() {
+        return uOPNDL;
+    }
+
+    public JLabel getoPRL() {
+        return oPRL;
+    }
+
+    public JLabel getoPNDL() {
+        return oPNDL;
+    }
+
     public Form() {
+
         tableModel=new MyTableModel();
         table1.setModel(tableModel);
 
@@ -87,6 +123,7 @@ public class Form extends JFrame{
 
     public void addOperator(String operator)
     {
+
         tableModel.addOperator(operator);
         table1.revalidate();
         table1.repaint();
@@ -96,6 +133,7 @@ public class Form extends JFrame{
 
     public void addOperand(String operand)
     {
+      //  operandsCount++;
         tableModel.addOperand(operand);
         table1.revalidate();
         table1.repaint();
