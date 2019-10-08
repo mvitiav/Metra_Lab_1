@@ -54,8 +54,23 @@ public class CodeAnalysis {
     }
      */
 
+    public String getInitialisedVoids(String text){
+        Pattern pattern = Pattern.compile("\\b(void|interface)\\b.+?[{;(),=]");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            String operator = text.substring(matcher.start(), matcher.end());
+            operator = operator.substring(operator.indexOf(" "), operator.length()-1).trim();
+            Main.window.getTableModel().addOperator(operator);
+//            Main.window.addOperator(operator);//                             // менняй как хочешь!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//            Main.window.addOperand(operator);
+            text = text.substring(0,matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
     public String getRegisteredOperators(String text) {
-        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|void|interface)\\b.+?[{;(),=]");//TODO: Убрал пока class, пока не выясним, чем он является. Если что, потом на костыль повесим или на старое место поставим. - ОК!
+        Pattern pattern = Pattern.compile("\\b(byte|short|int|long|float|double|char|boolean|String|void|interface)\\b.+?[{;(),=]");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String operator = text.substring(matcher.start(), matcher.end());
@@ -428,6 +443,14 @@ public class CodeAnalysis {
         matcher = pattern.matcher(text);
         while (matcher.find()) {
             Main.window.getTableModel().addOperator("do..while");
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+
+        pattern = Pattern.compile("(try).*[\\S\\s]*(catch)");
+        matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            Main.window.getTableModel().addOperator("try..catch");
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
             matcher.reset(text);
         }
