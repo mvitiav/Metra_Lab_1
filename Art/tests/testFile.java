@@ -25,10 +25,9 @@ public class Main extends JFrame implements Runnable {
         short testShort = 40;
         int testInt = 50;
         long testLong = 60;
-        testInt = (int)( Math.log(testInt)/Math.log(2));
+        testInt = (int)( Math.log ( testInt2 ) / Math.log ( 7788 ) );
         float testFloat = 70.80;
         double testDouble = 90.10;
-        writeTest(1273);
         char testChar = 'a';
         int neeeewwwwwiiiinnnnttt = 1010;
         boolean testBoolean = true;
@@ -37,7 +36,7 @@ public class Main extends JFrame implements Runnable {
 //new Main("Test");
         new Thread(new Main("Term_1")).run();
         new Thread(new Server()).run(69); //.start, but by hands and without new thread
-
+        writeTest();
 
 
         try {
@@ -130,5 +129,6 @@ class tempcl2
     public static void writeTest(int count=5){for(count=count;count>0;count--){
         System.out.println(count+")"+"Test");
         writeTest();
+        writeTest(1273);
     }}
 }

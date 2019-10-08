@@ -28,7 +28,8 @@ public class CodeAnalysis {
                 Main.window.getTableModel().addOperand(subText.substring(subText.indexOf("[")+1, subText.indexOf("]")));
             }
             Main.window.getTableModel().addOperator("[...]");
-            String array = subText.substring(subText.indexOf("{")+1, subText.lastIndexOf("}")-1);
+            String array = subText.substring(subText.indexOf("{")+1, subText.lastIndexOf("}"));
+//            String array = subText.substring(subText.indexOf("{")+1, subText.lastIndexOf("}")-1);
             String  arrayElems[] = array.split(",");
             for (String element : arrayElems){
                 Main.window.getTableModel().addOperand(element.trim());
@@ -78,12 +79,16 @@ public class CodeAnalysis {
             matcher.reset(text);
         }
 
-        pattern = Pattern.compile("[0-9]+"); //в составе одной регулярки работало не везде корректно
+//        pattern = Pattern.compile("[0-9]+"); //в составе одной регулярки работало не везде корректно
+//        pattern = Pattern.compile("[^\\w](\\d+)"); //в составе одной регулярки работало не везде корректно todo:из-за этой хуеты че-то ломалось!
+        pattern = Pattern.compile("([\\w]??)(\\d+)"); //в составе одной регулярки работало не везде корректно todo:из-за этой хуеты че-то ломалось!
         matcher = pattern.matcher(text);
         while (matcher.find()) {
-            String num = text.substring(matcher.start(), matcher.end());
-            Main.window.getTableModel().addOperand(num);
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+//            String num = text.substring(matcher.start(), matcher.end());
+            String num = (matcher.group(2));
+          if(matcher.group(1).length()==0)  Main.window.getTableModel().addOperand(num);
+//            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            text = text.substring(0, matcher.start()+matcher.group(1).length()) + text.substring(matcher.end());
             matcher.reset(text);
         }
         return text;
@@ -310,7 +315,7 @@ public class CodeAnalysis {
 //            Main.window.addOperand(methodParts[0]);
             //Main.window.getTableModel().addOperand(methodParts[1]);
 
-            if (methodParts.length > 1
+            if(!Main.disableFormAdding)    if (methodParts.length > 1
                 && methodParts[1].matches(".*[0-9]{1,}.*")
                 && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
                 //System.out.println("Cyclepart : |" + methodParts[1] + "|");
@@ -348,7 +353,7 @@ public class CodeAnalysis {
 
 
                 //Main.window.addOperand(methodParts[0]);
-                if (methodParts.length > 1
+                if(!Main.disableFormAdding)    if (methodParts.length > 1
                         && methodParts[1].matches(".*[0-9]{1,}.*")
                         && !methodParts[1].matches("\\b(byte|short|int|long|float|double|char|boolean|String)\\b")) {
                     System.out.println("Cyclepart111 : |" + methodParts[1] + "|");

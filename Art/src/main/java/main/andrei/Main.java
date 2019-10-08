@@ -156,8 +156,8 @@ public class Main {
                             System.out.println("NO SIMPLE METHODS " + tempInputText);
                             tempInputText = codeAnalysis.cutEmptyBrackets(tempInputText);
                             System.out.println("NO EMPTY BRACKETS " + tempInputText);
-//                            tempInputText = codeAnalysis.methodHandler(tempInputText);
-//                            tempInputText = codeAnalysis.simpleMethodHandler(tempInputText);
+                            tempInputText = codeAnalysis.methodHandler(tempInputText);
+                            tempInputText = codeAnalysis.simpleMethodHandler(tempInputText);
 
 
                             //inputText = codeAnalysis.cutRoundOperatorBrackets(inputText);

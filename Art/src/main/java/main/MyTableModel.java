@@ -145,6 +145,11 @@ public class MyTableModel implements TableModel {
     public void addOperand(String operand) {
         Form.operandsCount++;
 
+        if(operand.equals("testInt"))
+        {
+            System.out.println(1273);
+        }
+
         Main.window.getoPNDL().setText(String.valueOf(Form.operandsCount));
         Main.window.getuOPNDL().setText(String.valueOf(hashMap2.size()));
 
