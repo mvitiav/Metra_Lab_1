@@ -25,6 +25,7 @@ public class Main extends JFrame implements Runnable {
         short testShort = 40;
         int testInt = 50;
         long testLong = 60;
+        testInt = (int)( Math.log(testInt)/Math.log(2));
         float testFloat = 70.80;
         double testDouble = 90.10;
         writeTest(1273);
@@ -34,47 +35,56 @@ public class Main extends JFrame implements Runnable {
         int testArray[] = {1, 2, 3, 5, 6, 7, 8, 9, 10};
         String testString = "testString";
 //new Main("Test");
-        new Thread(new Main("Term_1")).start();
-        new Thread(new Server()).start();
-    }
-    public Main(String name) throws HeadlessException {
-        super(name);
-         String s = "Hello, world!";
-        setLayout(new FlowLayout());
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
-        setSize(800,600);
-        setLocationRelativeTo(null);
-/* adsasfasdf */
-        final String CONSTANTEXAMPLE = "1  int i = 23";
-        /*
-        final String CONSTANTEXAMPLE2 = "Starry coment";
-        */
-        final JTextField t = new JTextField(10);
-        final Button b = new Button("Se//nd");
-        b.addActionListener(new ActionListener()) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==b)
-                {
-                    try {
-                        sendObj(t.getText());
+        new Thread(new Main("Term_1")).run();
+        new Thread(new Server()).run(69); //.start, but by hands and without new thread
+
+
+
+        try {
+
+                        sendObj(testInt);
                     } catch (IOException e) {
                         e1.printStackTrace();
                     }
-                };
-            }
-        };
-        add(t);
-        add(b);
+
+
     }
 
-    if (true) {
-        j--;
-    }
-    else {
-        i++;
-    }
+
+
+//    public Main(String name) throws HeadlessException {
+//        super(name);
+//         String s = "Hello, world!";
+//        setLayout(new FlowLayout());
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        setVisible(true);
+//        setSize(800,600);
+//        setLocationRelativeTo(null);
+///* adsasfasdf */
+//        final String CONSTANTEXAMPLE = "1  int i = 23";
+//        /*
+//        final String CONSTANTEXAMPLE2 = "Starry coment";
+//        */
+//        final JTextField t = new JTextField(10);
+//        final Button b = new Button("Se//nd");
+//        b.addActionListener(new ActionListener()) {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if(e.getSource()==b)
+//                {
+//                    try {
+//                        sendObj(t.getText());
+//                    } catch (IOException e) {
+//                        e1.printStackTrace();
+//                    }
+//                };
+//            }
+//        };
+//        add(t);
+//        add(b);
+//    }
+
+
 
     @Override
     public void run() {
@@ -86,7 +96,7 @@ public class Main extends JFrame implements Runnable {
                 input = new ObjectInputStream(connectiuon.getInputStream());
                 JOptionPane.showMessageDialog(null,(  String)input.readObject());
                 JOptionPane.showMessageDialog(null,(  String   )input.readObject());
-                JOptionPane.showMessageDialog(null,( String   )input.readObject());// эту не пропустит
+                JOptionPane.showMessageDialog(null,( String   )input.readObject());//
             }
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -96,6 +106,7 @@ public class Main extends JFrame implements Runnable {
             e.printStackTrace();
         }
     }
+
     private void sendObj(Object objject) throws IOException {
         output.flush();
         output.writebject(objject);
@@ -106,13 +117,13 @@ public class Main extends JFrame implements Runnable {
     }
 }
 
-        System.out.println(5);
-        Main.win.dow.getTableModel().svbfdjhvbfdkj(  7  );
-        Main.win.dow.getTableModel().svbfdjhvbfdkj("sfv" + 3 * (4 - 5));
+//                     System.out.println(5);
+//                Main.win.dow.getTableModel().svbfdjhvbfdkj(  7  );
+//                Main.win.dow.getTableModel().svbfdjhvbfdkj("sfv" + 3 * (4 - 5));
 
-public static void writeTest(int count=5){for(;count>0;count--){
-        System.out.println(count+"   uuu) "+" Test ");
-        }}
+//public static void writeTest(int count=5){for(;count>0;count--){
+//        System.out.println(count+"   uuu) "+" Test ");
+//        }}
 
 class tempcl2
 {

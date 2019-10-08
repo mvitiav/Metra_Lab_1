@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
-    final static Boolean TEST_MODE = false;
+    final static Boolean TEST_MODE = true;
     public static Form window;
     public static ActionListener buttonClicked;
     public static ArrayList<Method2> globalMethodlist = new ArrayList<>();
@@ -53,7 +53,8 @@ public class Main {
                         chosenFile = new File("Art/tests/testFile.java");
                     }
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
-                    window.setTitle(window.getTitle() + chosenFile.toString());
+//                    window.setTitle(window.getTitle() + chosenFile.toString());
+                    window.setTitle("Метрики Холстеда: " + chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
                     /*
                     //inputText = codeAnalysis.cutTypedConstants(inputText);//тутатожебылотуду: Так нельзя
@@ -88,18 +89,29 @@ public class Main {
 //                    inputText = codeAnalysis.flowControlHandler(inputText);
 //                    codeAnalysis.getClassList(inputText);
 
+//                    inputText = codeAnalysis.getStrings(inputText);
+//                    System.out.println("NO STRINGS " + inputText);
+//                    inputText = codeAnalysis.cutImports(inputText);
+//                    System.out.println("NO IMPORTS " + inputText);
+//                    inputText = codeAnalysis.cutMultilineComments(inputText);
+//                    System.out.println("NO MULTI-LINE COMMENTS " + inputText);
+//                    inputText = codeAnalysis.cutSingleLineComments(inputText);
+//                    System.out.println("NO SINGLE-LINE COMMENTS " + inputText);
 
                     try {
 
                         codeAnalysis.getClassList(inputText).forEach(class2 -> {
                             System.out.println(class2.name);
-                            globalMethodlist.addAll(codeAnalysis.getMethodList(class2.body));
+                            globalMethodlist.addAll(
+                                    codeAnalysis.getMethodList(class2.body)
+                            );
                         });
 
                         System.out.println("======================================================================================");
 
 
                         System.out.println(globalMethodlist.get(globalMethodlist.indexOf(new Method2("main"))));
+                        disableFormAdding = true;//!!! коостыль обрубающий твоиим методам запись в форму !удалишь - все полетит
                         codeAnalysis.simpleMethodHandler(
                                 globalMethodlist.get
                                         (
@@ -109,7 +121,6 @@ public class Main {
                                         .body);
                         //globalMethodlist.forEach(System.out::println);
 
-                        disableFormAdding = true;//!!! коостыль обрубающий твоиим методам запись в форму !удалишь - все полетит
                         while (isReLoopNeeded) {
                             isReLoopNeeded = false;
                             globalMethodlist.forEach(method2 ->
@@ -121,41 +132,42 @@ public class Main {
 
                         }
                         disableFormAdding = false;
+                        globalMethodlist.get(globalMethodlist.indexOf(new Method2("main"))).usedCount++;
                         globalMethodlist.forEach(method2 ->
-                        {//if (method2.usedCount>0){
+                        {if (method2.usedCount>0){
                             String tempInputText = method2.body;
                             //тут имплементируй свои методы //(терь культурно )))
-                            inputText = codeAnalysis.getStrings(inputText);
-                            System.out.println("NO STRINGS " + inputText);
-                            inputText = codeAnalysis.cutImports(inputText);
-                            System.out.println("NO IMPORTS " + inputText);
-                            inputText = codeAnalysis.cutMultilineComments(inputText);
-                            System.out.println("NO MULTI-LINE COMMENTS " + inputText);
-                            inputText = codeAnalysis.cutSingleLineComments(inputText);
-                            System.out.println("NO SINGLE-LINE COMMENTS " + inputText);
-                            inputText = codeAnalysis.arrayHandler(inputText);
-                            inputText = codeAnalysis.cutTypedConstants(inputText);
-                            inputText = codeAnalysis.getCasters(inputText);
-                            System.out.println("NO CASTERS " + inputText);
-                            inputText = codeAnalysis.getNumericalOperands(inputText);
-                            inputText = codeAnalysis.methodHandler(inputText);
-                            System.out.println("NO METHODS " + inputText);
-                            inputText = codeAnalysis.simpleMethodHandler(inputText);
-                            System.out.println("NO SIMPLE METHODS " + inputText);
-                            inputText = codeAnalysis.cutEmptyBrackets(inputText);
-                            System.out.println("NO EMPTY BRACKETS " + inputText);
-                            inputText = codeAnalysis.methodHandler(inputText);
-                            inputText = codeAnalysis.simpleMethodHandler(inputText);
+                            tempInputText = codeAnalysis.getStrings(tempInputText);
+                            System.out.println("NO STRINGS " + tempInputText);
+                            tempInputText = codeAnalysis.cutImports(tempInputText);
+                            System.out.println("NO IMPORTS " + tempInputText);
+                            tempInputText = codeAnalysis.cutMultilineComments(tempInputText);
+                            System.out.println("NO MULTI-LINE COMMENTS " + tempInputText);
+                            tempInputText = codeAnalysis.cutSingleLineComments(tempInputText);
+                            System.out.println("NO SINGLE-LINE COMMENTS " + tempInputText);
+                            tempInputText = codeAnalysis.arrayHandler(tempInputText);
+                            tempInputText = codeAnalysis.cutTypedConstants(tempInputText);
+                            tempInputText = codeAnalysis.getCasters(tempInputText);
+                            System.out.println("NO CASTERS " + tempInputText);
+                            tempInputText = codeAnalysis.getNumericalOperands(tempInputText);
+                            tempInputText = codeAnalysis.methodHandler(tempInputText);
+                            System.out.println("NO METHODS " + tempInputText);
+                            tempInputText = codeAnalysis.simpleMethodHandler(tempInputText);
+                            System.out.println("NO SIMPLE METHODS " + tempInputText);
+                            tempInputText = codeAnalysis.cutEmptyBrackets(tempInputText);
+                            System.out.println("NO EMPTY BRACKETS " + tempInputText);
+//                            tempInputText = codeAnalysis.methodHandler(tempInputText);
+//                            tempInputText = codeAnalysis.simpleMethodHandler(tempInputText);
 
 
                             //inputText = codeAnalysis.cutRoundOperatorBrackets(inputText);
                             //System.out.println("NO BRACKETS " + inputText);
-                            inputText = codeAnalysis.getRegisteredOperators(inputText);
-                            inputText = codeAnalysis.getOperatorsList(inputText);
-                            inputText = codeAnalysis.getBrackets(inputText);
-                            System.out.println("NO OPERATORS : " + inputText);
-                            inputText = codeAnalysis.flowControlHandler(inputText);
-                            // }
+                            tempInputText = codeAnalysis.getRegisteredOperators(tempInputText);
+                            tempInputText = codeAnalysis.getOperatorsList(tempInputText);
+                            tempInputText = codeAnalysis.getBrackets(tempInputText);
+                            System.out.println("NO OPERATORS : " + tempInputText);
+                            tempInputText = codeAnalysis.flowControlHandler(tempInputText);
+                             }
                         });
 
 

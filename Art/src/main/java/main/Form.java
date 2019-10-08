@@ -104,7 +104,7 @@ public class Form extends JFrame{
             e.printStackTrace();
         }
         setSize(800, 600);
-        setTitle("Моднейшее окно!");
+        setTitle("Метрики Холстеда: ");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 

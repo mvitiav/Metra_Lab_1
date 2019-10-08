@@ -95,7 +95,7 @@ public class CodeAnalysis {
         Pattern pattern = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]\\,]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");//class(|.+?)[{]
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            //  System.out.println("==================================\n"+text.substring(matcher.start(),matcher.end())+"\n==================================");
+             System.out.println("==================================\n"+text.substring(matcher.start(),matcher.end())+"\n==================================");
 
             int bodyBegPos, bodyEndPos;
             int begs = 0;
@@ -115,7 +115,8 @@ public class CodeAnalysis {
             }
 
             list.add(new Method2(text.substring(bodyBegPos, index - 1), matcher.group(2)));
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+//            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
+            text = text.substring(index);
             matcher.reset(text);
         }
         return list;
@@ -303,7 +304,9 @@ public class CodeAnalysis {
 
             String[] methodParts = method.split("\\(");
             System.out.println("Method taken : " + method);
-            Main.window.getTableModel().addOperator(methodParts[0]);
+            if(!Main.disableFormAdding) Main.window.getTableModel().addOperator(methodParts[0]);
+
+
 //            Main.window.addOperand(methodParts[0]);
             //Main.window.getTableModel().addOperand(methodParts[1]);
 
@@ -327,13 +330,23 @@ public class CodeAnalysis {
         while (matcher.find()) {
             String method;
             method = text.substring(matcher.start(), matcher.end());
+
             //String[] methodParts = method.split("\\(");
             //Main.window.getTableModel().addOperator(methodParts[0]);
             //Main.window.addOperand(methodParts[0]);
 
-            if (text.substring(matcher.start()-10, matcher.end()).indexOf("new") == -1) {//Величайший костыль современности
+            if (text.substring(matcher.start()-10, matcher.end()).indexOf("new") == -1)
+            {//Величайший костыль современности
                 String methodParts[] = method.split("\\(");
-                Main.window.getTableModel().addOperator(methodParts[0]);
+                if(!Main.disableFormAdding)  Main.window.getTableModel().addOperator(methodParts[0]);
+
+                if(Main.globalMethodlist.indexOf(new Method2(methodParts[0]))>=0)
+                {
+                    Main.globalMethodlist.get(Main.globalMethodlist.indexOf(new Method2(methodParts[0]))).usedCount++;
+                   if(Main.globalMethodlist.get(Main.globalMethodlist.indexOf(new Method2(methodParts[0]))).usedCount==1){ Main.isReLoopNeeded=true;}
+                }
+
+
                 //Main.window.addOperand(methodParts[0]);
                 if (methodParts.length > 1
                         && methodParts[1].matches(".*[0-9]{1,}.*")
