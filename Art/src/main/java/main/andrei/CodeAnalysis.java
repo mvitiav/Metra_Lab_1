@@ -1,5 +1,6 @@
 package main.andrei;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,6 +80,27 @@ public class CodeAnalysis {
 //            Main.window.addOperator(operator);//                             // менняй как хочешь!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //            Main.window.addOperand(operator);
             text = text.substring(0,matcher.start()) + text.substring(matcher.end());
+            matcher.reset(text);
+        }
+        return text;
+    }
+
+    public String assigningOperands(String text){
+        //Pattern pattern = Pattern.compile("[a-zA-Z0-9]+\\s*=\\s*[a-zA-Z0-9]*;");
+        //Pattern pattern = Pattern.compile("[a-zA-Z0-9]+\\s*=\\s*;");
+        Pattern pattern = Pattern.compile("([a-zA-Z0-9]+)\\s*=\\s*([a-zA-Z0-9]+)\\s*;");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()){
+            String s = text.substring(matcher.start(), matcher.end());
+//            String ss[] = s.split("=");
+//            Main.window.getTableModel().addOperand(ss[0].trim());
+//            Main.window.getTableModel().addOperand(ss[1].trim());
+            Main.window.getTableModel().addOperand(matcher.group(1));
+            Main.window.getTableModel().addOperand(matcher.group(2));
+
+//            System.out.println(ss[0] + " ddddddddddd " + ss[1]);
+            Main.window.getTableModel().addOperator("=");
+            text = text.substring(0, matcher.start()) + text.substring(matcher.end()-1);
             matcher.reset(text);
         }
         return text;

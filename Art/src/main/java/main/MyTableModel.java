@@ -4,6 +4,7 @@ import main.andrei.Main;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 
@@ -126,6 +127,10 @@ public class MyTableModel implements TableModel {
 
     public void addOperator(String operator) {
         Form.operatorsCount++;
+        if (!hashMap1.containsKey(operator)) {
+            hashMap1.put(operator, 0);
+        }
+        hashMap1.put(operator, hashMap1.get(operator) + 1);
 
         Main.window.getoPRL().setText(String.valueOf(Form.operatorsCount));
         Main.window.getuOPRL().setText(String.valueOf(hashMap1.size()));
@@ -136,14 +141,19 @@ public class MyTableModel implements TableModel {
 
 
 
-        if (!hashMap1.containsKey(operator)) {
-            hashMap1.put(operator, 0);
+
+        if(Integer.parseInt(Main.window.getuOPRL().getText())!= hashMap1.size())
+        {
+            System.out.println(1273);
         }
-        hashMap1.put(operator, hashMap1.get(operator) + 1);
     }
 
     public void addOperand(String operand) {
         Form.operandsCount++;
+        if (!hashMap2.containsKey(operand)) {
+            hashMap2.put(operand, 0);
+        }
+        hashMap2.put(operand, hashMap2.get(operand) + 1);
 
         if(operand.equals("testInt"))
         {
@@ -159,10 +169,7 @@ public class MyTableModel implements TableModel {
 
 
         Main.window.getpDL().setText(String.valueOf(hashMap1.size()+hashMap2.size()));
-        if (!hashMap2.containsKey(operand)) {
-            hashMap2.put(operand, 0);
-        }
-        hashMap2.put(operand, hashMap2.get(operand) + 1);
+
     }
 
 }
