@@ -9,7 +9,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
-    //TODO: убери, пожалуйста отсюда все лишнее
     final static Boolean TEST_MODE = true;
     public static Form window;
     public static ActionListener buttonClicked;
@@ -28,6 +27,8 @@ public class Main {
 
         BasicGUI basicGUI = new BasicGUI();
         StringOperations stringOperations = new StringOperations();
+        CodeAnalysis codeAnalysis = new CodeAnalysis();
+
         buttonClicked = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -45,6 +46,15 @@ public class Main {
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
                     window.setTitle("Метрики НЕ Холстеда: " + chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
+
+                    //<DirtyJob>
+                    codeAnalysis.cutMultilineComments();
+                    codeAnalysis.cutSingleLineComments();
+                    codeAnalysis.cutImports();
+                    codeAnalysis.replaceArithmetics();
+                    System.out.println(inputText);
+                    //</DirtyJob>
+
                     window.getTable1().revalidate();
                     window.getTable1().repaint();
                 }

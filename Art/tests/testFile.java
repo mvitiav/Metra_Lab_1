@@ -22,6 +22,10 @@ public class Main extends JFrame implements Runnable {
     private static ObjectInputStream input;
     private static ObjectOutputStream output;
 
+    /*
+        So beautiful and cute multiline comment
+     */
+
     public static void main(String[] args) {
         for (String name : mappedField.getLoadNames()) {
             if (storedName.equals(name)) {
@@ -33,6 +37,13 @@ public class Main extends JFrame implements Runnable {
             if (mf.hasName(storedName)) {
                 return mf;
             }
+        }
+
+        if (10) {
+            make(11);
+        }
+        else {
+            make(12);
         }
 
         for (int q = 0; q < 1000000; q++) {
@@ -53,10 +64,13 @@ public class Main extends JFrame implements Runnable {
         if (switchNeeded) {
             switch (n) {
                 case 0:
+                    n++;
                     break;
                 case 1:
+                    j = j - 1;
                     break;
                 default:
+                    def = def * def;
                     break;
             }
         }
@@ -95,11 +109,13 @@ public class Main extends JFrame implements Runnable {
                         message.send();
                         break;
                     default:
+                        message.get();
+                        message.read();
                         bsuir.ksis.poit("851002");
                 }
             }
         }
     }
 
-
+    //Lovely single-line comment
 }

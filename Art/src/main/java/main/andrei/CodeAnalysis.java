@@ -6,6 +6,47 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CodeAnalysis {
+    //================================Методы класса, которые юзаются во второй лабе.====================================
+    //на комменты тоже можно было бы забить, но раз уже есть методы готовые, то пускай выпиливает
+    public void cutMultilineComments() {
+        Pattern pattern = Pattern.compile("(\\/\\*)([^*]|[\\r\\n]|(\\*+([^*\\/]|[\\r\\n])))*(\\*\\/)");
+        Matcher matcher = pattern.matcher(Main.inputText);
+        while (matcher.find()) {
+            Main.inputText = Main.inputText.substring(0, matcher.start()) + Main.inputText.substring(matcher.end());
+            matcher.reset(Main.inputText);
+        }
+    }
+
+    public void cutSingleLineComments() {
+        Pattern pattern = Pattern.compile("\\/\\/.*");//Закрыть глаза
+        Matcher matcher = pattern.matcher(Main.inputText);//Можно открывать
+        while (matcher.find()) {
+            Main.inputText = Main.inputText.substring(0, matcher.start()) + Main.inputText.substring(matcher.end());
+            matcher.reset(Main.inputText);
+        }
+    }
+
+    public void cutImports() {
+        Pattern pattern = Pattern.compile("(package|import).*;");
+        Matcher matcher = pattern.matcher(Main.inputText);
+        while (matcher.find()) {
+            Main.inputText = Main.inputText.substring(0, matcher.start()) + Main.inputText.substring(matcher.end()+1);
+            matcher.reset(Main.inputText);
+        }
+    }
+
+    //Текст программы передается через static
+    //На место оператора вставляется '#'
+    public void replaceArithmetics() {
+        Pattern pattern = Pattern.compile(">>>=|>>=|<<=|%=|\\^=|&=|\\|=|/=|\\*=|-=|\\+=|>>>|>>|<<|%|\\^|\\|\\||&&|/|\\*|\\+\\+|--|\\+|-|\\||&|!=|>=|<=|==|\\?|~|!|>|=");
+        Matcher matcher = pattern.matcher(Main.inputText);
+        while (matcher.find()) {
+            Main.inputText = Main.inputText.substring(0, matcher.start()) + '#' + Main.inputText.substring(matcher.end());
+            matcher.reset(Main.inputText);
+        }
+    }
+    //==================================================================================================================
+
     public String getStrings(String text) {// char здесь же забираем
         Pattern pattern = Pattern.compile("['|\"].+?['|\"]");
         Matcher matcher = pattern.matcher(text);
@@ -261,38 +302,6 @@ public class CodeAnalysis {
         while (matcher.find()) {
             Main.window.getTableModel().addOperator("{...}");
             text = text.substring(0, matcher.start()) + text.substring(matcher.end());
-            matcher.reset(text);
-        }
-        return text;
-    }
-
-    public String cutImports(String text) {
-        Pattern pattern = Pattern.compile(" *(package|import).*;");
-        Matcher matcher = pattern.matcher(text);
-        while (matcher.find()) {
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
-            matcher.reset(text);
-        }
-        return text;
-    }
-
-    public String cutMultilineComments(String text) {
-        Pattern pattern = Pattern.compile("(\\/\\*)([^*]|[\\r\\n]|(\\*+([^*\\/]|[\\r\\n])))*(\\*\\/)");
-        Matcher matcher = pattern.matcher(text);
-        while (matcher.find()) {
-            text = text.substring(0, matcher.start()) + text.substring(matcher.end());
-            matcher.reset(text);
-        }
-        return text;
-    }
-
-    public String cutSingleLineComments(String text) {
-        Pattern pattern = Pattern.compile("\"[^\"\\\\]*(?:\\\\[\\W\\w][^\"\\\\]*)*\"|(\\/\\/.*)");
-        Matcher matcher = pattern.matcher(text);
-        while (matcher.find()) {
-            if (text.charAt(matcher.start()) == '/') {
-                text = text.substring(0, matcher.start()) + text.substring(matcher.end());
-            }
             matcher.reset(text);
         }
         return text;
