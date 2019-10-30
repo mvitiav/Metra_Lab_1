@@ -43,9 +43,36 @@ public class CodeAnalysis {
         while (matcher.find()) {
             Main.inputText = Main.inputText.substring(0, matcher.start()) + '#' + Main.inputText.substring(matcher.end());
             matcher.reset(Main.inputText);
+            Main.allOperators++;
+        }
+    }
+
+    //"Методы с точкой" тоже заменяются на '#'
+    public void replaceDotMethods() {
+        Pattern pattern = Pattern.compile("(\\.{1,} *\\w+ *\\([^()]*\\))");
+        Matcher matcher = pattern.matcher(Main.inputText);
+        while (matcher.find()) {
+            Main.inputText = Main.inputText.substring(0, matcher.start()) + '#' + Main.inputText.substring(matcher.end());
+            matcher.reset(Main.inputText);
+            Main.allOperators++;
+        }
+    }
+
+    //"Простые методы" заменяются на все тот же '#'. Надо будет - поменяю.
+    public void replaceSimpleMethods() {
+        Pattern pattern = Pattern.compile("(\\w+\\([^()]*\\)){1,}\\;");//чекает только если между именем метода и скобками нет пробелов, чтоб с do..while различать без дополнительных костылей
+        Matcher matcher = pattern.matcher(Main.inputText);
+        while (matcher.find()) {
+            Main.inputText = Main.inputText.substring(0, matcher.start()) + '#' + Main.inputText.substring(matcher.end());
+            matcher.reset(Main.inputText);
+            Main.allOperators++;
         }
     }
     //==================================================================================================================
+
+
+
+
 
     public String getStrings(String text) {// char здесь же забираем
         Pattern pattern = Pattern.compile("['|\"].+?['|\"]");

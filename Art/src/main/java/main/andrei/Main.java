@@ -19,6 +19,8 @@ public class Main {
     static String inputText;
     static JFileChooser fileChooser;
 
+    public static int allOperators = 0;
+
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -52,6 +54,11 @@ public class Main {
                     codeAnalysis.cutSingleLineComments();
                     codeAnalysis.cutImports();
                     codeAnalysis.replaceArithmetics();
+                    System.out.println(allOperators);
+                    codeAnalysis.replaceDotMethods();
+                    System.out.println(allOperators);
+                    codeAnalysis.replaceSimpleMethods();
+                    System.out.println(allOperators);
                     System.out.println(inputText);
                     //</DirtyJob>
 
