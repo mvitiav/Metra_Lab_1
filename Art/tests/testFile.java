@@ -91,6 +91,36 @@ public class Main extends JFrame implements Runnable {
         }
         while (time < labTime);
 
+        while (true) {
+            if (k == 1) {
+                k = k + 1;
+            }
+            if (k == 2) {
+                k = k + 2;
+            }
+            if (k == 3) {
+                k = k + 3;
+            }
+            if (k == 4) {
+                k = k + 4;
+            }
+            if (k == 5) {
+                k = k + 5;
+            }
+            if (k == 6) {
+                k = k + 6;
+            }
+            if (k == 7) {
+                k = k + 7;
+            }
+            if (k == 8) {
+                k = k + 8;
+            }
+            if (k == 9) {
+                k = k + 9;
+            }
+        }
+
         if (strings != null) {                                                                      // 0
             for (String s : strings) {                                                              // 1
                 switch (num) {                                                                      // 2
@@ -120,6 +150,5 @@ public class Main extends JFrame implements Runnable {
             int ddd = ddd + mmm;
         }
     }
-
     //Lovely single-line comment
 }

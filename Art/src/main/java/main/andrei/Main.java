@@ -20,6 +20,7 @@ public class Main {
     static String inputText;
     static String maxNestingTextPart;
     static int nestingSum = 0;
+    static int maxNesting = 0;
     static int allOperators = 0;
 
     static JFileChooser fileChooser;
@@ -57,8 +58,10 @@ public class Main {
                     codeAnalysis.cutSingleLineComments();
                     codeAnalysis.cutImports();
 
+                    //сначала берем все как есть, без выпиленных кусков
                     codeAnalysis.annulNesting();
-                    codeAnalysis.getMaxNesting(0,0 );
+                    codeAnalysis.getMaxNesting(0);
+                    maxNesting--;
                     System.out.println("Max nesting part : " + '\n' + maxNestingTextPart);
 
                     codeAnalysis.replaceArithmetics();
@@ -67,6 +70,7 @@ public class Main {
                     //System.out.println("Input Text" + inputText);
                     System.out.println("All operators number: " + allOperators);
                     System.out.println("All nestings number : " + nestingSum);
+                    System.out.println("Max nesting : " + maxNesting);
                     //</DirtyJob>
 
                     window.getTable1().revalidate();

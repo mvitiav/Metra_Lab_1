@@ -1,5 +1,7 @@
 package main.andrei;
 
+
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -77,6 +79,7 @@ public class CodeAnalysis {
     }
 
     //метод считает все вложенности и передает кусок с максимальной вложенностью в static String maxNestingTextPart (Main class)
+    /*
     public void getMaxNesting(int start, int lastNesting) {
         int startPos = Main.inputText.indexOf('{', start);
         if (startPos != -1) {
@@ -103,9 +106,58 @@ public class CodeAnalysis {
                 startPos = 0;
             }
             if (curNesting > lastNesting) {
-            Main.maxNestingTextPart = Main.inputText.substring(startPos, curPos);
+                Main.maxNestingTextPart = Main.inputText.substring(startPos, curPos);
+                Main.maxNesting = curNesting;
             }
             getMaxNesting(curPos, curNesting);
+        }
+    }
+     */
+    /*
+    public int deepestNesting(String codeBlock) {
+        int curNesting = 0;
+        int nesting = 0;
+        Pattern pattern = Pattern.compile("\\{[\\s\\S]*((.(?!\\{))+?)\\}");
+        Matcher matcher = pattern.matcher(codeBlock);
+        while (matcher.find(lastOpenBracket)) {
+
+        }
+        return nesting;
+    }
+     */
+
+    public void getMaxNesting(int start) {
+        int startPos = Main.inputText.indexOf('{', start);
+        int nestingDepth = 0;
+        if (startPos != -1) {
+            int curPos = startPos;
+            int openCloses = 0;
+            openCloses++;
+            curPos++;
+            while (openCloses != 0) {
+                switch (Main.inputText.charAt(curPos)) {
+                    case '{':
+                        openCloses++;
+                        break;
+                    case '}':
+                        openCloses--;
+                        break;
+                }
+                curPos++;
+                if (openCloses > nestingDepth) {
+                    nestingDepth = openCloses;
+                }
+            }
+            startPos = Main.inputText.substring(0, startPos).lastIndexOf('\n') + 1;
+            if (startPos == -1) {
+                startPos = 0;
+            }
+            String codeBlock = Main.inputText.substring(startPos, curPos);
+            if (nestingDepth > Main.maxNesting) {
+                Main.maxNesting = nestingDepth;
+                Main.maxNestingTextPart = codeBlock;
+            }
+            getMaxNesting(curPos);
         }
     }
     //==================================================================================================================
