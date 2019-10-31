@@ -115,6 +115,10 @@ public class Main extends JFrame implements Runnable {
                 }
             }
         }
+
+        while (true) {
+            int ddd = ddd + mmm;
+        }
     }
 
     //Lovely single-line comment

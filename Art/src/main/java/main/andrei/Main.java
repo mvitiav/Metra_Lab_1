@@ -16,10 +16,13 @@ public class Main {
     public static boolean isReLoopNeeded = false;
     public static boolean disableFormAdding = false;
     static File chosenFile;
-    static String inputText;
-    static JFileChooser fileChooser;
 
-    public static int allOperators = 0;
+    static String inputText;
+    static String maxNestingTextPart;
+    static int nestingSum = 0;
+    static int allOperators = 0;
+
+    static JFileChooser fileChooser;
 
     public static void main(String[] args) {
         try {
@@ -53,13 +56,17 @@ public class Main {
                     codeAnalysis.cutMultilineComments();
                     codeAnalysis.cutSingleLineComments();
                     codeAnalysis.cutImports();
+
+                    codeAnalysis.annulNesting();
+                    codeAnalysis.getMaxNesting(0,0 );
+                    System.out.println("Max nesting part : " + '\n' + maxNestingTextPart);
+
                     codeAnalysis.replaceArithmetics();
-                    System.out.println(allOperators);
                     codeAnalysis.replaceDotMethods();
-                    System.out.println(allOperators);
                     codeAnalysis.replaceSimpleMethods();
-                    System.out.println(allOperators);
-                    System.out.println(inputText);
+                    //System.out.println("Input Text" + inputText);
+                    System.out.println("All operators number: " + allOperators);
+                    System.out.println("All nestings number : " + nestingSum);
                     //</DirtyJob>
 
                     window.getTable1().revalidate();

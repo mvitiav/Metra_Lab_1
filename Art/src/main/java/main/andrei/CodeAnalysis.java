@@ -68,6 +68,46 @@ public class CodeAnalysis {
             Main.allOperators++;
         }
     }
+
+    public void annulNesting() {
+        for (int i = 0; i < 2; i++) {
+            Main.inputText = Main.inputText.substring(0, Main.inputText.indexOf('{')) + Main.inputText.substring(Main.inputText.indexOf('{') + 1);
+            Main.inputText = Main.inputText.substring(0, Main.inputText.lastIndexOf('}')) + Main.inputText.substring(Main.inputText.lastIndexOf('}') + 1);
+        }
+    }
+
+    //метод считает все вложенности и передает кусок с максимальной вложенностью в static String maxNestingTextPart (Main class)
+    public void getMaxNesting(int start, int lastNesting) {
+        int startPos = Main.inputText.indexOf('{', start);
+        if (startPos != -1) {
+            int curPos = startPos;
+            int openCloses = 0;
+            int curNesting = 0;
+            openCloses++;
+            curPos++;
+            while (openCloses != 0) {
+                switch (Main.inputText.charAt(curPos)) {
+                    case '{':
+                        openCloses++;
+                        break;
+                    case '}':
+                        openCloses--;
+                        curNesting++;
+                        Main.nestingSum++;
+                        break;
+                }
+                curPos++;
+            }
+            startPos = Main.inputText.substring(0, startPos).lastIndexOf('\n') + 1;
+            if (startPos == -1) {
+                startPos = 0;
+            }
+            if (curNesting > lastNesting) {
+            Main.maxNestingTextPart = Main.inputText.substring(startPos, curPos);
+            }
+            getMaxNesting(curPos, curNesting);
+        }
+    }
     //==================================================================================================================
 
 
