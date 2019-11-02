@@ -61,7 +61,7 @@ public class Main extends JFrame implements Runnable {
             }
         }
 
-        if (switchNeeded) {
+        if (swtchNeeded) {
             switch (n) {
                 case 0:
                     n++;
@@ -121,10 +121,21 @@ public class Main extends JFrame implements Runnable {
             }
         }
 
+        switch (testSwtch) {
+            case 1:
+                Operator.operator1();
+                break;
+            case 2:
+                Operator.operator2();
+                break;
+            default:
+                Do.nothing();
+        }
+
         if (strings != null) {                                                                      // 0
             for (String s : strings) {                                                              // 1
-                switch (num) {                                                                      // 2
-                    case 0:
+                switch (num) {
+                    case 0:                                                                         // 2
                         while (true) {                                                              // 3
                             if (s != null) {                                                        // 4
                                 for (int i = 0; i < s.length(); i++) {                              // 5
@@ -135,8 +146,26 @@ public class Main extends JFrame implements Runnable {
                             }
                         }
                         break;
-                    case 1:
+                    case 1:                                                                         // 3
                         message.send();
+                        break;
+                    case 2:                                                                         // 4
+                        nesting.setMax();
+                        break;
+                    case 3:                                                                         // 5
+                        for (int i = 0; i < 100; i++) {                                             // 6
+                            for (int i = 0; i < 100; i++) {                                         // 7
+                                for (int i = 0; i < 100; i++) {                                     // 8
+                                    for (int i = 0; i < 100; i++) {                                 // 9
+                                        if (!false) {                                               // 10
+                                            while (true) {                                          // 11
+                                                System.out.printl("Hello, world!");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         break;
                     default:
                         message.get();
@@ -148,6 +177,16 @@ public class Main extends JFrame implements Runnable {
 
         while (true) {
             int ddd = ddd + mmm;
+        }
+
+        for (Player player : party.getPlayers()) {
+            for (Cell cell : player.getVisibleMapCells()) {
+                for (Item artefact : cell.getItemsOnTheFloor())
+                    if (artefact == HOLY_GRAIL) {
+                        chosen_one = player;
+                        break outer;
+                    }
+            }
         }
     }
     //Lovely single-line comment

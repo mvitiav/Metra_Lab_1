@@ -160,11 +160,118 @@ public class CodeAnalysis {
             getMaxNesting(curPos);
         }
     }
+
+    public void switchReplace(int start) {
+        int startPos = Main.inputText.indexOf("switch", start);
+        if (startPos != -1) {
+            int curPos = startPos;
+            int openCloses = 0;
+            curPos = Main.inputText.indexOf('{', curPos);
+            openCloses++;
+            curPos++;
+            while (openCloses != 0) {
+                switch (Main.inputText.charAt(curPos)) {
+                    case '{':
+                        openCloses++;
+                        break;
+                    case '}':
+                        openCloses--;
+                        break;
+                }
+                curPos++;
+            }
+            startPos = Main.inputText.substring(0, startPos).lastIndexOf('\n') + 1;
+            String codeBlock = Main.inputText.substring(startPos, curPos);
+            String replacement = doReplacement(codeBlock);
+            Main.inputText = Main.inputText.replace(codeBlock, replacement);
+            //System.out.println("+++++++"+codeBlock+"++++++");
+            switchReplace(curPos);
+        }
+    }
+
+/*
+    public void switchReplace(int start) {
+        int startPos = Main.inputText.indexOf("switch", start);
+        if (startPos != -1) {
+            int curPos = startPos;
+            int openCloses = 0;
+            openCloses++;
+            while (openCloses != 0) {
+                switch (Main.inputText.charAt(curPos)) {
+                    case '{':
+                        openCloses++;
+                        break;
+                    case '}':
+                        openCloses--;
+                        break;
+                }
+                curPos++;
+            }
+            startPos = Main.inputText.substring(0, startPos).lastIndexOf('{') - 1;
+            String switchBlock = Main.inputText.substring(startPos, curPos);
+            //switchBlock = switchBlock.substring(switchBlock.indexOf('{')+1, switchBlock.lastIndexOf('}')-2);
+            String switchNoBrackets = switchBlock.substring(switchBlock.indexOf('{')+1, switchBlock.lastIndexOf('}')-2);
+            System.out.println("++++++++++++++" + switchNoBrackets + "+++++++++++++++");
+            String transformedBlock = doReplacement(switchNoBrackets);
+            System.out.println("-------------" + transformedBlock + "--------------");
+            Main.inputText = Main.inputText.replace(switchBlock, transformedBlock);
+            switchReplace(curPos);
+        }
+    }
+*/
+    public String doReplacement(String switchBlock) {
+        String transformedBlock = "";
+        int casesNum = 0;
+        while (switchBlock.contains("case")) {
+            String caseBlock = switchBlock.substring(switchBlock.indexOf(':')+1, switchBlock.indexOf("break")-1);
+            switchBlock = switchBlock.substring(switchBlock.indexOf("break;") + 7);
+            transformedBlock += "\nif (true) { " + caseBlock;
+            //System.out.println("-------------" + transformedBlock + "----------------");
+            casesNum++;
+        }
+
+        if (switchBlock.contains("default")) {
+            int thinkEnd;
+            if (switchBlock.contains("break;")) {
+                thinkEnd = switchBlock.indexOf("break") - 1;
+            }
+            else {
+                thinkEnd = switchBlock.length() - 1;
+            }
+            String caseBlock = switchBlock.substring(switchBlock.indexOf(':') + 1, thinkEnd);
+            transformedBlock += "\n" + caseBlock;
+        }
+        while (casesNum > 0) {
+            transformedBlock += "\n}";
+            casesNum--;
+        }
+
+        //System.out.println("@@@@@@" + transformedBlock + "@@@@@");
+        return transformedBlock;
+    }
+
+    public boolean checkBrackets(String analyseText) { //Просто дебаг-метод, т.к. возникло сомнение, что скобки нигде не пропущены
+        boolean bracketsOkay = false;
+        int openCloses = 0;
+        for (int i = 0; i < analyseText.length(); i++) {
+            switch (analyseText.charAt(i)) {
+                case '{':
+                    openCloses++;
+                    break;
+                case '}':
+                    openCloses--;
+                    break;
+            }
+            if (openCloses == 0) {
+                bracketsOkay = true;
+            }
+            else {
+                bracketsOkay = false;
+            }
+        }
+        return bracketsOkay;
+    }
     //==================================================================================================================
-
-
-
-
 
     public String getStrings(String text) {// char здесь же забираем
         Pattern pattern = Pattern.compile("['|\"].+?['|\"]");

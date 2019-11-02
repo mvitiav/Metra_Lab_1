@@ -54,15 +54,19 @@ public class Main {
                     inputText = stringOperations.textFromFile(chosenFile);
 
                     //<DirtyJob>
+                    if (codeAnalysis.checkBrackets(inputText)) System.out.println("Brackets okay.");
+                    else System.out.println("Wrong brackets!");
+
                     codeAnalysis.cutMultilineComments();
                     codeAnalysis.cutSingleLineComments();
                     codeAnalysis.cutImports();
 
                     //сначала берем все как есть, без выпиленных кусков
                     codeAnalysis.annulNesting();
+                    codeAnalysis.switchReplace(0);
                     codeAnalysis.getMaxNesting(0);
                     maxNesting--;
-                    System.out.println("Max nesting part : " + '\n' + maxNestingTextPart);
+                    System.out.println("================ Max nesting part [TRANSFORMED!!!] ================= \n" + '\n' + maxNestingTextPart + '\n' + "==============================================================");
 
                     codeAnalysis.replaceArithmetics();
                     codeAnalysis.replaceDotMethods();
@@ -71,6 +75,11 @@ public class Main {
                     System.out.println("All operators number: " + allOperators);
                     System.out.println("All nestings number : " + nestingSum);
                     System.out.println("Max nesting : " + maxNesting);
+
+
+                    //codeAnalysis.switchReplacer();
+
+                    //System.out.println("Input Text" + inputText);
                     //</DirtyJob>
 
                     window.getTable1().revalidate();
