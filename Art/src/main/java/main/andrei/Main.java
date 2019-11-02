@@ -80,8 +80,10 @@ public class Main {
                     codeAnalysis.countConditionalOperators();
                     //System.out.println("Input Text" + inputText);
                     System.out.println("All operators number: " + allOperators);
-
                     System.out.println("All conditional operators number : " + allConditionalOperators);
+window2.setAbsolete(String.valueOf(allConditionalOperators));
+window2.setRelative(String.format("%.3f", (double)allConditionalOperators/allOperators)  );
+
                     System.out.println("Max nesting : " + maxNesting);
                     window2.setMax(String.valueOf(maxNesting));
                     //System.out.println("Input Text" + inputText);

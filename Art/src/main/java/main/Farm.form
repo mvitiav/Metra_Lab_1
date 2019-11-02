@@ -31,17 +31,8 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Ravie" size="48" style="2"/>
+              <font name="BeckettKanzleiCY" size="48"/>
               <text value="Absolute difficulty:"/>
-            </properties>
-          </component>
-          <component id="7c449" class="javax.swing.JLabel" binding="absd">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Ravie" size="48" style="2"/>
-              <text value="answer"/>
             </properties>
           </component>
           <component id="cd99" class="javax.swing.JLabel">
@@ -49,16 +40,16 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Rage Italic" size="48" style="2"/>
+              <font name="BeckettKanzleiCY" size="48"/>
               <text value="Relative difficulty:"/>
             </properties>
           </component>
           <component id="77075" class="javax.swing.JLabel" binding="reld">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="Rage Italic" size="48" style="2"/>
+              <font name="BeckettKanzleiCY" size="48"/>
               <text value="answer"/>
             </properties>
           </component>
@@ -73,7 +64,16 @@
           </component>
           <component id="7783" class="javax.swing.JLabel" binding="maxd">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="BeckettKanzleiCY" size="48"/>
+              <text value="answer"/>
+            </properties>
+          </component>
+          <component id="7c449" class="javax.swing.JLabel" binding="absd">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="BeckettKanzleiCY" size="48"/>
