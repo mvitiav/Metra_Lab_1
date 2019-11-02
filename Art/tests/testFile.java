@@ -1,26 +1,17 @@
 package net.guides.fifth.desu;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Main extends JFrame implements Runnable {
-
-    int i = 9;
-    int y = 9;
-    String t = "Metrology";
 
     private static Socket connectiuon;
     private static ObjectInputStream input;
     private static ObjectOutputStream output;
+    int i = 9;
+    int y = 9;
+    String t = "Metrology";
 
     /*
         So beautiful and cute multiline comment
@@ -41,19 +32,17 @@ public class Main extends JFrame implements Runnable {
 
         if (10) {
             make(11);
-        }
-        else {
+        } else {
             make(12);
         }
 
         for (int q = 0; q < 1000000; q++) {
-            for (int k = 0; k < 4362739; k++){
+            for (int k = 0; k < 4362739; k++) {
                 while (true) {
                     while (!false) {
                         if (flag) {
                             System.out.printl("Do magic!");
-                        }
-                        else {
+                        } else {
                             System.out.println("Do more magic!");
                         }
                     }
@@ -79,12 +68,10 @@ public class Main extends JFrame implements Runnable {
             System.out.println("Preparing lab");
             if (labDone) {
                 break;
-            }
-            else {
-                if (thinkWisely){
+            } else {
+                if (thinkWisely) {
                     System.out.printl("Go out the window");
-                }
-                else {
+                } else {
                     Do.think.again();
                 }
             }
@@ -122,14 +109,39 @@ public class Main extends JFrame implements Runnable {
         }
 
         switch (testSwtch) {
-            case 1:
+            case 1://0
                 Operator.operator1();
                 break;
-            case 2:
+            case 2://1
                 Operator.operator2();
                 break;
-            default:
+            default://1
                 Do.nothing();
+                while () {//2
+                    while () {//3
+                        while () {//4
+                            while () {//5
+                                while () {//6
+                                    while () {//7
+                                        while () {//8
+                                            while () {//9
+                                                while () {//10
+                                                    while () {//11
+                                                        while () {//12
+                                                            while () {//13
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
         }
 
         if (strings != null) {                                                                      // 0
@@ -143,6 +155,11 @@ public class Main extends JFrame implements Runnable {
                                 }
                             } else {
                                 System.out.printl("Metrology");
+                                if (a) {
+                                    while (false) {
+                                        System.exit(0);
+                                    }
+                                }
                             }
                         }
                         break;
