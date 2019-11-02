@@ -60,8 +60,16 @@ public class Main {
                     inputText = stringOperations.textFromFile(chosenFile);
 
                     //<DirtyJob>
+
+                    allConditionalOperators = 0;
+                    allOperators=0;
+                    maxNesting = 0;
+                    maxNestingTextPart="";
+
                     if (codeAnalysis.checkBrackets(inputText)) System.out.println("Brackets okay.");
-                    else System.out.println("Wrong brackets!");
+                    else {System.out.println("Wrong brackets!");
+                    JOptionPane.showMessageDialog(null,"Something wrong with brackets!","Error!",JOptionPane.ERROR_MESSAGE);
+                    }
 
                     codeAnalysis.cutMultilineComments();
                     codeAnalysis.cutSingleLineComments();
