@@ -31,7 +31,9 @@ public class Farm extends JFrame{
         try {
             chooseFileButton.setFont(Font.createFont(Font.TRUETYPE_FONT, new File("Art/src/main/resources/Red October.ttf")).deriveFont(16f));
             chooseFileButton.setIcon(new ImageIcon("Art/src/main/resources/document-16.png"));
-
+            chooseFileButton.setBorderPainted(false);
+            chooseFileButton.setFocusPainted(false);
+            chooseFileButton.setContentAreaFilled(false);
         } catch (FontFormatException | IOException e) {
             JOptionPane.showMessageDialog(null,"что - то отвалилося((");
             e.printStackTrace();
