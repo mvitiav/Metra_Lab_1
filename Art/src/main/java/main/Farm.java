@@ -17,13 +17,16 @@ public class Farm extends JFrame{
     private JLabel maxd;
 
     public void setAbsolete(String s){
-        absd.setText(s);
+        absd.setText("Absolute difficulty: "+s);
+        pack();
     }
     public void setRelative(String s){
-        reld.setText(s);
+        reld.setText("Relative difficulty: "+s);
+        pack();
     }
     public void setMax(String s){
-        maxd.setText(s);
+        maxd.setText("Max depth: "+s);
+        pack();
     }
 
     public Farm() {
@@ -44,6 +47,7 @@ public class Farm extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         add(panel2);
+        pack();
         setVisible(true);
         chooseFileButton.addActionListener(Main.buttonClicked);
     }
