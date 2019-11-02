@@ -1,6 +1,4 @@
 package main.andrei;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -245,9 +243,17 @@ public class CodeAnalysis {
             transformedBlock += "\n}";
             casesNum--;
         }
-
-        //System.out.println("@@@@@@" + transformedBlock + "@@@@@");
         return transformedBlock;
+    }
+
+    public void countConditionalOperators() {
+        int matchFrom = 0;
+        Pattern pattern = Pattern.compile("if|while|for");
+        Matcher matcher = pattern.matcher(Main.inputText);
+        while (matcher.find(matchFrom)) {
+            Main.allConditionalOperators++;
+            matchFrom = matcher.end();
+        }
     }
 
     public boolean checkBrackets(String analyseText) { //Просто дебаг-метод, т.к. возникло сомнение, что скобки нигде не пропущены

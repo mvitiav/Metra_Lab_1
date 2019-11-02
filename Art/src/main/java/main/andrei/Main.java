@@ -19,9 +19,9 @@ public class Main {
 
     static String inputText;
     static String maxNestingTextPart;
-    static int nestingSum = 0;
     static int maxNesting = 0;
     static int allOperators = 0;
+    static int allConditionalOperators = 0;
 
     static JFileChooser fileChooser;
 
@@ -71,14 +71,11 @@ public class Main {
                     codeAnalysis.replaceArithmetics();
                     codeAnalysis.replaceDotMethods();
                     codeAnalysis.replaceSimpleMethods();
+                    codeAnalysis.countConditionalOperators();
                     //System.out.println("Input Text" + inputText);
                     System.out.println("All operators number: " + allOperators);
-                    System.out.println("All nestings number : " + nestingSum);
+                    System.out.println("All conditional operators number : " + allConditionalOperators);
                     System.out.println("Max nesting : " + maxNesting);
-
-
-                    //codeAnalysis.switchReplacer();
-
                     //System.out.println("Input Text" + inputText);
                     //</DirtyJob>
 
