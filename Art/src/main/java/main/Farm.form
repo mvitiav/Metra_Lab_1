@@ -32,7 +32,7 @@
             </constraints>
             <properties>
               <font name="Ravie" size="48" style="2"/>
-              <text value="Absoplute difficulty:"/>
+              <text value="Absolute difficulty:"/>
             </properties>
           </component>
           <component id="7c449" class="javax.swing.JLabel" binding="absd">
