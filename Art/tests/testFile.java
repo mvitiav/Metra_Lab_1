@@ -117,44 +117,19 @@ public class Main extends JFrame implements Runnable {
                 break;
             default://1
                 Do.nothing();
-                while () {//2
-                    while () {//3
-                        while () {//4
-                            while () {//5
-                                while () {//6
-                                    while () {//7
-                                        while () {//8
-                                            while () {//9
-                                                while () {//10
-                                                    while () {//11
-                                                        while () {//12
-                                                            while () {//13
-
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
         }
 
-        if (strings != null) {                                                                      // 0
-            for (String s : strings) {                                                              // 1
+        if (str != null) {
+            for (int t = 0; t < 5; t++) {
                 switch (num) {
-                    case 0:                                                                         // 2
-                        while (true) {                                                              // 3
-                            if (s != null) {                                                        // 4
-                                for (int i = 0; i < s.length(); i++) {                              // 5
-                                    System.out.println(s.charAt(i) + "=" + (int) s.charAt(i));
+                    case 0:
+                        while (true) {
+                            if (s != null) {
+                                for (int i = 0; i < s.length(); i++) {
+                                    System.out.println(s.charAt(i) + (int) s.charAt(i));
                                 }
                             } else {
-                                System.out.printl("Metrology");
+                                System.out.println("Metrology");
                                 if (a) {
                                     while (false) {
                                         System.exit(0);
@@ -163,21 +138,31 @@ public class Main extends JFrame implements Runnable {
                             }
                         }
                         break;
-                    case 1:                                                                         // 3
+                    case 1:
                         message.send();
+                        do {
+                            labs.prepare();
+                        } while (always);
                         break;
-                    case 2:                                                                         // 4
+                    case 2:
                         nesting.setMax();
+                        if (n == 5) {
+                            n = n + 10;
+                        }
+                        else {
+                            findViewById(layoutId);
+                        }
                         break;
-                    case 3:                                                                         // 5
-                        for (int i = 0; i < 100; i++) {                                             // 6
-                            for (int i = 0; i < 100; i++) {                                         // 7
-                                for (int i = 0; i < 100; i++) {                                     // 8
-                                    for (int i = 0; i < 100; i++) {                                 // 9
-                                        if (!false) {                                               // 10
-                                            while (true) {                                          // 11
-                                                System.out.printl("Hello, world!");
-                                            }
+                    case 3:
+                        for (int i = 0; i < 100; i++) {
+                            for (int j = 0; j < 100; j++) {
+                                if (j == 5) {
+                                    camera.open(FRONT_CAMERA);
+                                }
+                                else {
+                                    if (cam == backCam) {
+                                        while (isOn) {
+                                            torch.turnedOn(true);
                                         }
                                     }
                                 }
