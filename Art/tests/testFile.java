@@ -74,4 +74,25 @@ public class Main extends JFrame implements Runnable {
             System.out.println(allText);
         }
     }
+
+    void switchVoid(boolean switchVar) {
+        if (switchVar) {
+            int value = 5;
+            int one = 1;
+            int two = 2;
+            int three = 3;
+
+            switch (value) {
+                case one:
+                    System.out.println(one);
+                    break;
+                case two:
+                    System.out.println(two);
+                    break;
+                case three:
+                    System.out.println(three);
+                    break;
+            }
+        }
+    }
 }

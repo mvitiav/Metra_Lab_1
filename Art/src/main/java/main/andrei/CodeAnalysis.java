@@ -158,7 +158,8 @@ public class CodeAnalysis {
     }
 
     private boolean checkIfInput(String curVar) {
-        final String scannerPattern = curVar + " *= *scanner";
+        //final String scannerPattern = curVar + " *= *scanner";
+        final String scannerPattern = curVar + " *= *[a-zA-Z0-9_]*\\.next(Byte|Short|Int|Long|Float|Double|Char|Boolean|String)";
         boolean isInput = false;
         Pattern pattern = Pattern.compile(scannerPattern);
         Matcher matcher = pattern.matcher(nextMethod);
@@ -201,7 +202,8 @@ public class CodeAnalysis {
     }
 
     private boolean checkIfControl(String curVar) {
-        final String flowControlPattren = "(while|if|for|switch).*\\)";
+        //final String flowControlPattren = "(while|if|for|switch).*\\)";
+        final String flowControlPattren = "(while|if|for|switch)(?:(?!(while|if|for|switch)|\\))[\\s\\S])*\\)";
         boolean isControl = false;
         Pattern pattern = Pattern.compile(flowControlPattren);
         Matcher matcher = pattern.matcher(nextMethod);
@@ -212,11 +214,25 @@ public class CodeAnalysis {
             Matcher subMatcher = subPattern.matcher(probablyMatch);
             if (subMatcher.find()) {
                 //nextMethod = nextMethod.replace(probablyMatch, "");
-                nextMethod = nextMethod.replaceFirst(nextMethod.substring(subMatcher.start(), nextMethod.indexOf(";", subMatcher.start()-1)), "");
+                nextMethod = nextMethod.replaceFirst(probablyMatch, "");
+                //nextMethod = nextMethod.replaceFirst(nextMethod.substring(subMatcher.start(), nextMethod.indexOf(";", subMatcher.start()-1)), "");
                 isControl = true;
             }
             startPos = matcher.start() + 1;
         }
+
+        if (!isControl) {
+            final String casePatternRegex = "case *" + curVar + " *:";
+            Pattern casePattern = Pattern.compile(casePatternRegex);
+            Matcher caseMatcher = casePattern.matcher(nextMethod);
+            startPos = 0;
+            while (caseMatcher.find(startPos)) {
+                nextMethod = nextMethod.replaceFirst(nextMethod.substring(caseMatcher.start(), caseMatcher.end()), "");
+                caseMatcher.reset(nextMethod);
+                isControl = true;
+            }
+        }
+
         return isControl;
     }
 
