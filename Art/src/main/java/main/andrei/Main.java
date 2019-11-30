@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     final static Boolean TEST_MODE = true;
@@ -20,11 +21,6 @@ public class Main {
     static File chosenFile;
 
     static String inputText;
-    static String maxNestingTextPart;
-    static int maxNesting = 0;
-    static int allOperators = 0;
-    static int allConditionalOperators = 0;
-
     static JFileChooser fileChooser;
 
     public static void main(String[] args) {
@@ -40,15 +36,6 @@ public class Main {
         buttonClicked = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                //Main.window.getTableModel().recreate();
-
-
-              //  Form.operandsCount = 0;
-               // Form.operatorsCount = 0;
-              //  Form.uniqueOperandsCount = 0;
-              //  Form.uniqueOperandsCount = 0;
-
-
                 if (selectFile()) {
                     if (!TEST_MODE) {
                         chosenFile = fileChooser.getSelectedFile();
@@ -56,57 +43,16 @@ public class Main {
                         chosenFile = new File("Art/tests/testFile.java");
                     }
                     basicGUI.chosenFileLabel.setText("Файл: " + chosenFile.toString());
-              //      window.setTitle("Метрики НЕ Холстеда: " + chosenFile.toString());
                     inputText = stringOperations.textFromFile(chosenFile);
+                    ////////////////////////////////
+                    codeAnalysis.getMetrics();
+                    ////////////////////////////////
 
-                    //<DirtyJob>
-
-                    allConditionalOperators = 0;
-                    allOperators=0;
-                    maxNesting = 0;
-                    maxNestingTextPart="";
-
-                    if (codeAnalysis.checkBrackets(inputText)) System.out.println("Brackets okay.");
-                    else {System.out.println("Wrong brackets!");
-                    JOptionPane.showMessageDialog(null,"Something wrong with brackets!","Error!",JOptionPane.ERROR_MESSAGE);
-                    }
-
-                    codeAnalysis.cutMultilineComments();
-                    codeAnalysis.cutSingleLineComments();
-                    codeAnalysis.cutImports();
-
-                    //сначала берем все как есть, без выпиленных кусков
-                    codeAnalysis.annulNesting();
-                    codeAnalysis.switchReplace(0);
-                    codeAnalysis.getMaxNesting(0);
-                    maxNesting--;
-                    System.out.println("================ Max nesting part [TRANSFORMED!!!] ================= \n" + '\n' + maxNestingTextPart + '\n' + "==============================================================");
-
-                    codeAnalysis.replaceArithmetics();
-                    codeAnalysis.replaceDotMethods();
-                    codeAnalysis.replaceSimpleMethods();
-                    codeAnalysis.countConditionalOperators();
-                    //System.out.println("Input Text" + inputText);
-                    System.out.println("All operators number: " + allOperators);
-                    System.out.println("All conditional operators number : " + allConditionalOperators);
-window2.setAbsolete(String.valueOf(allConditionalOperators));
-window2.setRelative(String.format("%.3f", (double)allConditionalOperators/allOperators)  );
-
-                    System.out.println("Max nesting : " + maxNesting);
-                    window2.setMax(String.valueOf(maxNesting));
-                    //System.out.println("Input Text" + inputText);
-                    //</DirtyJob>
-
-                 //   window.getTable1().revalidate();
-                 //   window.getTable1().repaint();
-                    //window2.set
                     window2.repaint();
                     window2.revalidate();
                 }
             }
         };
-//        window = new Form();
-//        window2.setMax(String.valueOf(123));
         window2 = new Farm();
         basicGUI.chooseFileButton.addActionListener(buttonClicked);
     }

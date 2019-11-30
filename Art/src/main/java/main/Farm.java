@@ -43,7 +43,7 @@ public class Farm extends JFrame{
         }
 
         setSize(800, 600);
-        setTitle("Laba 3 farm: ");
+        setTitle("Laba 3: ");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         add(panel2);
