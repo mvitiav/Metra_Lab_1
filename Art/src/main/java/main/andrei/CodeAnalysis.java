@@ -116,6 +116,8 @@ public class CodeAnalysis {
                 //System.out.println("=== Is Output: " + isOutput.get(curVar + " (" + methodName + ")"));
             }
             //System.out.println("");
+
+Main.varSpens.putAll(varSpens);
         }
 
         for (Map.Entry<String, String> entry : varGroup.entrySet()) {
@@ -123,6 +125,10 @@ public class CodeAnalysis {
             String group = entry.getValue();
             System.out.println(var + " : " + group);
         }
+        Main.vars.addAll(allMethodVars);
+        Main.varGroup.putAll(varGroup);
+        Main.isOutput.putAll(isOutput);
+        Main.isInput.putAll(isInput);
     }
 
 //FIXME:================================================================================================================

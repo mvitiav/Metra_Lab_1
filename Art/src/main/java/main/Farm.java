@@ -51,4 +51,5 @@ public class Farm extends JFrame{
         setVisible(true);
         chooseFileButton.addActionListener(Main.buttonClicked);
     }
+
 }
