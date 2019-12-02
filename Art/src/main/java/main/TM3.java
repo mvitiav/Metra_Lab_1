@@ -92,7 +92,7 @@ public class TM3 implements TableModel {
             String ret ="";
             for (Map.Entry<String, String> entry : Main.varGroup.entrySet()) {
                 if((entry.getValue().indexOf("T")>=0)&&((Main.isOutput.get(entry.getKey()))||(Main.isOutput.get(entry.getKey())))){
-                    if(rowIndex==0){ ret+= entry.getKey()+"; ";
+                    if(rowIndex==0){ ret+= entry.getKey()+";\n ";
                     }
                     else {count++; ret = String.valueOf(count);}}
             }
